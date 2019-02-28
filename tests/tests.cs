@@ -80,7 +80,6 @@ while (line != null)
 }
 
 
-@
 // test 10
 // variable definition on the wrong place and in the wrong order.
 

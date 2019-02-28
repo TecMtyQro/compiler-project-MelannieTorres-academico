@@ -99,13 +99,13 @@ t_ignore=' \t\r\n\f\v'
 
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    print("Lexer error: Illegal character '",t.value[0],"' at line",t.lineno)
+    # t.lexer.skip(1)
 
 import ply.lex as lex
 lexer = lex.lex()
 
-if(len(sys.argv) >1):
+if(len(sys.argv) > 1):
     while True:
         try:
             s = input('> ')
