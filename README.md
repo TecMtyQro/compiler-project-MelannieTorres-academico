@@ -6,5 +6,5 @@ compiler-project-MelannieTorres-academico created by GitHub Classroom
 
 ## How to use the lexer
 Run either :
-python3 lexer.py < tests/tests.cs to parse the whole file 
-python3 lexer.py -inline to parse strings in the command line
+* python3 lexer.py < tests/tests.cs to parse the whole file 
+* python3 lexer.py -inline to parse strings in the command line
