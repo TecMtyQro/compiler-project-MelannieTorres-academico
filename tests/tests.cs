@@ -2,6 +2,7 @@
 //a
 
 // test 2
+/* this is a multiline commment */
 /* this
 is
 a
@@ -12,7 +13,7 @@ commment */
 int num1;
 
 // test 4
- public const double Pi = 3.14159;
+ const double Pi = 3.14159;
 
 // test 5
 a a a a
@@ -49,7 +50,7 @@ Console.Write("this string");
 string fileName;
 if (length > 0 && length < 200)||(length >= 200 && length <= 400)
 {
-    fileName = arg[0];
+    fileName = arg;
 }
 else
 {
@@ -60,9 +61,9 @@ string line = r.ReadLine();
 while (line != null)
 {
     int pos = line.IndexOf('=');
-    string name = line.Substring(0, pos).Trim();
+    string name = line.Substring(0).Trim();
     long phone = Convert.ToInt64(line.Substring(pos + 1));
-    tab[name] = phone;
+    tab = phone;
     line = r.ReadLine();
 }
 r.Close();
@@ -72,7 +73,7 @@ while (line != null)
     string name = Console.ReadLine();
     if (name == "")
         break;
-    object phone = tab[name];
+    object phone = tab;
     if (phone == null)
         Console.WriteLine("-- Not Found in Phone Book");
     else
@@ -89,7 +90,7 @@ a = float 1.0;
 // test 11
 // string, variable and constant on a place that is not allowed.
 string int const = 2;
-int = 1 string, const;
+int = 1 string const;
 
 while (1==1){
     const a = 2;

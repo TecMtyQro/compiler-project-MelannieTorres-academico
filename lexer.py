@@ -4,7 +4,8 @@ import sys
 
 tokens = (
     #reserved words
-    'PUBLIC', 'PRIVATE', 'STATIC',
+    # 'PUBLIC', 'PRIVATE',
+    'STATIC',
     'CONST','IF', 'ELSE','READ', 'RETURN',
     'VAR','WHILE','WRITE', 'MAIN',
     #operatoris
@@ -17,13 +18,15 @@ tokens = (
     'INT_LITERAL', 'FLOAT_LITERAL', 'BOOL_LITERAL', 'STRING_LITERAL',
     #punctuation
     'LEFT_PARENTHESIS', 'RIGHT_PARENTHESIS', 'LEFT_CURLY_BRACKET',
-    'RIGHT_CURLY_BRACKET', 'LEFT_SQUARE_BRACKET', 'RIGHT_SQUARE_BRACKET',
-    'COMMA', 'SEMICOLON', 'DOT',
+    'RIGHT_CURLY_BRACKET',
+    # 'LEFT_SQUARE_BRACKET', 'RIGHT_SQUARE_BRACKET',
+    # 'COMMA',
+    'SEMICOLON', 'DOT',
     'DOUBLE_QUOTE', 'QUOTE',
     #whitespace
     # 'SPACE', 'TAB', 'NEW_LINE',
     #comment
-    'ONE_LINE_COMMENT', 'MULTIPLE_LINE_COMMENT',
+    # 'ONE_LINE_COMMENT', 'MULTIPLE_LINE_COMMENT',
 
     #id
     'ID'
@@ -31,8 +34,8 @@ tokens = (
 #tokens
 
 #reserved words
-def t_PUBLIC(t): r'public'; return t
-def t_PRIVATE(t): r'private'; return t
+# def t_PUBLIC(t): r'public'; return t
+# def t_PRIVATE(t): r'private'; return t
 def t_STATIC(t): r'static'; return t
 def t_CONST(t): r'const'; return t
 def t_IF(t): r'if'; return t
@@ -45,9 +48,9 @@ def t_WRITE(t): r'Console\.Write'; return t
 def t_MAIN(t): r'Main'; return t
 
 #comment
-# IGNORE 
-t_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
-t_MULTIPLE_LINE_COMMENT = r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/' # r'(/\*(.|\n)*?\*/)'
+# IGNORE
+t_ignore_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
+t_ignore_MULTIPLE_LINE_COMMENT = r'(/\*(.|\n)*?\*/)' #r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
 
 #operators
 t_GT = r'>'
@@ -84,9 +87,9 @@ t_LEFT_PARENTHESIS = r'\('
 t_RIGHT_PARENTHESIS = r'\)'
 t_LEFT_CURLY_BRACKET = r'{'
 t_RIGHT_CURLY_BRACKET = r'}'
-t_LEFT_SQUARE_BRACKET = r'\['
-t_RIGHT_SQUARE_BRACKET = r'\]'
-t_COMMA = r','
+# t_LEFT_SQUARE_BRACKET = r'\['
+# t_RIGHT_SQUARE_BRACKET = r'\]'
+# t_COMMA = r','
 t_SEMICOLON = r';'
 t_DOT = r'\.'
 t_DOUBLE_QUOTE = r'"'
@@ -114,7 +117,8 @@ def p_program(t):
     print('Program')
 
 def p_block(t):
-    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET'''
+    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+             |   LEFT_CURLY_BRACKET expression RETURN INT_LITERAL RIGHT_CURLY_BRACKET'''
     print('Block')
 
 def p_expression(t):
@@ -122,7 +126,9 @@ def p_expression(t):
                   | if_expression
                   | arithmetic_expression
                   | bool_expression
-                  | assign_expression'''
+                  | assign_expression
+                  | read_expression
+                  | write_expression'''
     print('Expression')
     print(t[1])
 
@@ -136,6 +142,14 @@ def p_if_expression(t):
                      | IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block'''
     print('if')
 
+def p_read_expression(t):
+    '''read_expression : READ'''
+    print('read')
+
+def p_write_expression(t):
+    '''write_expression : WRITE'''
+    print('write')
+
 def p_assign_expression(t):
     '''assign_expression : INT ID EQUALS arithmetic_expression
               | FLOAT ID EQUALS arithmetic_expression
@@ -143,24 +157,22 @@ def p_assign_expression(t):
               | STRING ID EQUALS string_expression'''
     print('assign')
 
+
+precedence = (
+     ('left', 'ADD', 'MINUS'),
+     ('left', 'MULTIPLICATION', 'DIVISION'),
+ )
+
 #start arithmetic_expressions
 def p_arithmetic_expression(t):
-    '''arithmetic_expression : term ADD arithmetic_expression
-                             | term MINUS arithmetic_expression
-                             | term '''
-    if len(t) < 3 : t[0] = t[1]
-    elif   t[2] == '+': t[0] = t[1] + t[3]
-    elif t[2] == '-': t[0] = t[1] - t[3]
+    '''arithmetic_expression : number ADD arithmetic_expression
+                             | number MINUS arithmetic_expression
+                             | number MULTIPLICATION arithmetic_expression
+                             | number DIVISION arithmetic_expression
+                             | number '''
     print('arithmetic_expression')
 
-def p_multiplication(t):
-    '''term : number MULTIPLICATION term
-            | number DIVISION term
-            | number '''
-    if len(t) < 3 : t[0] = t[1]
-    elif  t[2] == '*': t[0] = t[1] * t[3]
-    elif t[2] == '/': t[0] = t[1] / t[3]
-    print('multiplication')
+
 
 def p_number(t):
     '''number : INT_LITERAL
@@ -183,14 +195,16 @@ def p_string_expression(t):
     print('string_expression')
 
 def p_condition(t):
-    '''condition : condition GT term
-                   | condition LT term
-                   | condition GET term
-                   | condition LET term
-                   | condition IS_EQUAL term
-                   | condition IS_NOT_EQUAL term
-                   | BOOL_LITERAL
-                   | term'''
+    '''condition : number GT number
+                   | number LT number
+                   | number GET number
+                   | number LET number
+                   | number NOT number
+                   | BOOL_LITERAL NOT BOOL_LITERAL
+                   | number IS_EQUAL number
+                   | number IS_NOT_EQUAL number
+                   | BOOL_LITERAL IS_EQUAL BOOL_LITERAL
+                   | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'''
     print('condition')
 
 def p_error(t):
@@ -202,28 +216,58 @@ parser = yacc.yacc()
 lexer = lex.lex()
 
 if(len(sys.argv) < 2):
+    aux_s = ''
     while True:
         try:
             s = input('> ')
         except EOFError:
             break
-        lex.input(s)
-        while True:
-            tok = lex.token()
-            if tok:
-                print(tok)
-            else:
-                break
-            par = parser.parse(s)
+        if "/*" in s or aux_s:
+            aux_s = aux_s +s
+            if "*/" in s:
+                lex.input(aux_s)
+                while True:
+                    tok = lex.token()
+                    if tok:
+                        print(tok)
+                    else:
+                        break
+                    par = parser.parse(aux_s)
+                aux_s=''
+        else:
+            lex.input(s)
+            while True:
+                tok = lex.token()
+                if tok:
+                    print(tok)
+                else:
+                    break
+                par = parser.parse(s)
 
 
 else:
+    aux_s = ''
     file_input = fileinput.input()
     for s in file_input:
-        lex.input(s)
-        while True:
-            tok = lex.token()
-            if tok:
-                print(tok)
-            else:
-                break
+        if "/*" in s or aux_s:
+            aux_s = aux_s +s
+            if "*/" in s:
+                lex.input(aux_s)
+                while True:
+                    tok = lex.token()
+                    if tok:
+                        print(tok)
+                    else:
+                        break
+                    par = parser.parse(aux_s)
+                aux_s=''
+
+        else:
+            lex.input(s)
+            while True:
+                tok = lex.token()
+                if tok:
+                    print(tok)
+                else:
+                    break
+                par = parser.parse(s)
