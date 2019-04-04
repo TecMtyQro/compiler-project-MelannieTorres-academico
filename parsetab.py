@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ADD AND BOOL BOOL_LITERAL COMMA CONST DIVISION DOUBLE_QUOTE ELSE EQUALS FLOAT FLOAT_LITERAL GET GT ID IF INT INT_LITERAL IS_EQUAL IS_NOT_EQUAL LEFT_CURLY_BRACKET LEFT_PARENTHESIS LET LT MINUS MULTIPLE_LINE_COMMENT MULTIPLICATION NEW_LINE NOT ONE_LINE_COMMENT OR PRIVATE PUBLIC QUOTE READ RETURN RIGHT_CURLY_BRACKET RIGHT_PARENTHESIS SEMICOLON SPACE STRING STRING_LITERAL TAB VAR WHILE WRITEstatement : expressionexpression : INT_LITERAL ADD INT_LITERAL\n                  | expression MINUS expression\n                  | expression MULTIPLICATION expression\n                  | expression DIVISION expressionexpression : PUBLIC\n                | PRIVATE\n                | CONST\n                | IF\n                | ELSE\n                | READ\n                | RETURN\n                | VAR\n                | WHILE\n                | WRITE\n                | GT\n                | LT\n                | GET\n                | LET\n                | AND\n                | OR\n                | NOT\n                | EQUALS\n                | IS_NOT_EQUAL\n                | ADD\n                | MINUS\n                | MULTIPLICATION\n                | DIVISION\n                | IS_EQUAL\n                | INT\n                | FLOAT\n                | BOOL\n                | STRING\n                | FLOAT_LITERAL\n                | BOOL_LITERAL\n                | STRING_LITERAL\n                | LEFT_PARENTHESIS\n                | RIGHT_PARENTHESIS\n                | LEFT_CURLY_BRACKET\n                | RIGHT_CURLY_BRACKET\n                | COMMA\n                | SEMICOLON\n                | SPACE\n                | TAB\n                | NEW_LINE\n                | ONE_LINE_COMMENT\n                | MULTIPLE_LINE_COMMENT\n                | DOUBLE_QUOTE\n                | QUOTE\n                | ID\n                '
+_lr_signature = 'ADD AND BOOL BOOL_LITERAL COMMA CONST DIVISION DOT DOUBLE_QUOTE ELSE EQUALS FLOAT FLOAT_LITERAL GET GT ID IF INT INT_LITERAL IS_EQUAL IS_NOT_EQUAL LEFT_CURLY_BRACKET LEFT_PARENTHESIS LEFT_SQUARE_BRACKET LET LT MAIN MINUS MULTIPLE_LINE_COMMENT MULTIPLICATION NOT ONE_LINE_COMMENT OR PRIVATE PUBLIC QUOTE READ RETURN RIGHT_CURLY_BRACKET RIGHT_PARENTHESIS RIGHT_SQUARE_BRACKET SEMICOLON STATIC STRING STRING_LITERAL VAR VOID WHILE WRITEprogram : STATIC VOID MAIN blockblock :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKETexpression : while_expression\n                  | if_expression\n                  | arithmetic_expression\n                  | bool_expression\n                  | assign_expressionwhile_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS blockif_expression : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block\n                     | IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE blockassign_expression : INT ID EQUALS arithmetic_expression\n              | FLOAT ID EQUALS arithmetic_expression\n              | BOOL ID EQUALS bool_expression\n              | STRING ID EQUALS string_expressionarithmetic_expression : term ADD arithmetic_expression\n                             | term MINUS arithmetic_expression\n                             | term term : number MULTIPLICATION term\n            | number DIVISION term\n            | number number : INT_LITERAL\n              | FLOAT_LITERAL bool_expression : bool_expression AND BOOL_LITERAL\n                         | bool_expression OR BOOL_LITERAL\n                         | BOOL_LITERAL string_expression : QUOTE STRING_LITERAL QUOTE\n                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE condition : condition GT term\n                   | condition LT term\n                   | condition GET term\n                   | condition LET term\n                   | condition IS_EQUAL term\n                   | condition IS_NOT_EQUAL term\n                   | BOOL_LITERAL\n                   | term'
     
-_lr_action_items = {'INT_LITERAL':([0,49,50,51,52,],[3,3,3,3,56,]),'PUBLIC':([0,49,50,51,],[8,8,8,8,]),'PRIVATE':([0,49,50,51,],[9,9,9,9,]),'CONST':([0,49,50,51,],[10,10,10,10,]),'IF':([0,49,50,51,],[11,11,11,11,]),'ELSE':([0,49,50,51,],[12,12,12,12,]),'READ':([0,49,50,51,],[13,13,13,13,]),'RETURN':([0,49,50,51,],[14,14,14,14,]),'VAR':([0,49,50,51,],[15,15,15,15,]),'WHILE':([0,49,50,51,],[16,16,16,16,]),'WRITE':([0,49,50,51,],[17,17,17,17,]),'GT':([0,49,50,51,],[18,18,18,18,]),'LT':([0,49,50,51,],[19,19,19,19,]),'GET':([0,49,50,51,],[20,20,20,20,]),'LET':([0,49,50,51,],[21,21,21,21,]),'AND':([0,49,50,51,],[22,22,22,22,]),'OR':([0,49,50,51,],[23,23,23,23,]),'NOT':([0,49,50,51,],[24,24,24,24,]),'EQUALS':([0,49,50,51,],[25,25,25,25,]),'IS_NOT_EQUAL':([0,49,50,51,],[26,26,26,26,]),'ADD':([0,3,49,50,51,],[4,52,4,4,4,]),'MINUS':([0,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,54,55,56,],[5,49,-25,-26,-27,-28,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-47,-48,-49,-50,5,5,5,49,49,49,-2,]),'MULTIPLICATION':([0,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,54,55,56,],[6,50,-25,-26,-27,-28,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-47,-48,-49,-50,6,6,6,50,50,50,-2,]),'DIVISION':([0,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,53,54,55,56,],[7,51,-25,-26,-27,-28,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-47,-48,-49,-50,7,7,7,51,51,51,-2,]),'IS_EQUAL':([0,49,50,51,],[27,27,27,27,]),'INT':([0,49,50,51,],[28,28,28,28,]),'FLOAT':([0,49,50,51,],[29,29,29,29,]),'BOOL':([0,49,50,51,],[30,30,30,30,]),'STRING':([0,49,50,51,],[31,31,31,31,]),'FLOAT_LITERAL':([0,49,50,51,],[32,32,32,32,]),'BOOL_LITERAL':([0,49,50,51,],[33,33,33,33,]),'STRING_LITERAL':([0,49,50,51,],[34,34,34,34,]),'LEFT_PARENTHESIS':([0,49,50,51,],[35,35,35,35,]),'RIGHT_PARENTHESIS':([0,49,50,51,],[36,36,36,36,]),'LEFT_CURLY_BRACKET':([0,49,50,51,],[37,37,37,37,]),'RIGHT_CURLY_BRACKET':([0,49,50,51,],[38,38,38,38,]),'COMMA':([0,49,50,51,],[39,39,39,39,]),'SEMICOLON':([0,49,50,51,],[40,40,40,40,]),'SPACE':([0,49,50,51,],[41,41,41,41,]),'TAB':([0,49,50,51,],[42,42,42,42,]),'NEW_LINE':([0,49,50,51,],[43,43,43,43,]),'ONE_LINE_COMMENT':([0,49,50,51,],[44,44,44,44,]),'MULTIPLE_LINE_COMMENT':([0,49,50,51,],[45,45,45,45,]),'DOUBLE_QUOTE':([0,49,50,51,],[46,46,46,46,]),'QUOTE':([0,49,50,51,],[47,47,47,47,]),'ID':([0,49,50,51,],[48,48,48,48,]),'$end':([1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,53,54,55,56,],[0,-1,-25,-26,-27,-28,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-29,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-42,-43,-44,-45,-46,-47,-48,-49,-50,-3,-4,-5,-2,]),}
+_lr_action_items = {'STATIC':([0,],[2,]),'$end':([1,5,24,],[0,-1,-2,]),'VOID':([2,],[3,]),'MAIN':([3,],[4,]),'LEFT_CURLY_BRACKET':([4,51,58,75,],[6,6,6,6,]),'WHILE':([6,],[13,]),'IF':([6,],[14,]),'BOOL_LITERAL':([6,25,26,27,28,47,],[16,37,38,41,41,16,]),'INT':([6,],[17,]),'FLOAT':([6,],[18,]),'BOOL':([6,],[19,]),'STRING':([6,],[20,]),'INT_LITERAL':([6,27,28,29,30,35,36,45,46,52,53,54,55,56,57,],[22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,]),'FLOAT_LITERAL':([6,27,28,29,30,35,36,45,46,52,53,54,55,56,57,],[23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,]),'RIGHT_CURLY_BRACKET':([7,8,9,10,11,12,15,16,21,22,23,24,37,38,43,44,49,50,59,60,61,62,65,72,76,77,78,],[24,-3,-4,-5,-6,-7,-17,-25,-20,-21,-22,-2,-23,-24,-15,-16,-18,-19,-11,-12,-13,-14,-8,-9,-26,-27,-10,]),'AND':([11,16,37,38,61,],[25,-25,-23,-24,25,]),'OR':([11,16,37,38,61,],[26,-25,-23,-24,26,]),'LEFT_PARENTHESIS':([13,14,],[27,28,]),'ADD':([15,21,22,23,49,50,],[29,-20,-21,-22,-18,-19,]),'MINUS':([15,21,22,23,49,50,],[30,-20,-21,-22,-18,-19,]),'ID':([17,18,19,20,],[31,32,33,34,]),'MULTIPLICATION':([21,22,23,],[35,-21,-22,]),'DIVISION':([21,22,23,],[36,-21,-22,]),'RIGHT_PARENTHESIS':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,51,-35,-34,58,-18,-19,-28,-29,-30,-31,-32,-33,]),'GT':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,52,-35,-34,52,-18,-19,-28,-29,-30,-31,-32,-33,]),'LT':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,53,-35,-34,53,-18,-19,-28,-29,-30,-31,-32,-33,]),'GET':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,54,-35,-34,54,-18,-19,-28,-29,-30,-31,-32,-33,]),'LET':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,55,-35,-34,55,-18,-19,-28,-29,-30,-31,-32,-33,]),'IS_EQUAL':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,56,-35,-34,56,-18,-19,-28,-29,-30,-31,-32,-33,]),'IS_NOT_EQUAL':([21,22,23,39,40,41,42,49,50,66,67,68,69,70,71,],[-20,-21,-22,57,-35,-34,57,-18,-19,-28,-29,-30,-31,-32,-33,]),'ELSE':([24,72,],[-2,75,]),'EQUALS':([31,32,33,34,],[45,46,47,48,]),'QUOTE':([48,73,],[63,76,]),'DOUBLE_QUOTE':([48,74,],[64,77,]),'STRING_LITERAL':([63,64,],[73,74,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,49,50,51,],[2,53,54,55,]),}
+_lr_goto_items = {'program':([0,],[1,]),'block':([4,51,58,75,],[5,65,72,78,]),'expression':([6,],[7,]),'while_expression':([6,],[8,]),'if_expression':([6,],[9,]),'arithmetic_expression':([6,29,30,45,46,],[10,43,44,59,60,]),'bool_expression':([6,47,],[11,61,]),'assign_expression':([6,],[12,]),'term':([6,27,28,29,30,35,36,45,46,52,53,54,55,56,57,],[15,40,40,15,15,49,50,15,15,66,67,68,69,70,71,]),'number':([6,27,28,29,30,35,36,45,46,52,53,54,55,56,57,],[21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,]),'condition':([27,28,],[39,42,]),'string_expression':([48,],[62,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,55 +26,40 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> expression','statement',1,'p_statement_expr','lexer.py',103),
-  ('expression -> INT_LITERAL ADD INT_LITERAL','expression',3,'p_expression_binop','lexer.py',108),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','lexer.py',109),
-  ('expression -> expression MULTIPLICATION expression','expression',3,'p_expression_binop','lexer.py',110),
-  ('expression -> expression DIVISION expression','expression',3,'p_expression_binop','lexer.py',111),
-  ('expression -> PUBLIC','expression',1,'p_accept','lexer.py',114),
-  ('expression -> PRIVATE','expression',1,'p_accept','lexer.py',115),
-  ('expression -> CONST','expression',1,'p_accept','lexer.py',116),
-  ('expression -> IF','expression',1,'p_accept','lexer.py',117),
-  ('expression -> ELSE','expression',1,'p_accept','lexer.py',118),
-  ('expression -> READ','expression',1,'p_accept','lexer.py',119),
-  ('expression -> RETURN','expression',1,'p_accept','lexer.py',120),
-  ('expression -> VAR','expression',1,'p_accept','lexer.py',121),
-  ('expression -> WHILE','expression',1,'p_accept','lexer.py',122),
-  ('expression -> WRITE','expression',1,'p_accept','lexer.py',123),
-  ('expression -> GT','expression',1,'p_accept','lexer.py',124),
-  ('expression -> LT','expression',1,'p_accept','lexer.py',125),
-  ('expression -> GET','expression',1,'p_accept','lexer.py',126),
-  ('expression -> LET','expression',1,'p_accept','lexer.py',127),
-  ('expression -> AND','expression',1,'p_accept','lexer.py',128),
-  ('expression -> OR','expression',1,'p_accept','lexer.py',129),
-  ('expression -> NOT','expression',1,'p_accept','lexer.py',130),
-  ('expression -> EQUALS','expression',1,'p_accept','lexer.py',131),
-  ('expression -> IS_NOT_EQUAL','expression',1,'p_accept','lexer.py',132),
-  ('expression -> ADD','expression',1,'p_accept','lexer.py',133),
-  ('expression -> MINUS','expression',1,'p_accept','lexer.py',134),
-  ('expression -> MULTIPLICATION','expression',1,'p_accept','lexer.py',135),
-  ('expression -> DIVISION','expression',1,'p_accept','lexer.py',136),
-  ('expression -> IS_EQUAL','expression',1,'p_accept','lexer.py',137),
-  ('expression -> INT','expression',1,'p_accept','lexer.py',138),
-  ('expression -> FLOAT','expression',1,'p_accept','lexer.py',139),
-  ('expression -> BOOL','expression',1,'p_accept','lexer.py',140),
-  ('expression -> STRING','expression',1,'p_accept','lexer.py',141),
-  ('expression -> FLOAT_LITERAL','expression',1,'p_accept','lexer.py',142),
-  ('expression -> BOOL_LITERAL','expression',1,'p_accept','lexer.py',143),
-  ('expression -> STRING_LITERAL','expression',1,'p_accept','lexer.py',144),
-  ('expression -> LEFT_PARENTHESIS','expression',1,'p_accept','lexer.py',145),
-  ('expression -> RIGHT_PARENTHESIS','expression',1,'p_accept','lexer.py',146),
-  ('expression -> LEFT_CURLY_BRACKET','expression',1,'p_accept','lexer.py',147),
-  ('expression -> RIGHT_CURLY_BRACKET','expression',1,'p_accept','lexer.py',148),
-  ('expression -> COMMA','expression',1,'p_accept','lexer.py',149),
-  ('expression -> SEMICOLON','expression',1,'p_accept','lexer.py',150),
-  ('expression -> SPACE','expression',1,'p_accept','lexer.py',151),
-  ('expression -> TAB','expression',1,'p_accept','lexer.py',152),
-  ('expression -> NEW_LINE','expression',1,'p_accept','lexer.py',153),
-  ('expression -> ONE_LINE_COMMENT','expression',1,'p_accept','lexer.py',154),
-  ('expression -> MULTIPLE_LINE_COMMENT','expression',1,'p_accept','lexer.py',155),
-  ('expression -> DOUBLE_QUOTE','expression',1,'p_accept','lexer.py',156),
-  ('expression -> QUOTE','expression',1,'p_accept','lexer.py',157),
-  ('expression -> ID','expression',1,'p_accept','lexer.py',158),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> STATIC VOID MAIN block','program',4,'p_program','lexer.py',113),
+  ('block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET','block',3,'p_block','lexer.py',116),
+  ('expression -> while_expression','expression',1,'p_expression','lexer.py',120),
+  ('expression -> if_expression','expression',1,'p_expression','lexer.py',121),
+  ('expression -> arithmetic_expression','expression',1,'p_expression','lexer.py',122),
+  ('expression -> bool_expression','expression',1,'p_expression','lexer.py',123),
+  ('expression -> assign_expression','expression',1,'p_expression','lexer.py',124),
+  ('while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','while_expression',5,'p_while_expression','lexer.py',128),
+  ('if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','if_expression',5,'p_if_expression','lexer.py',131),
+  ('if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block','if_expression',7,'p_if_expression','lexer.py',132),
+  ('assign_expression -> INT ID EQUALS arithmetic_expression','assign_expression',4,'p_assign_expression','lexer.py',135),
+  ('assign_expression -> FLOAT ID EQUALS arithmetic_expression','assign_expression',4,'p_assign_expression','lexer.py',136),
+  ('assign_expression -> BOOL ID EQUALS bool_expression','assign_expression',4,'p_assign_expression','lexer.py',137),
+  ('assign_expression -> STRING ID EQUALS string_expression','assign_expression',4,'p_assign_expression','lexer.py',138),
+  ('arithmetic_expression -> term ADD arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',142),
+  ('arithmetic_expression -> term MINUS arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',143),
+  ('arithmetic_expression -> term','arithmetic_expression',1,'p_arithmetic_expression','lexer.py',144),
+  ('term -> number MULTIPLICATION term','term',3,'p_multiplication','lexer.py',149),
+  ('term -> number DIVISION term','term',3,'p_multiplication','lexer.py',150),
+  ('term -> number','term',1,'p_multiplication','lexer.py',151),
+  ('number -> INT_LITERAL','number',1,'p_number','lexer.py',157),
+  ('number -> FLOAT_LITERAL','number',1,'p_number','lexer.py',158),
+  ('bool_expression -> bool_expression AND BOOL_LITERAL','bool_expression',3,'p_bool_expression','lexer.py',165),
+  ('bool_expression -> bool_expression OR BOOL_LITERAL','bool_expression',3,'p_bool_expression','lexer.py',166),
+  ('bool_expression -> BOOL_LITERAL','bool_expression',1,'p_bool_expression','lexer.py',167),
+  ('string_expression -> QUOTE STRING_LITERAL QUOTE','string_expression',3,'p_string_expression','lexer.py',170),
+  ('string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE','string_expression',3,'p_string_expression','lexer.py',171),
+  ('condition -> condition GT term','condition',3,'p_condition','lexer.py',174),
+  ('condition -> condition LT term','condition',3,'p_condition','lexer.py',175),
+  ('condition -> condition GET term','condition',3,'p_condition','lexer.py',176),
+  ('condition -> condition LET term','condition',3,'p_condition','lexer.py',177),
+  ('condition -> condition IS_EQUAL term','condition',3,'p_condition','lexer.py',178),
+  ('condition -> condition IS_NOT_EQUAL term','condition',3,'p_condition','lexer.py',179),
+  ('condition -> BOOL_LITERAL','condition',1,'p_condition','lexer.py',180),
+  ('condition -> term','condition',1,'p_condition','lexer.py',181),
 ]

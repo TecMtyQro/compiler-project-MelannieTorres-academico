@@ -25,8 +25,8 @@ a a a a
 
 // test 7
 bool a;
-if (i % 2 == 0) {
-    if(i%3){
+if (i / 2 == 0) {
+    if(i/3 == 1){
         a=true;
     } else {
         a=false;
@@ -94,6 +94,7 @@ int = 1 string, const;
 while (1==1){
     const a = 2;
 }
+
 
 // test 12
 // loop defined using a wrong grammar

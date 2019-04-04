@@ -1,1087 +1,1036 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    COMMA
+    CONST
+    DOT
+    LEFT_SQUARE_BRACKET
+    MULTIPLE_LINE_COMMENT
+    NOT
+    ONE_LINE_COMMENT
+    PRIVATE
+    PUBLIC
+    READ
+    RETURN
+    RIGHT_SQUARE_BRACKET
+    SEMICOLON
+    VAR
+    WRITE
+
 Grammar
 
-Rule 0     S' -> statement
-Rule 1     statement -> expression
-Rule 2     expression -> INT_LITERAL ADD INT_LITERAL
-Rule 3     expression -> expression MINUS expression
-Rule 4     expression -> expression MULTIPLICATION expression
-Rule 5     expression -> expression DIVISION expression
-Rule 6     expression -> PUBLIC
-Rule 7     expression -> PRIVATE
-Rule 8     expression -> CONST
-Rule 9     expression -> IF
-Rule 10    expression -> ELSE
-Rule 11    expression -> READ
-Rule 12    expression -> RETURN
-Rule 13    expression -> VAR
-Rule 14    expression -> WHILE
-Rule 15    expression -> WRITE
-Rule 16    expression -> GT
-Rule 17    expression -> LT
-Rule 18    expression -> GET
-Rule 19    expression -> LET
-Rule 20    expression -> AND
-Rule 21    expression -> OR
-Rule 22    expression -> NOT
-Rule 23    expression -> EQUALS
-Rule 24    expression -> IS_NOT_EQUAL
-Rule 25    expression -> ADD
-Rule 26    expression -> MINUS
-Rule 27    expression -> MULTIPLICATION
-Rule 28    expression -> DIVISION
-Rule 29    expression -> IS_EQUAL
-Rule 30    expression -> INT
-Rule 31    expression -> FLOAT
-Rule 32    expression -> BOOL
-Rule 33    expression -> STRING
-Rule 34    expression -> FLOAT_LITERAL
-Rule 35    expression -> BOOL_LITERAL
-Rule 36    expression -> STRING_LITERAL
-Rule 37    expression -> LEFT_PARENTHESIS
-Rule 38    expression -> RIGHT_PARENTHESIS
-Rule 39    expression -> LEFT_CURLY_BRACKET
-Rule 40    expression -> RIGHT_CURLY_BRACKET
-Rule 41    expression -> COMMA
-Rule 42    expression -> SEMICOLON
-Rule 43    expression -> SPACE
-Rule 44    expression -> TAB
-Rule 45    expression -> NEW_LINE
-Rule 46    expression -> ONE_LINE_COMMENT
-Rule 47    expression -> MULTIPLE_LINE_COMMENT
-Rule 48    expression -> DOUBLE_QUOTE
-Rule 49    expression -> QUOTE
-Rule 50    expression -> ID
+Rule 0     S' -> program
+Rule 1     program -> STATIC VOID MAIN block
+Rule 2     block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+Rule 3     expression -> while_expression
+Rule 4     expression -> if_expression
+Rule 5     expression -> arithmetic_expression
+Rule 6     expression -> bool_expression
+Rule 7     expression -> assign_expression
+Rule 8     while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+Rule 9     if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+Rule 10    if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block
+Rule 11    assign_expression -> INT ID EQUALS arithmetic_expression
+Rule 12    assign_expression -> FLOAT ID EQUALS arithmetic_expression
+Rule 13    assign_expression -> BOOL ID EQUALS bool_expression
+Rule 14    assign_expression -> STRING ID EQUALS string_expression
+Rule 15    arithmetic_expression -> term ADD arithmetic_expression
+Rule 16    arithmetic_expression -> term MINUS arithmetic_expression
+Rule 17    arithmetic_expression -> term
+Rule 18    term -> number MULTIPLICATION term
+Rule 19    term -> number DIVISION term
+Rule 20    term -> number
+Rule 21    number -> INT_LITERAL
+Rule 22    number -> FLOAT_LITERAL
+Rule 23    bool_expression -> bool_expression AND BOOL_LITERAL
+Rule 24    bool_expression -> bool_expression OR BOOL_LITERAL
+Rule 25    bool_expression -> BOOL_LITERAL
+Rule 26    string_expression -> QUOTE STRING_LITERAL QUOTE
+Rule 27    string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE
+Rule 28    condition -> condition GT term
+Rule 29    condition -> condition LT term
+Rule 30    condition -> condition GET term
+Rule 31    condition -> condition LET term
+Rule 32    condition -> condition IS_EQUAL term
+Rule 33    condition -> condition IS_NOT_EQUAL term
+Rule 34    condition -> BOOL_LITERAL
+Rule 35    condition -> term
 
 Terminals, with rules where they appear
 
-ADD                  : 2 25
-AND                  : 20
-BOOL                 : 32
-BOOL_LITERAL         : 35
-COMMA                : 41
-CONST                : 8
-DIVISION             : 5 28
-DOUBLE_QUOTE         : 48
+ADD                  : 15
+AND                  : 23
+BOOL                 : 13
+BOOL_LITERAL         : 23 24 25 34
+COMMA                : 
+CONST                : 
+DIVISION             : 19
+DOT                  : 
+DOUBLE_QUOTE         : 27 27
 ELSE                 : 10
-EQUALS               : 23
-FLOAT                : 31
-FLOAT_LITERAL        : 34
-GET                  : 18
-GT                   : 16
-ID                   : 50
-IF                   : 9
-INT                  : 30
-INT_LITERAL          : 2 2
-IS_EQUAL             : 29
-IS_NOT_EQUAL         : 24
-LEFT_CURLY_BRACKET   : 39
-LEFT_PARENTHESIS     : 37
-LET                  : 19
-LT                   : 17
-MINUS                : 3 26
-MULTIPLE_LINE_COMMENT : 47
-MULTIPLICATION       : 4 27
-NEW_LINE             : 45
-NOT                  : 22
-ONE_LINE_COMMENT     : 46
-OR                   : 21
-PRIVATE              : 7
-PUBLIC               : 6
-QUOTE                : 49
-READ                 : 11
-RETURN               : 12
-RIGHT_CURLY_BRACKET  : 40
-RIGHT_PARENTHESIS    : 38
-SEMICOLON            : 42
-SPACE                : 43
-STRING               : 33
-STRING_LITERAL       : 36
-TAB                  : 44
-VAR                  : 13
-WHILE                : 14
-WRITE                : 15
+EQUALS               : 11 12 13 14
+FLOAT                : 12
+FLOAT_LITERAL        : 22
+GET                  : 30
+GT                   : 28
+ID                   : 11 12 13 14
+IF                   : 9 10
+INT                  : 11
+INT_LITERAL          : 21
+IS_EQUAL             : 32
+IS_NOT_EQUAL         : 33
+LEFT_CURLY_BRACKET   : 2
+LEFT_PARENTHESIS     : 8 9 10
+LEFT_SQUARE_BRACKET  : 
+LET                  : 31
+LT                   : 29
+MAIN                 : 1
+MINUS                : 16
+MULTIPLE_LINE_COMMENT : 
+MULTIPLICATION       : 18
+NOT                  : 
+ONE_LINE_COMMENT     : 
+OR                   : 24
+PRIVATE              : 
+PUBLIC               : 
+QUOTE                : 26 26
+READ                 : 
+RETURN               : 
+RIGHT_CURLY_BRACKET  : 2
+RIGHT_PARENTHESIS    : 8 9 10
+RIGHT_SQUARE_BRACKET : 
+SEMICOLON            : 
+STATIC               : 1
+STRING               : 14
+STRING_LITERAL       : 26 27
+VAR                  : 
+VOID                 : 1
+WHILE                : 8
+WRITE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 3 3 4 4 5 5
-statement            : 0
+arithmetic_expression : 5 11 12 15 16
+assign_expression    : 7
+block                : 1 8 9 10 10
+bool_expression      : 6 13 23 24
+condition            : 8 9 10 28 29 30 31 32 33
+expression           : 2
+if_expression        : 4
+number               : 18 19 20
+program              : 0
+string_expression    : 14
+term                 : 15 16 17 18 19 28 29 30 31 32 33 35
+while_expression     : 3
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . statement
-    (1) statement -> . expression
-    (2) expression -> . INT_LITERAL ADD INT_LITERAL
-    (3) expression -> . expression MINUS expression
-    (4) expression -> . expression MULTIPLICATION expression
-    (5) expression -> . expression DIVISION expression
-    (6) expression -> . PUBLIC
-    (7) expression -> . PRIVATE
-    (8) expression -> . CONST
-    (9) expression -> . IF
-    (10) expression -> . ELSE
-    (11) expression -> . READ
-    (12) expression -> . RETURN
-    (13) expression -> . VAR
-    (14) expression -> . WHILE
-    (15) expression -> . WRITE
-    (16) expression -> . GT
-    (17) expression -> . LT
-    (18) expression -> . GET
-    (19) expression -> . LET
-    (20) expression -> . AND
-    (21) expression -> . OR
-    (22) expression -> . NOT
-    (23) expression -> . EQUALS
-    (24) expression -> . IS_NOT_EQUAL
-    (25) expression -> . ADD
-    (26) expression -> . MINUS
-    (27) expression -> . MULTIPLICATION
-    (28) expression -> . DIVISION
-    (29) expression -> . IS_EQUAL
-    (30) expression -> . INT
-    (31) expression -> . FLOAT
-    (32) expression -> . BOOL
-    (33) expression -> . STRING
-    (34) expression -> . FLOAT_LITERAL
-    (35) expression -> . BOOL_LITERAL
-    (36) expression -> . STRING_LITERAL
-    (37) expression -> . LEFT_PARENTHESIS
-    (38) expression -> . RIGHT_PARENTHESIS
-    (39) expression -> . LEFT_CURLY_BRACKET
-    (40) expression -> . RIGHT_CURLY_BRACKET
-    (41) expression -> . COMMA
-    (42) expression -> . SEMICOLON
-    (43) expression -> . SPACE
-    (44) expression -> . TAB
-    (45) expression -> . NEW_LINE
-    (46) expression -> . ONE_LINE_COMMENT
-    (47) expression -> . MULTIPLE_LINE_COMMENT
-    (48) expression -> . DOUBLE_QUOTE
-    (49) expression -> . QUOTE
-    (50) expression -> . ID
+    (0) S' -> . program
+    (1) program -> . STATIC VOID MAIN block
 
-    INT_LITERAL     shift and go to state 3
-    PUBLIC          shift and go to state 8
-    PRIVATE         shift and go to state 9
-    CONST           shift and go to state 10
-    IF              shift and go to state 11
-    ELSE            shift and go to state 12
-    READ            shift and go to state 13
-    RETURN          shift and go to state 14
-    VAR             shift and go to state 15
-    WHILE           shift and go to state 16
-    WRITE           shift and go to state 17
-    GT              shift and go to state 18
-    LT              shift and go to state 19
-    GET             shift and go to state 20
-    LET             shift and go to state 21
-    AND             shift and go to state 22
-    OR              shift and go to state 23
-    NOT             shift and go to state 24
-    EQUALS          shift and go to state 25
-    IS_NOT_EQUAL    shift and go to state 26
-    ADD             shift and go to state 4
-    MINUS           shift and go to state 5
-    MULTIPLICATION  shift and go to state 6
-    DIVISION        shift and go to state 7
-    IS_EQUAL        shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    BOOL            shift and go to state 30
-    STRING          shift and go to state 31
-    FLOAT_LITERAL   shift and go to state 32
-    BOOL_LITERAL    shift and go to state 33
-    STRING_LITERAL  shift and go to state 34
-    LEFT_PARENTHESIS shift and go to state 35
-    RIGHT_PARENTHESIS shift and go to state 36
-    LEFT_CURLY_BRACKET shift and go to state 37
-    RIGHT_CURLY_BRACKET shift and go to state 38
-    COMMA           shift and go to state 39
-    SEMICOLON       shift and go to state 40
-    SPACE           shift and go to state 41
-    TAB             shift and go to state 42
-    NEW_LINE        shift and go to state 43
-    ONE_LINE_COMMENT shift and go to state 44
-    MULTIPLE_LINE_COMMENT shift and go to state 45
-    DOUBLE_QUOTE    shift and go to state 46
-    QUOTE           shift and go to state 47
-    ID              shift and go to state 48
+    STATIC          shift and go to state 2
 
-    statement                      shift and go to state 1
-    expression                     shift and go to state 2
+    program                        shift and go to state 1
 
 state 1
 
-    (0) S' -> statement .
+    (0) S' -> program .
 
 
 
 state 2
 
-    (1) statement -> expression .
-    (3) expression -> expression . MINUS expression
-    (4) expression -> expression . MULTIPLICATION expression
-    (5) expression -> expression . DIVISION expression
+    (1) program -> STATIC . VOID MAIN block
 
-    $end            reduce using rule 1 (statement -> expression .)
-    MINUS           shift and go to state 49
-    MULTIPLICATION  shift and go to state 50
-    DIVISION        shift and go to state 51
+    VOID            shift and go to state 3
 
 
 state 3
 
-    (2) expression -> INT_LITERAL . ADD INT_LITERAL
+    (1) program -> STATIC VOID . MAIN block
 
-    ADD             shift and go to state 52
+    MAIN            shift and go to state 4
 
 
 state 4
 
-    (25) expression -> ADD .
+    (1) program -> STATIC VOID MAIN . block
+    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
 
-    MINUS           reduce using rule 25 (expression -> ADD .)
-    MULTIPLICATION  reduce using rule 25 (expression -> ADD .)
-    DIVISION        reduce using rule 25 (expression -> ADD .)
-    $end            reduce using rule 25 (expression -> ADD .)
+    LEFT_CURLY_BRACKET shift and go to state 6
 
+    block                          shift and go to state 5
 
 state 5
 
-    (26) expression -> MINUS .
+    (1) program -> STATIC VOID MAIN block .
 
-    MINUS           reduce using rule 26 (expression -> MINUS .)
-    MULTIPLICATION  reduce using rule 26 (expression -> MINUS .)
-    DIVISION        reduce using rule 26 (expression -> MINUS .)
-    $end            reduce using rule 26 (expression -> MINUS .)
+    $end            reduce using rule 1 (program -> STATIC VOID MAIN block .)
 
 
 state 6
 
-    (27) expression -> MULTIPLICATION .
+    (2) block -> LEFT_CURLY_BRACKET . expression RIGHT_CURLY_BRACKET
+    (3) expression -> . while_expression
+    (4) expression -> . if_expression
+    (5) expression -> . arithmetic_expression
+    (6) expression -> . bool_expression
+    (7) expression -> . assign_expression
+    (8) while_expression -> . WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (9) if_expression -> . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (10) if_expression -> . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block
+    (15) arithmetic_expression -> . term ADD arithmetic_expression
+    (16) arithmetic_expression -> . term MINUS arithmetic_expression
+    (17) arithmetic_expression -> . term
+    (23) bool_expression -> . bool_expression AND BOOL_LITERAL
+    (24) bool_expression -> . bool_expression OR BOOL_LITERAL
+    (25) bool_expression -> . BOOL_LITERAL
+    (11) assign_expression -> . INT ID EQUALS arithmetic_expression
+    (12) assign_expression -> . FLOAT ID EQUALS arithmetic_expression
+    (13) assign_expression -> . BOOL ID EQUALS bool_expression
+    (14) assign_expression -> . STRING ID EQUALS string_expression
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 27 (expression -> MULTIPLICATION .)
-    MULTIPLICATION  reduce using rule 27 (expression -> MULTIPLICATION .)
-    DIVISION        reduce using rule 27 (expression -> MULTIPLICATION .)
-    $end            reduce using rule 27 (expression -> MULTIPLICATION .)
+    WHILE           shift and go to state 13
+    IF              shift and go to state 14
+    BOOL_LITERAL    shift and go to state 16
+    INT             shift and go to state 17
+    FLOAT           shift and go to state 18
+    BOOL            shift and go to state 19
+    STRING          shift and go to state 20
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    expression                     shift and go to state 7
+    while_expression               shift and go to state 8
+    if_expression                  shift and go to state 9
+    arithmetic_expression          shift and go to state 10
+    bool_expression                shift and go to state 11
+    assign_expression              shift and go to state 12
+    term                           shift and go to state 15
+    number                         shift and go to state 21
 
 state 7
 
-    (28) expression -> DIVISION .
+    (2) block -> LEFT_CURLY_BRACKET expression . RIGHT_CURLY_BRACKET
 
-    MINUS           reduce using rule 28 (expression -> DIVISION .)
-    MULTIPLICATION  reduce using rule 28 (expression -> DIVISION .)
-    DIVISION        reduce using rule 28 (expression -> DIVISION .)
-    $end            reduce using rule 28 (expression -> DIVISION .)
+    RIGHT_CURLY_BRACKET shift and go to state 24
 
 
 state 8
 
-    (6) expression -> PUBLIC .
+    (3) expression -> while_expression .
 
-    MINUS           reduce using rule 6 (expression -> PUBLIC .)
-    MULTIPLICATION  reduce using rule 6 (expression -> PUBLIC .)
-    DIVISION        reduce using rule 6 (expression -> PUBLIC .)
-    $end            reduce using rule 6 (expression -> PUBLIC .)
+    RIGHT_CURLY_BRACKET reduce using rule 3 (expression -> while_expression .)
 
 
 state 9
 
-    (7) expression -> PRIVATE .
+    (4) expression -> if_expression .
 
-    MINUS           reduce using rule 7 (expression -> PRIVATE .)
-    MULTIPLICATION  reduce using rule 7 (expression -> PRIVATE .)
-    DIVISION        reduce using rule 7 (expression -> PRIVATE .)
-    $end            reduce using rule 7 (expression -> PRIVATE .)
+    RIGHT_CURLY_BRACKET reduce using rule 4 (expression -> if_expression .)
 
 
 state 10
 
-    (8) expression -> CONST .
+    (5) expression -> arithmetic_expression .
 
-    MINUS           reduce using rule 8 (expression -> CONST .)
-    MULTIPLICATION  reduce using rule 8 (expression -> CONST .)
-    DIVISION        reduce using rule 8 (expression -> CONST .)
-    $end            reduce using rule 8 (expression -> CONST .)
+    RIGHT_CURLY_BRACKET reduce using rule 5 (expression -> arithmetic_expression .)
 
 
 state 11
 
-    (9) expression -> IF .
+    (6) expression -> bool_expression .
+    (23) bool_expression -> bool_expression . AND BOOL_LITERAL
+    (24) bool_expression -> bool_expression . OR BOOL_LITERAL
 
-    MINUS           reduce using rule 9 (expression -> IF .)
-    MULTIPLICATION  reduce using rule 9 (expression -> IF .)
-    DIVISION        reduce using rule 9 (expression -> IF .)
-    $end            reduce using rule 9 (expression -> IF .)
+    RIGHT_CURLY_BRACKET reduce using rule 6 (expression -> bool_expression .)
+    AND             shift and go to state 25
+    OR              shift and go to state 26
 
 
 state 12
 
-    (10) expression -> ELSE .
+    (7) expression -> assign_expression .
 
-    MINUS           reduce using rule 10 (expression -> ELSE .)
-    MULTIPLICATION  reduce using rule 10 (expression -> ELSE .)
-    DIVISION        reduce using rule 10 (expression -> ELSE .)
-    $end            reduce using rule 10 (expression -> ELSE .)
+    RIGHT_CURLY_BRACKET reduce using rule 7 (expression -> assign_expression .)
 
 
 state 13
 
-    (11) expression -> READ .
+    (8) while_expression -> WHILE . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
 
-    MINUS           reduce using rule 11 (expression -> READ .)
-    MULTIPLICATION  reduce using rule 11 (expression -> READ .)
-    DIVISION        reduce using rule 11 (expression -> READ .)
-    $end            reduce using rule 11 (expression -> READ .)
+    LEFT_PARENTHESIS shift and go to state 27
 
 
 state 14
 
-    (12) expression -> RETURN .
+    (9) if_expression -> IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (10) if_expression -> IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block
 
-    MINUS           reduce using rule 12 (expression -> RETURN .)
-    MULTIPLICATION  reduce using rule 12 (expression -> RETURN .)
-    DIVISION        reduce using rule 12 (expression -> RETURN .)
-    $end            reduce using rule 12 (expression -> RETURN .)
+    LEFT_PARENTHESIS shift and go to state 28
 
 
 state 15
 
-    (13) expression -> VAR .
+    (15) arithmetic_expression -> term . ADD arithmetic_expression
+    (16) arithmetic_expression -> term . MINUS arithmetic_expression
+    (17) arithmetic_expression -> term .
 
-    MINUS           reduce using rule 13 (expression -> VAR .)
-    MULTIPLICATION  reduce using rule 13 (expression -> VAR .)
-    DIVISION        reduce using rule 13 (expression -> VAR .)
-    $end            reduce using rule 13 (expression -> VAR .)
+    ADD             shift and go to state 29
+    MINUS           shift and go to state 30
+    RIGHT_CURLY_BRACKET reduce using rule 17 (arithmetic_expression -> term .)
 
 
 state 16
 
-    (14) expression -> WHILE .
+    (25) bool_expression -> BOOL_LITERAL .
 
-    MINUS           reduce using rule 14 (expression -> WHILE .)
-    MULTIPLICATION  reduce using rule 14 (expression -> WHILE .)
-    DIVISION        reduce using rule 14 (expression -> WHILE .)
-    $end            reduce using rule 14 (expression -> WHILE .)
+    AND             reduce using rule 25 (bool_expression -> BOOL_LITERAL .)
+    OR              reduce using rule 25 (bool_expression -> BOOL_LITERAL .)
+    RIGHT_CURLY_BRACKET reduce using rule 25 (bool_expression -> BOOL_LITERAL .)
 
 
 state 17
 
-    (15) expression -> WRITE .
+    (11) assign_expression -> INT . ID EQUALS arithmetic_expression
 
-    MINUS           reduce using rule 15 (expression -> WRITE .)
-    MULTIPLICATION  reduce using rule 15 (expression -> WRITE .)
-    DIVISION        reduce using rule 15 (expression -> WRITE .)
-    $end            reduce using rule 15 (expression -> WRITE .)
+    ID              shift and go to state 31
 
 
 state 18
 
-    (16) expression -> GT .
+    (12) assign_expression -> FLOAT . ID EQUALS arithmetic_expression
 
-    MINUS           reduce using rule 16 (expression -> GT .)
-    MULTIPLICATION  reduce using rule 16 (expression -> GT .)
-    DIVISION        reduce using rule 16 (expression -> GT .)
-    $end            reduce using rule 16 (expression -> GT .)
+    ID              shift and go to state 32
 
 
 state 19
 
-    (17) expression -> LT .
+    (13) assign_expression -> BOOL . ID EQUALS bool_expression
 
-    MINUS           reduce using rule 17 (expression -> LT .)
-    MULTIPLICATION  reduce using rule 17 (expression -> LT .)
-    DIVISION        reduce using rule 17 (expression -> LT .)
-    $end            reduce using rule 17 (expression -> LT .)
+    ID              shift and go to state 33
 
 
 state 20
 
-    (18) expression -> GET .
+    (14) assign_expression -> STRING . ID EQUALS string_expression
 
-    MINUS           reduce using rule 18 (expression -> GET .)
-    MULTIPLICATION  reduce using rule 18 (expression -> GET .)
-    DIVISION        reduce using rule 18 (expression -> GET .)
-    $end            reduce using rule 18 (expression -> GET .)
+    ID              shift and go to state 34
 
 
 state 21
 
-    (19) expression -> LET .
+    (18) term -> number . MULTIPLICATION term
+    (19) term -> number . DIVISION term
+    (20) term -> number .
 
-    MINUS           reduce using rule 19 (expression -> LET .)
-    MULTIPLICATION  reduce using rule 19 (expression -> LET .)
-    DIVISION        reduce using rule 19 (expression -> LET .)
-    $end            reduce using rule 19 (expression -> LET .)
+    MULTIPLICATION  shift and go to state 35
+    DIVISION        shift and go to state 36
+    ADD             reduce using rule 20 (term -> number .)
+    MINUS           reduce using rule 20 (term -> number .)
+    RIGHT_CURLY_BRACKET reduce using rule 20 (term -> number .)
+    RIGHT_PARENTHESIS reduce using rule 20 (term -> number .)
+    GT              reduce using rule 20 (term -> number .)
+    LT              reduce using rule 20 (term -> number .)
+    GET             reduce using rule 20 (term -> number .)
+    LET             reduce using rule 20 (term -> number .)
+    IS_EQUAL        reduce using rule 20 (term -> number .)
+    IS_NOT_EQUAL    reduce using rule 20 (term -> number .)
 
 
 state 22
 
-    (20) expression -> AND .
+    (21) number -> INT_LITERAL .
 
-    MINUS           reduce using rule 20 (expression -> AND .)
-    MULTIPLICATION  reduce using rule 20 (expression -> AND .)
-    DIVISION        reduce using rule 20 (expression -> AND .)
-    $end            reduce using rule 20 (expression -> AND .)
+    MULTIPLICATION  reduce using rule 21 (number -> INT_LITERAL .)
+    DIVISION        reduce using rule 21 (number -> INT_LITERAL .)
+    ADD             reduce using rule 21 (number -> INT_LITERAL .)
+    MINUS           reduce using rule 21 (number -> INT_LITERAL .)
+    RIGHT_CURLY_BRACKET reduce using rule 21 (number -> INT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 21 (number -> INT_LITERAL .)
+    GT              reduce using rule 21 (number -> INT_LITERAL .)
+    LT              reduce using rule 21 (number -> INT_LITERAL .)
+    GET             reduce using rule 21 (number -> INT_LITERAL .)
+    LET             reduce using rule 21 (number -> INT_LITERAL .)
+    IS_EQUAL        reduce using rule 21 (number -> INT_LITERAL .)
+    IS_NOT_EQUAL    reduce using rule 21 (number -> INT_LITERAL .)
 
 
 state 23
 
-    (21) expression -> OR .
+    (22) number -> FLOAT_LITERAL .
 
-    MINUS           reduce using rule 21 (expression -> OR .)
-    MULTIPLICATION  reduce using rule 21 (expression -> OR .)
-    DIVISION        reduce using rule 21 (expression -> OR .)
-    $end            reduce using rule 21 (expression -> OR .)
+    MULTIPLICATION  reduce using rule 22 (number -> FLOAT_LITERAL .)
+    DIVISION        reduce using rule 22 (number -> FLOAT_LITERAL .)
+    ADD             reduce using rule 22 (number -> FLOAT_LITERAL .)
+    MINUS           reduce using rule 22 (number -> FLOAT_LITERAL .)
+    RIGHT_CURLY_BRACKET reduce using rule 22 (number -> FLOAT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 22 (number -> FLOAT_LITERAL .)
+    GT              reduce using rule 22 (number -> FLOAT_LITERAL .)
+    LT              reduce using rule 22 (number -> FLOAT_LITERAL .)
+    GET             reduce using rule 22 (number -> FLOAT_LITERAL .)
+    LET             reduce using rule 22 (number -> FLOAT_LITERAL .)
+    IS_EQUAL        reduce using rule 22 (number -> FLOAT_LITERAL .)
+    IS_NOT_EQUAL    reduce using rule 22 (number -> FLOAT_LITERAL .)
 
 
 state 24
 
-    (22) expression -> NOT .
+    (2) block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .
 
-    MINUS           reduce using rule 22 (expression -> NOT .)
-    MULTIPLICATION  reduce using rule 22 (expression -> NOT .)
-    DIVISION        reduce using rule 22 (expression -> NOT .)
-    $end            reduce using rule 22 (expression -> NOT .)
+    $end            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
+    RIGHT_CURLY_BRACKET reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
+    ELSE            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
 
 
 state 25
 
-    (23) expression -> EQUALS .
+    (23) bool_expression -> bool_expression AND . BOOL_LITERAL
 
-    MINUS           reduce using rule 23 (expression -> EQUALS .)
-    MULTIPLICATION  reduce using rule 23 (expression -> EQUALS .)
-    DIVISION        reduce using rule 23 (expression -> EQUALS .)
-    $end            reduce using rule 23 (expression -> EQUALS .)
+    BOOL_LITERAL    shift and go to state 37
 
 
 state 26
 
-    (24) expression -> IS_NOT_EQUAL .
+    (24) bool_expression -> bool_expression OR . BOOL_LITERAL
 
-    MINUS           reduce using rule 24 (expression -> IS_NOT_EQUAL .)
-    MULTIPLICATION  reduce using rule 24 (expression -> IS_NOT_EQUAL .)
-    DIVISION        reduce using rule 24 (expression -> IS_NOT_EQUAL .)
-    $end            reduce using rule 24 (expression -> IS_NOT_EQUAL .)
+    BOOL_LITERAL    shift and go to state 38
 
 
 state 27
 
-    (29) expression -> IS_EQUAL .
+    (8) while_expression -> WHILE LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
+    (28) condition -> . condition GT term
+    (29) condition -> . condition LT term
+    (30) condition -> . condition GET term
+    (31) condition -> . condition LET term
+    (32) condition -> . condition IS_EQUAL term
+    (33) condition -> . condition IS_NOT_EQUAL term
+    (34) condition -> . BOOL_LITERAL
+    (35) condition -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 29 (expression -> IS_EQUAL .)
-    MULTIPLICATION  reduce using rule 29 (expression -> IS_EQUAL .)
-    DIVISION        reduce using rule 29 (expression -> IS_EQUAL .)
-    $end            reduce using rule 29 (expression -> IS_EQUAL .)
+    BOOL_LITERAL    shift and go to state 41
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    condition                      shift and go to state 39
+    term                           shift and go to state 40
+    number                         shift and go to state 21
 
 state 28
 
-    (30) expression -> INT .
+    (9) if_expression -> IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
+    (10) if_expression -> IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block ELSE block
+    (28) condition -> . condition GT term
+    (29) condition -> . condition LT term
+    (30) condition -> . condition GET term
+    (31) condition -> . condition LET term
+    (32) condition -> . condition IS_EQUAL term
+    (33) condition -> . condition IS_NOT_EQUAL term
+    (34) condition -> . BOOL_LITERAL
+    (35) condition -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 30 (expression -> INT .)
-    MULTIPLICATION  reduce using rule 30 (expression -> INT .)
-    DIVISION        reduce using rule 30 (expression -> INT .)
-    $end            reduce using rule 30 (expression -> INT .)
+    BOOL_LITERAL    shift and go to state 41
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    condition                      shift and go to state 42
+    term                           shift and go to state 40
+    number                         shift and go to state 21
 
 state 29
 
-    (31) expression -> FLOAT .
+    (15) arithmetic_expression -> term ADD . arithmetic_expression
+    (15) arithmetic_expression -> . term ADD arithmetic_expression
+    (16) arithmetic_expression -> . term MINUS arithmetic_expression
+    (17) arithmetic_expression -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 31 (expression -> FLOAT .)
-    MULTIPLICATION  reduce using rule 31 (expression -> FLOAT .)
-    DIVISION        reduce using rule 31 (expression -> FLOAT .)
-    $end            reduce using rule 31 (expression -> FLOAT .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    term                           shift and go to state 15
+    arithmetic_expression          shift and go to state 43
+    number                         shift and go to state 21
 
 state 30
 
-    (32) expression -> BOOL .
+    (16) arithmetic_expression -> term MINUS . arithmetic_expression
+    (15) arithmetic_expression -> . term ADD arithmetic_expression
+    (16) arithmetic_expression -> . term MINUS arithmetic_expression
+    (17) arithmetic_expression -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 32 (expression -> BOOL .)
-    MULTIPLICATION  reduce using rule 32 (expression -> BOOL .)
-    DIVISION        reduce using rule 32 (expression -> BOOL .)
-    $end            reduce using rule 32 (expression -> BOOL .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    term                           shift and go to state 15
+    arithmetic_expression          shift and go to state 44
+    number                         shift and go to state 21
 
 state 31
 
-    (33) expression -> STRING .
+    (11) assign_expression -> INT ID . EQUALS arithmetic_expression
 
-    MINUS           reduce using rule 33 (expression -> STRING .)
-    MULTIPLICATION  reduce using rule 33 (expression -> STRING .)
-    DIVISION        reduce using rule 33 (expression -> STRING .)
-    $end            reduce using rule 33 (expression -> STRING .)
+    EQUALS          shift and go to state 45
 
 
 state 32
 
-    (34) expression -> FLOAT_LITERAL .
+    (12) assign_expression -> FLOAT ID . EQUALS arithmetic_expression
 
-    MINUS           reduce using rule 34 (expression -> FLOAT_LITERAL .)
-    MULTIPLICATION  reduce using rule 34 (expression -> FLOAT_LITERAL .)
-    DIVISION        reduce using rule 34 (expression -> FLOAT_LITERAL .)
-    $end            reduce using rule 34 (expression -> FLOAT_LITERAL .)
+    EQUALS          shift and go to state 46
 
 
 state 33
 
-    (35) expression -> BOOL_LITERAL .
+    (13) assign_expression -> BOOL ID . EQUALS bool_expression
 
-    MINUS           reduce using rule 35 (expression -> BOOL_LITERAL .)
-    MULTIPLICATION  reduce using rule 35 (expression -> BOOL_LITERAL .)
-    DIVISION        reduce using rule 35 (expression -> BOOL_LITERAL .)
-    $end            reduce using rule 35 (expression -> BOOL_LITERAL .)
+    EQUALS          shift and go to state 47
 
 
 state 34
 
-    (36) expression -> STRING_LITERAL .
+    (14) assign_expression -> STRING ID . EQUALS string_expression
 
-    MINUS           reduce using rule 36 (expression -> STRING_LITERAL .)
-    MULTIPLICATION  reduce using rule 36 (expression -> STRING_LITERAL .)
-    DIVISION        reduce using rule 36 (expression -> STRING_LITERAL .)
-    $end            reduce using rule 36 (expression -> STRING_LITERAL .)
+    EQUALS          shift and go to state 48
 
 
 state 35
 
-    (37) expression -> LEFT_PARENTHESIS .
+    (18) term -> number MULTIPLICATION . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 37 (expression -> LEFT_PARENTHESIS .)
-    MULTIPLICATION  reduce using rule 37 (expression -> LEFT_PARENTHESIS .)
-    DIVISION        reduce using rule 37 (expression -> LEFT_PARENTHESIS .)
-    $end            reduce using rule 37 (expression -> LEFT_PARENTHESIS .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    number                         shift and go to state 21
+    term                           shift and go to state 49
 
 state 36
 
-    (38) expression -> RIGHT_PARENTHESIS .
+    (19) term -> number DIVISION . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 38 (expression -> RIGHT_PARENTHESIS .)
-    MULTIPLICATION  reduce using rule 38 (expression -> RIGHT_PARENTHESIS .)
-    DIVISION        reduce using rule 38 (expression -> RIGHT_PARENTHESIS .)
-    $end            reduce using rule 38 (expression -> RIGHT_PARENTHESIS .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    number                         shift and go to state 21
+    term                           shift and go to state 50
 
 state 37
 
-    (39) expression -> LEFT_CURLY_BRACKET .
+    (23) bool_expression -> bool_expression AND BOOL_LITERAL .
 
-    MINUS           reduce using rule 39 (expression -> LEFT_CURLY_BRACKET .)
-    MULTIPLICATION  reduce using rule 39 (expression -> LEFT_CURLY_BRACKET .)
-    DIVISION        reduce using rule 39 (expression -> LEFT_CURLY_BRACKET .)
-    $end            reduce using rule 39 (expression -> LEFT_CURLY_BRACKET .)
+    AND             reduce using rule 23 (bool_expression -> bool_expression AND BOOL_LITERAL .)
+    OR              reduce using rule 23 (bool_expression -> bool_expression AND BOOL_LITERAL .)
+    RIGHT_CURLY_BRACKET reduce using rule 23 (bool_expression -> bool_expression AND BOOL_LITERAL .)
 
 
 state 38
 
-    (40) expression -> RIGHT_CURLY_BRACKET .
+    (24) bool_expression -> bool_expression OR BOOL_LITERAL .
 
-    MINUS           reduce using rule 40 (expression -> RIGHT_CURLY_BRACKET .)
-    MULTIPLICATION  reduce using rule 40 (expression -> RIGHT_CURLY_BRACKET .)
-    DIVISION        reduce using rule 40 (expression -> RIGHT_CURLY_BRACKET .)
-    $end            reduce using rule 40 (expression -> RIGHT_CURLY_BRACKET .)
+    AND             reduce using rule 24 (bool_expression -> bool_expression OR BOOL_LITERAL .)
+    OR              reduce using rule 24 (bool_expression -> bool_expression OR BOOL_LITERAL .)
+    RIGHT_CURLY_BRACKET reduce using rule 24 (bool_expression -> bool_expression OR BOOL_LITERAL .)
 
 
 state 39
 
-    (41) expression -> COMMA .
+    (8) while_expression -> WHILE LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
+    (28) condition -> condition . GT term
+    (29) condition -> condition . LT term
+    (30) condition -> condition . GET term
+    (31) condition -> condition . LET term
+    (32) condition -> condition . IS_EQUAL term
+    (33) condition -> condition . IS_NOT_EQUAL term
 
-    MINUS           reduce using rule 41 (expression -> COMMA .)
-    MULTIPLICATION  reduce using rule 41 (expression -> COMMA .)
-    DIVISION        reduce using rule 41 (expression -> COMMA .)
-    $end            reduce using rule 41 (expression -> COMMA .)
+    RIGHT_PARENTHESIS shift and go to state 51
+    GT              shift and go to state 52
+    LT              shift and go to state 53
+    GET             shift and go to state 54
+    LET             shift and go to state 55
+    IS_EQUAL        shift and go to state 56
+    IS_NOT_EQUAL    shift and go to state 57
 
 
 state 40
 
-    (42) expression -> SEMICOLON .
+    (35) condition -> term .
 
-    MINUS           reduce using rule 42 (expression -> SEMICOLON .)
-    MULTIPLICATION  reduce using rule 42 (expression -> SEMICOLON .)
-    DIVISION        reduce using rule 42 (expression -> SEMICOLON .)
-    $end            reduce using rule 42 (expression -> SEMICOLON .)
+    RIGHT_PARENTHESIS reduce using rule 35 (condition -> term .)
+    GT              reduce using rule 35 (condition -> term .)
+    LT              reduce using rule 35 (condition -> term .)
+    GET             reduce using rule 35 (condition -> term .)
+    LET             reduce using rule 35 (condition -> term .)
+    IS_EQUAL        reduce using rule 35 (condition -> term .)
+    IS_NOT_EQUAL    reduce using rule 35 (condition -> term .)
 
 
 state 41
 
-    (43) expression -> SPACE .
+    (34) condition -> BOOL_LITERAL .
 
-    MINUS           reduce using rule 43 (expression -> SPACE .)
-    MULTIPLICATION  reduce using rule 43 (expression -> SPACE .)
-    DIVISION        reduce using rule 43 (expression -> SPACE .)
-    $end            reduce using rule 43 (expression -> SPACE .)
+    RIGHT_PARENTHESIS reduce using rule 34 (condition -> BOOL_LITERAL .)
+    GT              reduce using rule 34 (condition -> BOOL_LITERAL .)
+    LT              reduce using rule 34 (condition -> BOOL_LITERAL .)
+    GET             reduce using rule 34 (condition -> BOOL_LITERAL .)
+    LET             reduce using rule 34 (condition -> BOOL_LITERAL .)
+    IS_EQUAL        reduce using rule 34 (condition -> BOOL_LITERAL .)
+    IS_NOT_EQUAL    reduce using rule 34 (condition -> BOOL_LITERAL .)
 
 
 state 42
 
-    (44) expression -> TAB .
+    (9) if_expression -> IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
+    (10) if_expression -> IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block ELSE block
+    (28) condition -> condition . GT term
+    (29) condition -> condition . LT term
+    (30) condition -> condition . GET term
+    (31) condition -> condition . LET term
+    (32) condition -> condition . IS_EQUAL term
+    (33) condition -> condition . IS_NOT_EQUAL term
 
-    MINUS           reduce using rule 44 (expression -> TAB .)
-    MULTIPLICATION  reduce using rule 44 (expression -> TAB .)
-    DIVISION        reduce using rule 44 (expression -> TAB .)
-    $end            reduce using rule 44 (expression -> TAB .)
+    RIGHT_PARENTHESIS shift and go to state 58
+    GT              shift and go to state 52
+    LT              shift and go to state 53
+    GET             shift and go to state 54
+    LET             shift and go to state 55
+    IS_EQUAL        shift and go to state 56
+    IS_NOT_EQUAL    shift and go to state 57
 
 
 state 43
 
-    (45) expression -> NEW_LINE .
+    (15) arithmetic_expression -> term ADD arithmetic_expression .
 
-    MINUS           reduce using rule 45 (expression -> NEW_LINE .)
-    MULTIPLICATION  reduce using rule 45 (expression -> NEW_LINE .)
-    DIVISION        reduce using rule 45 (expression -> NEW_LINE .)
-    $end            reduce using rule 45 (expression -> NEW_LINE .)
+    RIGHT_CURLY_BRACKET reduce using rule 15 (arithmetic_expression -> term ADD arithmetic_expression .)
 
 
 state 44
 
-    (46) expression -> ONE_LINE_COMMENT .
+    (16) arithmetic_expression -> term MINUS arithmetic_expression .
 
-    MINUS           reduce using rule 46 (expression -> ONE_LINE_COMMENT .)
-    MULTIPLICATION  reduce using rule 46 (expression -> ONE_LINE_COMMENT .)
-    DIVISION        reduce using rule 46 (expression -> ONE_LINE_COMMENT .)
-    $end            reduce using rule 46 (expression -> ONE_LINE_COMMENT .)
+    RIGHT_CURLY_BRACKET reduce using rule 16 (arithmetic_expression -> term MINUS arithmetic_expression .)
 
 
 state 45
 
-    (47) expression -> MULTIPLE_LINE_COMMENT .
+    (11) assign_expression -> INT ID EQUALS . arithmetic_expression
+    (15) arithmetic_expression -> . term ADD arithmetic_expression
+    (16) arithmetic_expression -> . term MINUS arithmetic_expression
+    (17) arithmetic_expression -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 47 (expression -> MULTIPLE_LINE_COMMENT .)
-    MULTIPLICATION  reduce using rule 47 (expression -> MULTIPLE_LINE_COMMENT .)
-    DIVISION        reduce using rule 47 (expression -> MULTIPLE_LINE_COMMENT .)
-    $end            reduce using rule 47 (expression -> MULTIPLE_LINE_COMMENT .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    arithmetic_expression          shift and go to state 59
+    term                           shift and go to state 15
+    number                         shift and go to state 21
 
 state 46
 
-    (48) expression -> DOUBLE_QUOTE .
+    (12) assign_expression -> FLOAT ID EQUALS . arithmetic_expression
+    (15) arithmetic_expression -> . term ADD arithmetic_expression
+    (16) arithmetic_expression -> . term MINUS arithmetic_expression
+    (17) arithmetic_expression -> . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 48 (expression -> DOUBLE_QUOTE .)
-    MULTIPLICATION  reduce using rule 48 (expression -> DOUBLE_QUOTE .)
-    DIVISION        reduce using rule 48 (expression -> DOUBLE_QUOTE .)
-    $end            reduce using rule 48 (expression -> DOUBLE_QUOTE .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    arithmetic_expression          shift and go to state 60
+    term                           shift and go to state 15
+    number                         shift and go to state 21
 
 state 47
 
-    (49) expression -> QUOTE .
+    (13) assign_expression -> BOOL ID EQUALS . bool_expression
+    (23) bool_expression -> . bool_expression AND BOOL_LITERAL
+    (24) bool_expression -> . bool_expression OR BOOL_LITERAL
+    (25) bool_expression -> . BOOL_LITERAL
 
-    MINUS           reduce using rule 49 (expression -> QUOTE .)
-    MULTIPLICATION  reduce using rule 49 (expression -> QUOTE .)
-    DIVISION        reduce using rule 49 (expression -> QUOTE .)
-    $end            reduce using rule 49 (expression -> QUOTE .)
+    BOOL_LITERAL    shift and go to state 16
 
+    bool_expression                shift and go to state 61
 
 state 48
 
-    (50) expression -> ID .
+    (14) assign_expression -> STRING ID EQUALS . string_expression
+    (26) string_expression -> . QUOTE STRING_LITERAL QUOTE
+    (27) string_expression -> . DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE
 
-    MINUS           reduce using rule 50 (expression -> ID .)
-    MULTIPLICATION  reduce using rule 50 (expression -> ID .)
-    DIVISION        reduce using rule 50 (expression -> ID .)
-    $end            reduce using rule 50 (expression -> ID .)
+    QUOTE           shift and go to state 63
+    DOUBLE_QUOTE    shift and go to state 64
 
+    string_expression              shift and go to state 62
 
 state 49
 
-    (3) expression -> expression MINUS . expression
-    (2) expression -> . INT_LITERAL ADD INT_LITERAL
-    (3) expression -> . expression MINUS expression
-    (4) expression -> . expression MULTIPLICATION expression
-    (5) expression -> . expression DIVISION expression
-    (6) expression -> . PUBLIC
-    (7) expression -> . PRIVATE
-    (8) expression -> . CONST
-    (9) expression -> . IF
-    (10) expression -> . ELSE
-    (11) expression -> . READ
-    (12) expression -> . RETURN
-    (13) expression -> . VAR
-    (14) expression -> . WHILE
-    (15) expression -> . WRITE
-    (16) expression -> . GT
-    (17) expression -> . LT
-    (18) expression -> . GET
-    (19) expression -> . LET
-    (20) expression -> . AND
-    (21) expression -> . OR
-    (22) expression -> . NOT
-    (23) expression -> . EQUALS
-    (24) expression -> . IS_NOT_EQUAL
-    (25) expression -> . ADD
-    (26) expression -> . MINUS
-    (27) expression -> . MULTIPLICATION
-    (28) expression -> . DIVISION
-    (29) expression -> . IS_EQUAL
-    (30) expression -> . INT
-    (31) expression -> . FLOAT
-    (32) expression -> . BOOL
-    (33) expression -> . STRING
-    (34) expression -> . FLOAT_LITERAL
-    (35) expression -> . BOOL_LITERAL
-    (36) expression -> . STRING_LITERAL
-    (37) expression -> . LEFT_PARENTHESIS
-    (38) expression -> . RIGHT_PARENTHESIS
-    (39) expression -> . LEFT_CURLY_BRACKET
-    (40) expression -> . RIGHT_CURLY_BRACKET
-    (41) expression -> . COMMA
-    (42) expression -> . SEMICOLON
-    (43) expression -> . SPACE
-    (44) expression -> . TAB
-    (45) expression -> . NEW_LINE
-    (46) expression -> . ONE_LINE_COMMENT
-    (47) expression -> . MULTIPLE_LINE_COMMENT
-    (48) expression -> . DOUBLE_QUOTE
-    (49) expression -> . QUOTE
-    (50) expression -> . ID
+    (18) term -> number MULTIPLICATION term .
 
-    INT_LITERAL     shift and go to state 3
-    PUBLIC          shift and go to state 8
-    PRIVATE         shift and go to state 9
-    CONST           shift and go to state 10
-    IF              shift and go to state 11
-    ELSE            shift and go to state 12
-    READ            shift and go to state 13
-    RETURN          shift and go to state 14
-    VAR             shift and go to state 15
-    WHILE           shift and go to state 16
-    WRITE           shift and go to state 17
-    GT              shift and go to state 18
-    LT              shift and go to state 19
-    GET             shift and go to state 20
-    LET             shift and go to state 21
-    AND             shift and go to state 22
-    OR              shift and go to state 23
-    NOT             shift and go to state 24
-    EQUALS          shift and go to state 25
-    IS_NOT_EQUAL    shift and go to state 26
-    ADD             shift and go to state 4
-    MINUS           shift and go to state 5
-    MULTIPLICATION  shift and go to state 6
-    DIVISION        shift and go to state 7
-    IS_EQUAL        shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    BOOL            shift and go to state 30
-    STRING          shift and go to state 31
-    FLOAT_LITERAL   shift and go to state 32
-    BOOL_LITERAL    shift and go to state 33
-    STRING_LITERAL  shift and go to state 34
-    LEFT_PARENTHESIS shift and go to state 35
-    RIGHT_PARENTHESIS shift and go to state 36
-    LEFT_CURLY_BRACKET shift and go to state 37
-    RIGHT_CURLY_BRACKET shift and go to state 38
-    COMMA           shift and go to state 39
-    SEMICOLON       shift and go to state 40
-    SPACE           shift and go to state 41
-    TAB             shift and go to state 42
-    NEW_LINE        shift and go to state 43
-    ONE_LINE_COMMENT shift and go to state 44
-    MULTIPLE_LINE_COMMENT shift and go to state 45
-    DOUBLE_QUOTE    shift and go to state 46
-    QUOTE           shift and go to state 47
-    ID              shift and go to state 48
+    ADD             reduce using rule 18 (term -> number MULTIPLICATION term .)
+    MINUS           reduce using rule 18 (term -> number MULTIPLICATION term .)
+    RIGHT_CURLY_BRACKET reduce using rule 18 (term -> number MULTIPLICATION term .)
+    RIGHT_PARENTHESIS reduce using rule 18 (term -> number MULTIPLICATION term .)
+    GT              reduce using rule 18 (term -> number MULTIPLICATION term .)
+    LT              reduce using rule 18 (term -> number MULTIPLICATION term .)
+    GET             reduce using rule 18 (term -> number MULTIPLICATION term .)
+    LET             reduce using rule 18 (term -> number MULTIPLICATION term .)
+    IS_EQUAL        reduce using rule 18 (term -> number MULTIPLICATION term .)
+    IS_NOT_EQUAL    reduce using rule 18 (term -> number MULTIPLICATION term .)
 
-    expression                     shift and go to state 53
 
 state 50
 
-    (4) expression -> expression MULTIPLICATION . expression
-    (2) expression -> . INT_LITERAL ADD INT_LITERAL
-    (3) expression -> . expression MINUS expression
-    (4) expression -> . expression MULTIPLICATION expression
-    (5) expression -> . expression DIVISION expression
-    (6) expression -> . PUBLIC
-    (7) expression -> . PRIVATE
-    (8) expression -> . CONST
-    (9) expression -> . IF
-    (10) expression -> . ELSE
-    (11) expression -> . READ
-    (12) expression -> . RETURN
-    (13) expression -> . VAR
-    (14) expression -> . WHILE
-    (15) expression -> . WRITE
-    (16) expression -> . GT
-    (17) expression -> . LT
-    (18) expression -> . GET
-    (19) expression -> . LET
-    (20) expression -> . AND
-    (21) expression -> . OR
-    (22) expression -> . NOT
-    (23) expression -> . EQUALS
-    (24) expression -> . IS_NOT_EQUAL
-    (25) expression -> . ADD
-    (26) expression -> . MINUS
-    (27) expression -> . MULTIPLICATION
-    (28) expression -> . DIVISION
-    (29) expression -> . IS_EQUAL
-    (30) expression -> . INT
-    (31) expression -> . FLOAT
-    (32) expression -> . BOOL
-    (33) expression -> . STRING
-    (34) expression -> . FLOAT_LITERAL
-    (35) expression -> . BOOL_LITERAL
-    (36) expression -> . STRING_LITERAL
-    (37) expression -> . LEFT_PARENTHESIS
-    (38) expression -> . RIGHT_PARENTHESIS
-    (39) expression -> . LEFT_CURLY_BRACKET
-    (40) expression -> . RIGHT_CURLY_BRACKET
-    (41) expression -> . COMMA
-    (42) expression -> . SEMICOLON
-    (43) expression -> . SPACE
-    (44) expression -> . TAB
-    (45) expression -> . NEW_LINE
-    (46) expression -> . ONE_LINE_COMMENT
-    (47) expression -> . MULTIPLE_LINE_COMMENT
-    (48) expression -> . DOUBLE_QUOTE
-    (49) expression -> . QUOTE
-    (50) expression -> . ID
+    (19) term -> number DIVISION term .
 
-    INT_LITERAL     shift and go to state 3
-    PUBLIC          shift and go to state 8
-    PRIVATE         shift and go to state 9
-    CONST           shift and go to state 10
-    IF              shift and go to state 11
-    ELSE            shift and go to state 12
-    READ            shift and go to state 13
-    RETURN          shift and go to state 14
-    VAR             shift and go to state 15
-    WHILE           shift and go to state 16
-    WRITE           shift and go to state 17
-    GT              shift and go to state 18
-    LT              shift and go to state 19
-    GET             shift and go to state 20
-    LET             shift and go to state 21
-    AND             shift and go to state 22
-    OR              shift and go to state 23
-    NOT             shift and go to state 24
-    EQUALS          shift and go to state 25
-    IS_NOT_EQUAL    shift and go to state 26
-    ADD             shift and go to state 4
-    MINUS           shift and go to state 5
-    MULTIPLICATION  shift and go to state 6
-    DIVISION        shift and go to state 7
-    IS_EQUAL        shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    BOOL            shift and go to state 30
-    STRING          shift and go to state 31
-    FLOAT_LITERAL   shift and go to state 32
-    BOOL_LITERAL    shift and go to state 33
-    STRING_LITERAL  shift and go to state 34
-    LEFT_PARENTHESIS shift and go to state 35
-    RIGHT_PARENTHESIS shift and go to state 36
-    LEFT_CURLY_BRACKET shift and go to state 37
-    RIGHT_CURLY_BRACKET shift and go to state 38
-    COMMA           shift and go to state 39
-    SEMICOLON       shift and go to state 40
-    SPACE           shift and go to state 41
-    TAB             shift and go to state 42
-    NEW_LINE        shift and go to state 43
-    ONE_LINE_COMMENT shift and go to state 44
-    MULTIPLE_LINE_COMMENT shift and go to state 45
-    DOUBLE_QUOTE    shift and go to state 46
-    QUOTE           shift and go to state 47
-    ID              shift and go to state 48
+    ADD             reduce using rule 19 (term -> number DIVISION term .)
+    MINUS           reduce using rule 19 (term -> number DIVISION term .)
+    RIGHT_CURLY_BRACKET reduce using rule 19 (term -> number DIVISION term .)
+    RIGHT_PARENTHESIS reduce using rule 19 (term -> number DIVISION term .)
+    GT              reduce using rule 19 (term -> number DIVISION term .)
+    LT              reduce using rule 19 (term -> number DIVISION term .)
+    GET             reduce using rule 19 (term -> number DIVISION term .)
+    LET             reduce using rule 19 (term -> number DIVISION term .)
+    IS_EQUAL        reduce using rule 19 (term -> number DIVISION term .)
+    IS_NOT_EQUAL    reduce using rule 19 (term -> number DIVISION term .)
 
-    expression                     shift and go to state 54
 
 state 51
 
-    (5) expression -> expression DIVISION . expression
-    (2) expression -> . INT_LITERAL ADD INT_LITERAL
-    (3) expression -> . expression MINUS expression
-    (4) expression -> . expression MULTIPLICATION expression
-    (5) expression -> . expression DIVISION expression
-    (6) expression -> . PUBLIC
-    (7) expression -> . PRIVATE
-    (8) expression -> . CONST
-    (9) expression -> . IF
-    (10) expression -> . ELSE
-    (11) expression -> . READ
-    (12) expression -> . RETURN
-    (13) expression -> . VAR
-    (14) expression -> . WHILE
-    (15) expression -> . WRITE
-    (16) expression -> . GT
-    (17) expression -> . LT
-    (18) expression -> . GET
-    (19) expression -> . LET
-    (20) expression -> . AND
-    (21) expression -> . OR
-    (22) expression -> . NOT
-    (23) expression -> . EQUALS
-    (24) expression -> . IS_NOT_EQUAL
-    (25) expression -> . ADD
-    (26) expression -> . MINUS
-    (27) expression -> . MULTIPLICATION
-    (28) expression -> . DIVISION
-    (29) expression -> . IS_EQUAL
-    (30) expression -> . INT
-    (31) expression -> . FLOAT
-    (32) expression -> . BOOL
-    (33) expression -> . STRING
-    (34) expression -> . FLOAT_LITERAL
-    (35) expression -> . BOOL_LITERAL
-    (36) expression -> . STRING_LITERAL
-    (37) expression -> . LEFT_PARENTHESIS
-    (38) expression -> . RIGHT_PARENTHESIS
-    (39) expression -> . LEFT_CURLY_BRACKET
-    (40) expression -> . RIGHT_CURLY_BRACKET
-    (41) expression -> . COMMA
-    (42) expression -> . SEMICOLON
-    (43) expression -> . SPACE
-    (44) expression -> . TAB
-    (45) expression -> . NEW_LINE
-    (46) expression -> . ONE_LINE_COMMENT
-    (47) expression -> . MULTIPLE_LINE_COMMENT
-    (48) expression -> . DOUBLE_QUOTE
-    (49) expression -> . QUOTE
-    (50) expression -> . ID
+    (8) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
+    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
 
-    INT_LITERAL     shift and go to state 3
-    PUBLIC          shift and go to state 8
-    PRIVATE         shift and go to state 9
-    CONST           shift and go to state 10
-    IF              shift and go to state 11
-    ELSE            shift and go to state 12
-    READ            shift and go to state 13
-    RETURN          shift and go to state 14
-    VAR             shift and go to state 15
-    WHILE           shift and go to state 16
-    WRITE           shift and go to state 17
-    GT              shift and go to state 18
-    LT              shift and go to state 19
-    GET             shift and go to state 20
-    LET             shift and go to state 21
-    AND             shift and go to state 22
-    OR              shift and go to state 23
-    NOT             shift and go to state 24
-    EQUALS          shift and go to state 25
-    IS_NOT_EQUAL    shift and go to state 26
-    ADD             shift and go to state 4
-    MINUS           shift and go to state 5
-    MULTIPLICATION  shift and go to state 6
-    DIVISION        shift and go to state 7
-    IS_EQUAL        shift and go to state 27
-    INT             shift and go to state 28
-    FLOAT           shift and go to state 29
-    BOOL            shift and go to state 30
-    STRING          shift and go to state 31
-    FLOAT_LITERAL   shift and go to state 32
-    BOOL_LITERAL    shift and go to state 33
-    STRING_LITERAL  shift and go to state 34
-    LEFT_PARENTHESIS shift and go to state 35
-    RIGHT_PARENTHESIS shift and go to state 36
-    LEFT_CURLY_BRACKET shift and go to state 37
-    RIGHT_CURLY_BRACKET shift and go to state 38
-    COMMA           shift and go to state 39
-    SEMICOLON       shift and go to state 40
-    SPACE           shift and go to state 41
-    TAB             shift and go to state 42
-    NEW_LINE        shift and go to state 43
-    ONE_LINE_COMMENT shift and go to state 44
-    MULTIPLE_LINE_COMMENT shift and go to state 45
-    DOUBLE_QUOTE    shift and go to state 46
-    QUOTE           shift and go to state 47
-    ID              shift and go to state 48
+    LEFT_CURLY_BRACKET shift and go to state 6
 
-    expression                     shift and go to state 55
+    block                          shift and go to state 65
 
 state 52
 
-    (2) expression -> INT_LITERAL ADD . INT_LITERAL
+    (28) condition -> condition GT . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    INT_LITERAL     shift and go to state 56
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
+    term                           shift and go to state 66
+    number                         shift and go to state 21
 
 state 53
 
-    (3) expression -> expression MINUS expression .
-    (3) expression -> expression . MINUS expression
-    (4) expression -> expression . MULTIPLICATION expression
-    (5) expression -> expression . DIVISION expression
+    (29) condition -> condition LT . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLICATION resolved as shift
-  ! shift/reduce conflict for DIVISION resolved as shift
-    $end            reduce using rule 3 (expression -> expression MINUS expression .)
-    MINUS           shift and go to state 49
-    MULTIPLICATION  shift and go to state 50
-    DIVISION        shift and go to state 51
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
-  ! MINUS           [ reduce using rule 3 (expression -> expression MINUS expression .) ]
-  ! MULTIPLICATION  [ reduce using rule 3 (expression -> expression MINUS expression .) ]
-  ! DIVISION        [ reduce using rule 3 (expression -> expression MINUS expression .) ]
-
+    term                           shift and go to state 67
+    number                         shift and go to state 21
 
 state 54
 
-    (4) expression -> expression MULTIPLICATION expression .
-    (3) expression -> expression . MINUS expression
-    (4) expression -> expression . MULTIPLICATION expression
-    (5) expression -> expression . DIVISION expression
+    (30) condition -> condition GET . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLICATION resolved as shift
-  ! shift/reduce conflict for DIVISION resolved as shift
-    $end            reduce using rule 4 (expression -> expression MULTIPLICATION expression .)
-    MINUS           shift and go to state 49
-    MULTIPLICATION  shift and go to state 50
-    DIVISION        shift and go to state 51
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
-  ! MINUS           [ reduce using rule 4 (expression -> expression MULTIPLICATION expression .) ]
-  ! MULTIPLICATION  [ reduce using rule 4 (expression -> expression MULTIPLICATION expression .) ]
-  ! DIVISION        [ reduce using rule 4 (expression -> expression MULTIPLICATION expression .) ]
-
+    term                           shift and go to state 68
+    number                         shift and go to state 21
 
 state 55
 
-    (5) expression -> expression DIVISION expression .
-    (3) expression -> expression . MINUS expression
-    (4) expression -> expression . MULTIPLICATION expression
-    (5) expression -> expression . DIVISION expression
+    (31) condition -> condition LET . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for MULTIPLICATION resolved as shift
-  ! shift/reduce conflict for DIVISION resolved as shift
-    $end            reduce using rule 5 (expression -> expression DIVISION expression .)
-    MINUS           shift and go to state 49
-    MULTIPLICATION  shift and go to state 50
-    DIVISION        shift and go to state 51
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
-  ! MINUS           [ reduce using rule 5 (expression -> expression DIVISION expression .) ]
-  ! MULTIPLICATION  [ reduce using rule 5 (expression -> expression DIVISION expression .) ]
-  ! DIVISION        [ reduce using rule 5 (expression -> expression DIVISION expression .) ]
-
+    term                           shift and go to state 69
+    number                         shift and go to state 21
 
 state 56
 
-    (2) expression -> INT_LITERAL ADD INT_LITERAL .
+    (32) condition -> condition IS_EQUAL . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
 
-    MINUS           reduce using rule 2 (expression -> INT_LITERAL ADD INT_LITERAL .)
-    MULTIPLICATION  reduce using rule 2 (expression -> INT_LITERAL ADD INT_LITERAL .)
-    DIVISION        reduce using rule 2 (expression -> INT_LITERAL ADD INT_LITERAL .)
-    $end            reduce using rule 2 (expression -> INT_LITERAL ADD INT_LITERAL .)
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for MINUS in state 53 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICATION in state 53 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 53 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 54 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICATION in state 54 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 54 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 55 resolved as shift
-WARNING: shift/reduce conflict for MULTIPLICATION in state 55 resolved as shift
-WARNING: shift/reduce conflict for DIVISION in state 55 resolved as shift
+    term                           shift and go to state 70
+    number                         shift and go to state 21
+
+state 57
+
+    (33) condition -> condition IS_NOT_EQUAL . term
+    (18) term -> . number MULTIPLICATION term
+    (19) term -> . number DIVISION term
+    (20) term -> . number
+    (21) number -> . INT_LITERAL
+    (22) number -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 22
+    FLOAT_LITERAL   shift and go to state 23
+
+    term                           shift and go to state 71
+    number                         shift and go to state 21
+
+state 58
+
+    (9) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
+    (10) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block ELSE block
+    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+
+    LEFT_CURLY_BRACKET shift and go to state 6
+
+    block                          shift and go to state 72
+
+state 59
+
+    (11) assign_expression -> INT ID EQUALS arithmetic_expression .
+
+    RIGHT_CURLY_BRACKET reduce using rule 11 (assign_expression -> INT ID EQUALS arithmetic_expression .)
+
+
+state 60
+
+    (12) assign_expression -> FLOAT ID EQUALS arithmetic_expression .
+
+    RIGHT_CURLY_BRACKET reduce using rule 12 (assign_expression -> FLOAT ID EQUALS arithmetic_expression .)
+
+
+state 61
+
+    (13) assign_expression -> BOOL ID EQUALS bool_expression .
+    (23) bool_expression -> bool_expression . AND BOOL_LITERAL
+    (24) bool_expression -> bool_expression . OR BOOL_LITERAL
+
+    RIGHT_CURLY_BRACKET reduce using rule 13 (assign_expression -> BOOL ID EQUALS bool_expression .)
+    AND             shift and go to state 25
+    OR              shift and go to state 26
+
+
+state 62
+
+    (14) assign_expression -> STRING ID EQUALS string_expression .
+
+    RIGHT_CURLY_BRACKET reduce using rule 14 (assign_expression -> STRING ID EQUALS string_expression .)
+
+
+state 63
+
+    (26) string_expression -> QUOTE . STRING_LITERAL QUOTE
+
+    STRING_LITERAL  shift and go to state 73
+
+
+state 64
+
+    (27) string_expression -> DOUBLE_QUOTE . STRING_LITERAL DOUBLE_QUOTE
+
+    STRING_LITERAL  shift and go to state 74
+
+
+state 65
+
+    (8) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+
+    RIGHT_CURLY_BRACKET reduce using rule 8 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+
+
+state 66
+
+    (28) condition -> condition GT term .
+
+    RIGHT_PARENTHESIS reduce using rule 28 (condition -> condition GT term .)
+    GT              reduce using rule 28 (condition -> condition GT term .)
+    LT              reduce using rule 28 (condition -> condition GT term .)
+    GET             reduce using rule 28 (condition -> condition GT term .)
+    LET             reduce using rule 28 (condition -> condition GT term .)
+    IS_EQUAL        reduce using rule 28 (condition -> condition GT term .)
+    IS_NOT_EQUAL    reduce using rule 28 (condition -> condition GT term .)
+
+
+state 67
+
+    (29) condition -> condition LT term .
+
+    RIGHT_PARENTHESIS reduce using rule 29 (condition -> condition LT term .)
+    GT              reduce using rule 29 (condition -> condition LT term .)
+    LT              reduce using rule 29 (condition -> condition LT term .)
+    GET             reduce using rule 29 (condition -> condition LT term .)
+    LET             reduce using rule 29 (condition -> condition LT term .)
+    IS_EQUAL        reduce using rule 29 (condition -> condition LT term .)
+    IS_NOT_EQUAL    reduce using rule 29 (condition -> condition LT term .)
+
+
+state 68
+
+    (30) condition -> condition GET term .
+
+    RIGHT_PARENTHESIS reduce using rule 30 (condition -> condition GET term .)
+    GT              reduce using rule 30 (condition -> condition GET term .)
+    LT              reduce using rule 30 (condition -> condition GET term .)
+    GET             reduce using rule 30 (condition -> condition GET term .)
+    LET             reduce using rule 30 (condition -> condition GET term .)
+    IS_EQUAL        reduce using rule 30 (condition -> condition GET term .)
+    IS_NOT_EQUAL    reduce using rule 30 (condition -> condition GET term .)
+
+
+state 69
+
+    (31) condition -> condition LET term .
+
+    RIGHT_PARENTHESIS reduce using rule 31 (condition -> condition LET term .)
+    GT              reduce using rule 31 (condition -> condition LET term .)
+    LT              reduce using rule 31 (condition -> condition LET term .)
+    GET             reduce using rule 31 (condition -> condition LET term .)
+    LET             reduce using rule 31 (condition -> condition LET term .)
+    IS_EQUAL        reduce using rule 31 (condition -> condition LET term .)
+    IS_NOT_EQUAL    reduce using rule 31 (condition -> condition LET term .)
+
+
+state 70
+
+    (32) condition -> condition IS_EQUAL term .
+
+    RIGHT_PARENTHESIS reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    GT              reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    LT              reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    GET             reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    LET             reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    IS_EQUAL        reduce using rule 32 (condition -> condition IS_EQUAL term .)
+    IS_NOT_EQUAL    reduce using rule 32 (condition -> condition IS_EQUAL term .)
+
+
+state 71
+
+    (33) condition -> condition IS_NOT_EQUAL term .
+
+    RIGHT_PARENTHESIS reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    GT              reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    LT              reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    GET             reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    LET             reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    IS_EQUAL        reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+    IS_NOT_EQUAL    reduce using rule 33 (condition -> condition IS_NOT_EQUAL term .)
+
+
+state 72
+
+    (9) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+    (10) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block . ELSE block
+
+    RIGHT_CURLY_BRACKET reduce using rule 9 (if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ELSE            shift and go to state 75
+
+
+state 73
+
+    (26) string_expression -> QUOTE STRING_LITERAL . QUOTE
+
+    QUOTE           shift and go to state 76
+
+
+state 74
+
+    (27) string_expression -> DOUBLE_QUOTE STRING_LITERAL . DOUBLE_QUOTE
+
+    DOUBLE_QUOTE    shift and go to state 77
+
+
+state 75
+
+    (10) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE . block
+    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+
+    LEFT_CURLY_BRACKET shift and go to state 6
+
+    block                          shift and go to state 78
+
+state 76
+
+    (26) string_expression -> QUOTE STRING_LITERAL QUOTE .
+
+    RIGHT_CURLY_BRACKET reduce using rule 26 (string_expression -> QUOTE STRING_LITERAL QUOTE .)
+
+
+state 77
+
+    (27) string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE .
+
+    RIGHT_CURLY_BRACKET reduce using rule 27 (string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE .)
+
+
+state 78
+
+    (10) if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block .
+
+    RIGHT_CURLY_BRACKET reduce using rule 10 (if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block .)
+

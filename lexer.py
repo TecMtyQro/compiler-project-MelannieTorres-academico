@@ -4,15 +4,15 @@ import sys
 
 tokens = (
     #reserved words
-    'PUBLIC', 'PRIVATE',
+    'PUBLIC', 'PRIVATE', 'STATIC',
     'CONST','IF', 'ELSE','READ', 'RETURN',
-    'VAR','WHILE','WRITE',
+    'VAR','WHILE','WRITE', 'MAIN',
     #operatoris
-    'IS_EQUAL','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
-    'AND', 'OR', 'NOT', 'EQUALS',
+    'EQUALS','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
+    'AND', 'OR', 'NOT', 'IS_EQUAL',
     'ADD','MINUS', 'MULTIPLICATION', 'DIVISION',
     #data types
-    'INT', 'FLOAT', 'BOOL', 'STRING',
+    'INT', 'FLOAT', 'BOOL', 'STRING', 'VOID',
     #literals
     'INT_LITERAL', 'FLOAT_LITERAL', 'BOOL_LITERAL', 'STRING_LITERAL',
     #punctuation
@@ -21,25 +21,33 @@ tokens = (
     'COMMA', 'SEMICOLON', 'DOT',
     'DOUBLE_QUOTE', 'QUOTE',
     #whitespace
-    'SPACE', 'TAB', 'NEW_LINE',
+    # 'SPACE', 'TAB', 'NEW_LINE',
     #comment
     'ONE_LINE_COMMENT', 'MULTIPLE_LINE_COMMENT',
+
     #id
     'ID'
 )
 #tokens
 
 #reserved words
-t_PUBLIC = r'public'
-t_PRIVATE = r'private'
-t_CONST = r'const'
-t_IF = r'if'
-t_ELSE = r'else'
-t_READ = r'Console\.Read'
-t_RETURN = r'return'
-t_VAR = r'var'
-t_WHILE = r'while'
-t_WRITE = r'Console\.Write'
+def t_PUBLIC(t): r'public'; return t
+def t_PRIVATE(t): r'private'; return t
+def t_STATIC(t): r'static'; return t
+def t_CONST(t): r'const'; return t
+def t_IF(t): r'if'; return t
+def t_ELSE(t): r'else'; return t
+def t_READ(t): r'Console\.Read'; return t
+def t_RETURN(t): r'return'; return t
+def t_VAR(t): r'var'; return t
+def t_WHILE(t): r'while'; return t
+def t_WRITE(t): r'Console\.Write'; return t
+def t_MAIN(t): r'Main'; return t
+
+#comment
+# IGNORE
+t_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
+t_MULTIPLE_LINE_COMMENT = r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/' # r'(/\*(.|\n)*?\*/)'
 
 #operators
 t_GT = r'>'
@@ -49,24 +57,26 @@ t_LET = r'<='
 t_AND = r'&&'
 t_OR = r'\|\|'
 t_NOT = r'!'
-t_EQUALS = r'=='
+t_IS_EQUAL = r'=='
 t_IS_NOT_EQUAL = r'!='
 t_ADD = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLICATION = r'\*'
-t_DIVISION = r'/'
-t_IS_EQUAL = r'\='
+t_DIVISION = r'/ '
+t_EQUALS = r'\='
+
 
 #data types
-t_INT = r'int'
-t_FLOAT = r'float'
-t_BOOL = r'bool'
-t_STRING = r'string'
+def t_INT(t): r'int'; return t
+def t_FLOAT(t): r'float'; return t
+def t_BOOL(t): r'bool'; return t
+def t_STRING(t): r'string'; return t
+def t_VOID(t): r'void'; return t
 
 #literals
 t_INT_LITERAL = r'[-]?[0-9]+'
 t_FLOAT_LITERAL = r'[-]?[\d]+\.[\d]+'
-t_BOOL_LITERAL = r'true|false'
+def t_BOOL_LITERAL(t): r'true|false'; return t
 t_STRING_LITERAL = r'\"([^\\\n]|(\\(.|\n)))*?\"|\'([^\\\n]|(\\(.|\n)))*?\'' #r'^[\'|\"]\w+[\'|\"]$'
 
 #punctuation
@@ -82,30 +92,116 @@ t_DOT = r'\.'
 t_DOUBLE_QUOTE = r'"'
 t_QUOTE = r"'"
 
+#id
+t_ID = r'[a-zA-Z]\w*'
 #whitespace
 # t_SPACE = r'\\s'
 # t_TAB = r'\\t'
 # t_NEW_LINE = r'\\n'
 
-#comment
-t_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
-t_MULTIPLE_LINE_COMMENT = r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/' # r'(/\*(.|\n)*?\*/)'
-
-#id
-t_ID = r'[a-zA-Z]\w*'
-
 # ignore
 t_ignore=' \t\r\n\f\v'
 
 
+
 def t_error(t):
     print("Lexer error: Illegal character '",t.value[0],"' at line",t.lineno)
-    # t.lexer.skip(1)
+    t.lexer.skip(1)
+
+
+def p_program(t):
+    '''program : STATIC VOID MAIN block'''
+    print('Program')
+
+def p_block(t):
+    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET'''
+    print('Block')
+
+def p_expression(t):
+    '''expression : while_expression
+                  | if_expression
+                  | arithmetic_expression
+                  | bool_expression
+                  | assign_expression'''
+    print('Expression')
+    print(t[1])
+
+
+def p_while_expression(t):
+    '''while_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
+    print('While')
+
+def p_if_expression(t):
+    '''if_expression : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+                     | IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block'''
+    print('if')
+
+def p_assign_expression(t):
+    '''assign_expression : INT ID EQUALS arithmetic_expression
+              | FLOAT ID EQUALS arithmetic_expression
+              | BOOL ID EQUALS bool_expression
+              | STRING ID EQUALS string_expression'''
+    print('assign')
+
+#start arithmetic_expressions
+def p_arithmetic_expression(t):
+    '''arithmetic_expression : term ADD arithmetic_expression
+                             | term MINUS arithmetic_expression
+                             | term '''
+    if len(t) < 3 : t[0] = t[1]
+    elif   t[2] == '+': t[0] = t[1] + t[3]
+    elif t[2] == '-': t[0] = t[1] - t[3]
+    print('arithmetic_expression')
+
+def p_multiplication(t):
+    '''term : number MULTIPLICATION term
+            | number DIVISION term
+            | number '''
+    if len(t) < 3 : t[0] = t[1]
+    elif  t[2] == '*': t[0] = t[1] * t[3]
+    elif t[2] == '/': t[0] = t[1] / t[3]
+    print('multiplication')
+
+def p_number(t):
+    '''number : INT_LITERAL
+              | FLOAT_LITERAL '''
+    t[0] = t[1]
+    print('number')
+#ends arithmetic_expressions
+
+#start bool_expression
+
+def p_bool_expression(t):
+    '''bool_expression : bool_expression AND BOOL_LITERAL
+                         | bool_expression OR BOOL_LITERAL
+                         | BOOL_LITERAL '''
+    print('bool_expression')
+
+def p_string_expression(t):
+    '''string_expression : QUOTE STRING_LITERAL QUOTE
+                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
+    print('string_expression')
+
+def p_condition(t):
+    '''condition : condition GT term
+                   | condition LT term
+                   | condition GET term
+                   | condition LET term
+                   | condition IS_EQUAL term
+                   | condition IS_NOT_EQUAL term
+                   | BOOL_LITERAL
+                   | term'''
+    print('condition')
+
+def p_error(t):
+    print("Syntax error at '%s'" % t.value)
 
 import ply.lex as lex
+import ply.yacc as yacc
+parser = yacc.yacc()
 lexer = lex.lex()
 
-if(len(sys.argv) > 1):
+if(len(sys.argv) < 2):
     while True:
         try:
             s = input('> ')
@@ -118,6 +214,8 @@ if(len(sys.argv) > 1):
                 print(tok)
             else:
                 break
+            par = parser.parse(s)
+
 
 else:
     file_input = fileinput.input()
