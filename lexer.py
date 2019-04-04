@@ -45,7 +45,7 @@ def t_WRITE(t): r'Console\.Write'; return t
 def t_MAIN(t): r'Main'; return t
 
 #comment
-# IGNORE
+# IGNORE 
 t_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
 t_MULTIPLE_LINE_COMMENT = r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/' # r'(/\*(.|\n)*?\*/)'
 
