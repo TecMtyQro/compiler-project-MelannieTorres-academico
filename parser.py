@@ -1,16 +1,17 @@
 import fileinput
 import sys
 #https://www.dabeaz.com/ply/PLYTalk.pdf
+#https://github.com/dabeaz/ply/blob/master/example/yply/ylex.py
 
 reserved = {
     'static' : 'STATIC',
     'const' : 'CONST',
     'if' : 'IF',
     'else' : 'ELSE',
-    'read' : 'READ',
     'return' : 'RETURN',
     'while': 'WHILE',
     'Main':'MAIN',
+    #datatypes
     'int':'INT',
     'float' : 'FLOAT',
     'bool': 'BOOL',
@@ -19,62 +20,32 @@ reserved = {
 }
 
 tokens = [
-    #comment
-    # 'ONE_LINE_COMMENT', #'MULTIPLE_LINE_COMMENT',
-    #reserved words
-    # 'PUBLIC', 'PRIVATE',
-    # 'STATIC',
-    # 'CONST','IF', 'ELSE','READ', 'RETURN',
-    # 'VAR',
-    # 'WHILE',
-    'WRITE',
-    # 'MAIN',
-    #operators
+    # I / O
+    'READ','WRITE',
+    # operators
     'EQUALS','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
     'AND', 'OR',
-    # 'NOT',
     'IS_EQUAL',
     'ADD','MINUS', 'MULTIPLICATION', 'DIVISION',
-    #data types
-    # 'INT', 'FLOAT', 'BOOL', 'STRING', 'VOID',
     #literals
     'INT_LITERAL', 'FLOAT_LITERAL', 'BOOL_LITERAL', 'STRING_LITERAL',
     #punctuation
-    'LEFT_PARENTHESIS', 'RIGHT_PARENTHESIS', 'LEFT_CURLY_BRACKET',
-    'RIGHT_CURLY_BRACKET',
-    # 'LEFT_SQUARE_BRACKET', 'RIGHT_SQUARE_BRACKET',
-    # 'COMMA',
+    'LEFT_PARENTHESIS', 'RIGHT_PARENTHESIS',
+    'LEFT_CURLY_BRACKET','RIGHT_CURLY_BRACKET',
     'SEMICOLON',
-    # 'DOT',
-    # 'DOUBLE_QUOTE', 'QUOTE',
-    #whitespace
-    # 'SPACE', 'TAB', 'NEW_LINE',
-
     #id
     'ID'
 ]+ list(reserved.values())
-#tokens
+# tokens
 
-#comment
-# IGNORE
-# t_ignore_ONE_LINE_COMMENT =  r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
+# comments
+# old one line comment regex  r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
 t_ignore_MULTIPLE_LINE_COMMENT = r'(/\*(.|\n)*?\*/)' #r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
 t_ignore_ONE_LINE_COMMENT = r'//.*'
 
-#reserved words
-# def t_PUBLIC(t): r'public'; return t
-# def t_PRIVATE(t): r'private'; return t
-# def t_STATIC(t): r'static'; return t
-# def t_CONST(t): r'const'; return t
-# def t_IF(t): r'if'; return t
-# def t_ELSE(t): r'else'; return t
+#read write
 def t_READ(t): r'Console\.Read\(\)'; return t
-# def t_RETURN(t): r'return'; return t
-# def t_VAR(t): r'var'; return t
-# def t_WHILE(t): r'while'; return t
 def t_WRITE(t): r'Console\.Write'; return t
-# def t_MAIN(t): r'Main'; return t
-
 
 #operators
 t_GT = r'>'
@@ -83,7 +54,6 @@ t_GET = r'>='
 t_LET = r'<='
 t_AND = r'&&'
 t_OR = r'\|\|'
-# t_NOT = r'!'
 t_IS_EQUAL = r'=='
 t_IS_NOT_EQUAL = r'!='
 t_ADD = r'\+'
@@ -91,14 +61,6 @@ t_MINUS = r'\-'
 t_MULTIPLICATION = r'\*'
 t_DIVISION = r'\/'
 t_EQUALS = r'\='
-
-
-#data types
-# def t_INT(t): r'int'; return t
-# def t_FLOAT(t): r'float'; return t
-# def t_BOOL(t): r'bool'; return t
-# def t_STRING(t): r'string'; return t
-# def t_VOID(t): r'void'; return t
 
 #literals
 t_INT_LITERAL = r'[-]?[0-9]+'
@@ -111,27 +73,12 @@ t_LEFT_PARENTHESIS = r'\('
 t_RIGHT_PARENTHESIS = r'\)'
 t_LEFT_CURLY_BRACKET = r'{'
 t_RIGHT_CURLY_BRACKET = r'}'
-# t_LEFT_SQUARE_BRACKET = r'\['
-# t_RIGHT_SQUARE_BRACKET = r'\]'
-# t_COMMA = r','
 t_SEMICOLON = r';'
-# t_DOT = r'\.'
-# t_DOUBLE_QUOTE = r'"'
-# t_QUOTE = r"'"
-
-#id
-# t_ID = r'[a-zA-Z]\w*'
-
 
 def t_ID(t):
      r'[a-zA-Z_][a-zA-Z_0-9]*'
      t.type = reserved.get(t.value,'ID')    # Check for reserved words
      return t
-
-#whitespace
-# t_SPACE = r'\\s'
-# t_TAB = r'\\t'
-# t_NEW_LINE = r'\\n'
 
 # ignore
 t_ignore=' \t\r\f\v'
@@ -139,8 +86,6 @@ t_ignore=' \t\r\f\v'
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
-
-
 
 def t_error(t):
     print("Lexer error: Illegal character '",t.value[0],"' at line",t.lineno)
@@ -154,7 +99,6 @@ def p_program(t):
 
 def p_block(t):
     '''block :  LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET'''
-    # print('Block')
 
 def p_expressions(t):
     '''expressions : expression
@@ -169,10 +113,8 @@ def p_expression(t):
                   | if_expression
                   | while_expression'''
 
-
 def p_while_expression(t):
     '''while_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
-    # print('While')
 
 def p_if_expression(t):
     '''if_expression : start_if
@@ -187,11 +129,9 @@ def p_else_expression(t):
 
 def p_read_expression(t):
     '''read_expression : READ'''
-    # print('read')
 
 def p_write_expression(t):
     '''write_expression : WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS'''
-    # print('write')
 
 def p_arithmetic_datatypes(t):
     '''arithmetic_datatypes : INT
@@ -208,7 +148,6 @@ def p_assign_expression(t):
                          | aux_assign_expression
                          | declaration_expression
                          | aux2_assign_expression'''
-    # print('assign')
 
 def p_aux_assign_expression(t):
     '''aux_assign_expression : arithmetic_datatypes ID EQUALS arithmetic_expression
@@ -220,51 +159,38 @@ def p_aux2_assign_expression(t):
               | ID EQUALS bool_expression
               | ID EQUALS string_expression'''
 
-
 def p_declaration_expression(t):
     '''declaration_expression : arithmetic_datatypes ID
               | bool_datatypes ID
               | string_datatypes ID'''
-
 
 precedence = (
      ('left', 'ADD', 'MINUS'),
      ('left', 'MULTIPLICATION', 'DIVISION'),
  )
 
-# #start arithmetic_expressions
 def p_arithmetic_expression(t):
     '''arithmetic_expression : arithmetic_literals ADD arithmetic_expression
                              | arithmetic_literals MINUS arithmetic_expression
                              | arithmetic_literals MULTIPLICATION arithmetic_expression
                              | arithmetic_literals DIVISION arithmetic_expression
                              | arithmetic_literals '''
-    # print('arithmetic_expression')
-
-
 
 def p_arithmetic_literals(t):
     '''arithmetic_literals : INT_LITERAL
                            | FLOAT_LITERAL
                            | ID'''
-    # print('arithmetic_literals')
-
-#ends arithmetic_expressions
 
 def p_string_literals(t):
     '''string_literals : STRING_LITERAL
                        | ID'''
-# #start bool_expression
-#
 def p_bool_expression(t):
     '''bool_expression : BOOL_LITERAL AND bool_expression
                          | BOOL_LITERAL OR bool_expression
-                         | BOOL_LITERAL '''
-    # print('bool_expression')
+                         | BOOL_LITERAL'''
 
 def p_string_expression(t):
     '''string_expression : STRING_LITERAL'''
-    # print('string_expression')
 
 def p_condition(t):
     '''condition : arithmetic_expression GT arithmetic_expression
@@ -275,8 +201,6 @@ def p_condition(t):
                    | arithmetic_expression IS_NOT_EQUAL arithmetic_expression
                    | BOOL_LITERAL IS_EQUAL BOOL_LITERAL
                    | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'''
-    # print('condition')
-
 
 # https://stackoverflow.com/questions/24627928/ply-lex-yacc-errors-handling
 def p_error(t):
@@ -296,14 +220,12 @@ parser = yacc.yacc(method="SLR")
 lexer = lex.lex()
 
 def _process(s):
-    parser.parse(s)
-    # lex.input(s)
-    # while True:
-    #     tok = lex.token()
-    #     print(tok)
-    #     if not tok:
-    #         break
-    #     par = parser.parse(s)
+    lex.input(s)
+    while True:
+        tok = lex.token()
+        if not tok:
+            break
+        par = parser.parse(s)
 
 if(len(sys.argv) < 2):
     aux_s = ''
@@ -325,14 +247,3 @@ else:
     Errors = 0
     file = open(sys.argv[1], "r")
     _process(file.read())
-
-    # aux_s = ''
-    # file_input = fileinput.input()
-    # for s in file_input:
-    #     if "/*" in s or aux_s:
-    #         aux_s = aux_s +s
-    #         if "*/" in s:
-    #             _process(aux_s)
-    #             aux_s=''
-    #     else:
-    #         _process(s)
