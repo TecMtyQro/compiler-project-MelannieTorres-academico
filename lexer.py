@@ -7,7 +7,8 @@ tokens = (
     # 'PUBLIC', 'PRIVATE',
     'STATIC',
     'CONST','IF', 'ELSE','READ', 'RETURN',
-    'VAR','WHILE','WRITE', 'MAIN',
+    # 'VAR',
+    'WHILE','WRITE', 'MAIN',
     #operatoris
     'EQUALS','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
     'AND', 'OR',
@@ -25,7 +26,7 @@ tokens = (
     # 'COMMA',
     'SEMICOLON',
     # 'DOT',
-    'DOUBLE_QUOTE', 'QUOTE',
+    # 'DOUBLE_QUOTE', 'QUOTE',
     #whitespace
     # 'SPACE', 'TAB', 'NEW_LINE',
     #comment
@@ -45,7 +46,7 @@ def t_IF(t): r'if'; return t
 def t_ELSE(t): r'else'; return t
 def t_READ(t): r'Console\.Read\(\)'; return t
 def t_RETURN(t): r'return'; return t
-def t_VAR(t): r'var'; return t
+# def t_VAR(t): r'var'; return t
 def t_WHILE(t): r'while'; return t
 def t_WRITE(t): r'Console\.Write'; return t
 def t_MAIN(t): r'Main'; return t
@@ -95,8 +96,8 @@ t_RIGHT_CURLY_BRACKET = r'}'
 # t_COMMA = r','
 t_SEMICOLON = r';'
 # t_DOT = r'\.'
-t_DOUBLE_QUOTE = r'"'
-t_QUOTE = r"'"
+# t_DOUBLE_QUOTE = r'"'
+# t_QUOTE = r"'"
 
 #id
 t_ID = r'[a-zA-Z]\w*'
@@ -130,8 +131,8 @@ def p_expressions(t):
 def p_expression(t):
     '''expression : read_expression SEMICOLON
                   | write_expression SEMICOLON
-                  | RETURN INT_LITERAL SEMICOLON
-                  | RETURN BOOL_LITERAL SEMICOLON
+                  | RETURN arithmetic_expression SEMICOLON
+                  | RETURN bool_expression SEMICOLON
                   | assign_expression SEMICOLON
                   | if_expression
                   | while_expression'''
@@ -212,7 +213,8 @@ def p_arithmetic_expression(t):
 
 def p_arithmetic_literals(t):
     '''arithmetic_literals : INT_LITERAL
-              | FLOAT_LITERAL '''
+                           | FLOAT_LITERAL
+                           | ID'''
     # print('arithmetic_literals')
 
 #ends arithmetic_expressions
@@ -229,8 +231,7 @@ def p_bool_expression(t):
     # print('bool_expression')
 
 def p_string_expression(t):
-    '''string_expression : QUOTE STRING_LITERAL QUOTE
-                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
+    '''string_expression : STRING_LITERAL'''
     # print('string_expression')
 
 def p_condition(t):
@@ -252,6 +253,14 @@ import ply.yacc as yacc
 parser = yacc.yacc(method="SLR")
 lexer = lex.lex()
 
+def _process(s):
+    lex.input(s)
+    while True:
+        tok = lex.token()
+        if not tok:
+            break
+        par = parser.parse(s)
+
 if(len(sys.argv) < 2):
     aux_s = ''
     while True:
@@ -262,24 +271,10 @@ if(len(sys.argv) < 2):
         if "/*" in s or aux_s:
             aux_s = aux_s +s
             if "*/" in s:
-                lex.input(aux_s)
-                while True:
-                    tok = lex.token()
-                    if tok:
-                        print(tok)
-                    else:
-                        break
-                    par = parser.parse(aux_s)
+                _process(aux_s)
                 aux_s=''
         else:
-            lex.input(s)
-            while True:
-                tok = lex.token()
-                if tok:
-                    print(tok)
-                else:
-                    break
-                par = parser.parse(s)
+            _process(s)
 
 
 else:
@@ -289,22 +284,7 @@ else:
         if "/*" in s or aux_s:
             aux_s = aux_s +s
             if "*/" in s:
-                lex.input(aux_s)
-                while True:
-                    tok = lex.token()
-                    if tok:
-                        print(tok)
-                    else:
-                        break
-                    par = parser.parse(aux_s)
+                _process(aux_s)
                 aux_s=''
-
         else:
-            lex.input(s)
-            while True:
-                tok = lex.token()
-                if tok:
-                    print(tok)
-                else:
-                    break
-                par = parser.parse(s)
+            _process(s)
