@@ -116,3 +116,11 @@ static void Main{if(3<1){return 1;}}
 
 //test 15
 static void Main{if(1>2){if(3<1){return 1;}} else if (4>2) {return 2; } else{ return 3;}}
+
+
+// test 16
+static void Main{int i = 1; i = 2; const int a = 2;}
+
+
+// test 17
+static void Main{const int a = 2;}

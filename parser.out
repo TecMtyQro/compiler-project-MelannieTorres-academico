@@ -2,118 +2,138 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    BOOL
-    CONST
-    DOUBLE_QUOTE
-    EQUALS
-    FLOAT
-    INT
-    QUOTE
-    STRING
     VAR
 
 Grammar
 
 Rule 0     S' -> program
 Rule 1     program -> STATIC VOID MAIN block
-Rule 2     block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+Rule 2     block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
 Rule 3     expressions -> expression
 Rule 4     expressions -> expression expressions
 Rule 5     expression -> read_expression SEMICOLON
 Rule 6     expression -> write_expression SEMICOLON
 Rule 7     expression -> RETURN INT_LITERAL SEMICOLON
 Rule 8     expression -> RETURN BOOL_LITERAL SEMICOLON
-Rule 9     expression -> if_expression
-Rule 10    expression -> while_expression
-Rule 11    while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
-Rule 12    if_expression -> start_if
-Rule 13    if_expression -> start_if else_expression
-Rule 14    start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
-Rule 15    else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
-Rule 16    else_expression -> ELSE block
-Rule 17    read_expression -> READ
-Rule 18    write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
-Rule 19    arithmetic_expression -> arithmetic_literals ADD arithmetic_expression
-Rule 20    arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression
-Rule 21    arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression
-Rule 22    arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression
-Rule 23    arithmetic_expression -> arithmetic_literals
-Rule 24    arithmetic_literals -> INT_LITERAL
-Rule 25    arithmetic_literals -> FLOAT_LITERAL
-Rule 26    string_literals -> STRING_LITERAL
-Rule 27    string_literals -> ID
-Rule 28    bool_expression -> BOOL_LITERAL AND bool_expression
-Rule 29    bool_expression -> BOOL_LITERAL OR bool_expression
-Rule 30    bool_expression -> BOOL_LITERAL
-Rule 31    condition -> arithmetic_expression GT arithmetic_expression
-Rule 32    condition -> arithmetic_expression LT arithmetic_expression
-Rule 33    condition -> arithmetic_expression GET arithmetic_expression
-Rule 34    condition -> arithmetic_expression LET arithmetic_expression
-Rule 35    condition -> arithmetic_expression IS_EQUAL arithmetic_expression
-Rule 36    condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression
-Rule 37    condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL
-Rule 38    condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
+Rule 9     expression -> assign_expression SEMICOLON
+Rule 10    expression -> if_expression
+Rule 11    expression -> while_expression
+Rule 12    while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+Rule 13    if_expression -> start_if
+Rule 14    if_expression -> start_if else_expression
+Rule 15    start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+Rule 16    else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
+Rule 17    else_expression -> ELSE block
+Rule 18    read_expression -> READ
+Rule 19    write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
+Rule 20    arithmetic_datatypes -> INT
+Rule 21    arithmetic_datatypes -> FLOAT
+Rule 22    bool_datatypes -> BOOL
+Rule 23    string_datatypes -> STRING
+Rule 24    assign_expression -> CONST aux_assign_expression
+Rule 25    assign_expression -> aux_assign_expression
+Rule 26    assign_expression -> declaration_expression
+Rule 27    assign_expression -> aux2_assign_expression
+Rule 28    aux_assign_expression -> arithmetic_datatypes ID EQUALS arithmetic_expression
+Rule 29    aux_assign_expression -> bool_datatypes ID EQUALS bool_expression
+Rule 30    aux_assign_expression -> string_datatypes ID EQUALS string_expression
+Rule 31    aux2_assign_expression -> ID EQUALS arithmetic_expression
+Rule 32    aux2_assign_expression -> ID EQUALS bool_expression
+Rule 33    aux2_assign_expression -> ID EQUALS string_expression
+Rule 34    declaration_expression -> arithmetic_datatypes ID
+Rule 35    declaration_expression -> bool_datatypes ID
+Rule 36    declaration_expression -> string_datatypes ID
+Rule 37    arithmetic_expression -> arithmetic_literals ADD arithmetic_expression
+Rule 38    arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression
+Rule 39    arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression
+Rule 40    arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression
+Rule 41    arithmetic_expression -> arithmetic_literals
+Rule 42    arithmetic_literals -> INT_LITERAL
+Rule 43    arithmetic_literals -> FLOAT_LITERAL
+Rule 44    string_literals -> STRING_LITERAL
+Rule 45    string_literals -> ID
+Rule 46    bool_expression -> BOOL_LITERAL AND bool_expression
+Rule 47    bool_expression -> BOOL_LITERAL OR bool_expression
+Rule 48    bool_expression -> BOOL_LITERAL
+Rule 49    string_expression -> QUOTE STRING_LITERAL QUOTE
+Rule 50    string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE
+Rule 51    condition -> arithmetic_expression GT arithmetic_expression
+Rule 52    condition -> arithmetic_expression LT arithmetic_expression
+Rule 53    condition -> arithmetic_expression GET arithmetic_expression
+Rule 54    condition -> arithmetic_expression LET arithmetic_expression
+Rule 55    condition -> arithmetic_expression IS_EQUAL arithmetic_expression
+Rule 56    condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression
+Rule 57    condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL
+Rule 58    condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
 
 Terminals, with rules where they appear
 
-ADD                  : 19
-AND                  : 28
-BOOL                 : 
-BOOL_LITERAL         : 8 28 29 30 37 37 38 38
-CONST                : 
-DIVISION             : 22
-DOUBLE_QUOTE         : 
-ELSE                 : 15 16
-EQUALS               : 
-FLOAT                : 
-FLOAT_LITERAL        : 25
-GET                  : 33
-GT                   : 31
-ID                   : 27
-IF                   : 14 15
-INT                  : 
-INT_LITERAL          : 7 24
-IS_EQUAL             : 35 37
-IS_NOT_EQUAL         : 36 38
+ADD                  : 37
+AND                  : 46
+BOOL                 : 22
+BOOL_LITERAL         : 8 46 47 48 57 57 58 58
+CONST                : 24
+DIVISION             : 40
+DOUBLE_QUOTE         : 50 50
+ELSE                 : 16 17
+EQUALS               : 28 29 30 31 32 33
+FLOAT                : 21
+FLOAT_LITERAL        : 43
+GET                  : 53
+GT                   : 51
+ID                   : 28 29 30 31 32 33 34 35 36 45
+IF                   : 15 16
+INT                  : 20
+INT_LITERAL          : 7 42
+IS_EQUAL             : 55 57
+IS_NOT_EQUAL         : 56 58
 LEFT_CURLY_BRACKET   : 2
-LEFT_PARENTHESIS     : 11 14 15 18
-LET                  : 34
-LT                   : 32
+LEFT_PARENTHESIS     : 12 15 16 19
+LET                  : 54
+LT                   : 52
 MAIN                 : 1
-MINUS                : 20
-MULTIPLICATION       : 21
-OR                   : 29
-QUOTE                : 
-READ                 : 17
+MINUS                : 38
+MULTIPLICATION       : 39
+OR                   : 47
+QUOTE                : 49 49
+READ                 : 18
 RETURN               : 7 8
 RIGHT_CURLY_BRACKET  : 2
-RIGHT_PARENTHESIS    : 11 14 15 18
-SEMICOLON            : 5 6 7 8
+RIGHT_PARENTHESIS    : 12 15 16 19
+SEMICOLON            : 5 6 7 8 9
 STATIC               : 1
-STRING               : 
-STRING_LITERAL       : 26
+STRING               : 23
+STRING_LITERAL       : 44 49 50
 VAR                  : 
 VOID                 : 1
-WHILE                : 11
-WRITE                : 18
+WHILE                : 12
+WRITE                : 19
 error                : 
 
 Nonterminals, with rules where they appear
 
-arithmetic_expression : 19 20 21 22 31 31 32 32 33 33 34 34 35 35 36 36
-arithmetic_literals  : 19 20 21 22 23
-block                : 1 11 14 15 16
-bool_expression      : 28 29
-condition            : 11 14 15
-else_expression      : 13 15
-expression           : 2 3 4
-expressions          : 4
-if_expression        : 9
+arithmetic_datatypes : 28 34
+arithmetic_expression : 28 31 37 38 39 40 51 51 52 52 53 53 54 54 55 55 56 56
+arithmetic_literals  : 37 38 39 40 41
+assign_expression    : 9
+aux2_assign_expression : 27
+aux_assign_expression : 24 25
+block                : 1 12 15 16 17
+bool_datatypes       : 29 35
+bool_expression      : 29 32 46 47
+condition            : 12 15 16
+declaration_expression : 26
+else_expression      : 14 16
+expression           : 3 4
+expressions          : 2 4
+if_expression        : 10
 program              : 0
 read_expression      : 5
-start_if             : 12 13
-string_literals      : 18
-while_expression     : 10
+start_if             : 13 14
+string_datatypes     : 30 36
+string_expression    : 30 33
+string_literals      : 19
+while_expression     : 11
 write_expression     : 6
 
 Parsing method: SLR
@@ -150,7 +170,7 @@ state 3
 state 4
 
     (1) program -> STATIC VOID MAIN . block
-    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+    (2) block -> . LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
 
     LEFT_CURLY_BRACKET shift and go to state 6
 
@@ -165,147 +185,387 @@ state 5
 
 state 6
 
-    (2) block -> LEFT_CURLY_BRACKET . expression RIGHT_CURLY_BRACKET
+    (2) block -> LEFT_CURLY_BRACKET . expressions RIGHT_CURLY_BRACKET
+    (3) expressions -> . expression
+    (4) expressions -> . expression expressions
     (5) expression -> . read_expression SEMICOLON
     (6) expression -> . write_expression SEMICOLON
     (7) expression -> . RETURN INT_LITERAL SEMICOLON
     (8) expression -> . RETURN BOOL_LITERAL SEMICOLON
-    (9) expression -> . if_expression
-    (10) expression -> . while_expression
-    (17) read_expression -> . READ
-    (18) write_expression -> . WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
-    (12) if_expression -> . start_if
-    (13) if_expression -> . start_if else_expression
-    (11) while_expression -> . WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
-    (14) start_if -> . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (9) expression -> . assign_expression SEMICOLON
+    (10) expression -> . if_expression
+    (11) expression -> . while_expression
+    (18) read_expression -> . READ
+    (19) write_expression -> . WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
+    (24) assign_expression -> . CONST aux_assign_expression
+    (25) assign_expression -> . aux_assign_expression
+    (26) assign_expression -> . declaration_expression
+    (27) assign_expression -> . aux2_assign_expression
+    (13) if_expression -> . start_if
+    (14) if_expression -> . start_if else_expression
+    (12) while_expression -> . WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (28) aux_assign_expression -> . arithmetic_datatypes ID EQUALS arithmetic_expression
+    (29) aux_assign_expression -> . bool_datatypes ID EQUALS bool_expression
+    (30) aux_assign_expression -> . string_datatypes ID EQUALS string_expression
+    (34) declaration_expression -> . arithmetic_datatypes ID
+    (35) declaration_expression -> . bool_datatypes ID
+    (36) declaration_expression -> . string_datatypes ID
+    (31) aux2_assign_expression -> . ID EQUALS arithmetic_expression
+    (32) aux2_assign_expression -> . ID EQUALS bool_expression
+    (33) aux2_assign_expression -> . ID EQUALS string_expression
+    (15) start_if -> . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (20) arithmetic_datatypes -> . INT
+    (21) arithmetic_datatypes -> . FLOAT
+    (22) bool_datatypes -> . BOOL
+    (23) string_datatypes -> . STRING
 
-    RETURN          shift and go to state 10
-    READ            shift and go to state 13
-    WRITE           shift and go to state 14
-    WHILE           shift and go to state 16
-    IF              shift and go to state 17
+    RETURN          shift and go to state 11
+    READ            shift and go to state 15
+    WRITE           shift and go to state 16
+    CONST           shift and go to state 17
+    WHILE           shift and go to state 22
+    ID              shift and go to state 24
+    IF              shift and go to state 27
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 29
+    BOOL            shift and go to state 30
+    STRING          shift and go to state 31
 
-    expression                     shift and go to state 7
-    read_expression                shift and go to state 8
-    write_expression               shift and go to state 9
-    if_expression                  shift and go to state 11
-    while_expression               shift and go to state 12
-    start_if                       shift and go to state 15
+    expressions                    shift and go to state 7
+    expression                     shift and go to state 8
+    read_expression                shift and go to state 9
+    write_expression               shift and go to state 10
+    assign_expression              shift and go to state 12
+    if_expression                  shift and go to state 13
+    while_expression               shift and go to state 14
+    aux_assign_expression          shift and go to state 18
+    declaration_expression         shift and go to state 19
+    aux2_assign_expression         shift and go to state 20
+    start_if                       shift and go to state 21
+    arithmetic_datatypes           shift and go to state 23
+    bool_datatypes                 shift and go to state 25
+    string_datatypes               shift and go to state 26
 
 state 7
 
-    (2) block -> LEFT_CURLY_BRACKET expression . RIGHT_CURLY_BRACKET
+    (2) block -> LEFT_CURLY_BRACKET expressions . RIGHT_CURLY_BRACKET
 
-    RIGHT_CURLY_BRACKET shift and go to state 18
+    RIGHT_CURLY_BRACKET shift and go to state 32
 
 
 state 8
 
-    (5) expression -> read_expression . SEMICOLON
+    (3) expressions -> expression .
+    (4) expressions -> expression . expressions
+    (3) expressions -> . expression
+    (4) expressions -> . expression expressions
+    (5) expression -> . read_expression SEMICOLON
+    (6) expression -> . write_expression SEMICOLON
+    (7) expression -> . RETURN INT_LITERAL SEMICOLON
+    (8) expression -> . RETURN BOOL_LITERAL SEMICOLON
+    (9) expression -> . assign_expression SEMICOLON
+    (10) expression -> . if_expression
+    (11) expression -> . while_expression
+    (18) read_expression -> . READ
+    (19) write_expression -> . WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
+    (24) assign_expression -> . CONST aux_assign_expression
+    (25) assign_expression -> . aux_assign_expression
+    (26) assign_expression -> . declaration_expression
+    (27) assign_expression -> . aux2_assign_expression
+    (13) if_expression -> . start_if
+    (14) if_expression -> . start_if else_expression
+    (12) while_expression -> . WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (28) aux_assign_expression -> . arithmetic_datatypes ID EQUALS arithmetic_expression
+    (29) aux_assign_expression -> . bool_datatypes ID EQUALS bool_expression
+    (30) aux_assign_expression -> . string_datatypes ID EQUALS string_expression
+    (34) declaration_expression -> . arithmetic_datatypes ID
+    (35) declaration_expression -> . bool_datatypes ID
+    (36) declaration_expression -> . string_datatypes ID
+    (31) aux2_assign_expression -> . ID EQUALS arithmetic_expression
+    (32) aux2_assign_expression -> . ID EQUALS bool_expression
+    (33) aux2_assign_expression -> . ID EQUALS string_expression
+    (15) start_if -> . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (20) arithmetic_datatypes -> . INT
+    (21) arithmetic_datatypes -> . FLOAT
+    (22) bool_datatypes -> . BOOL
+    (23) string_datatypes -> . STRING
 
-    SEMICOLON       shift and go to state 19
+    RIGHT_CURLY_BRACKET reduce using rule 3 (expressions -> expression .)
+    RETURN          shift and go to state 11
+    READ            shift and go to state 15
+    WRITE           shift and go to state 16
+    CONST           shift and go to state 17
+    WHILE           shift and go to state 22
+    ID              shift and go to state 24
+    IF              shift and go to state 27
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 29
+    BOOL            shift and go to state 30
+    STRING          shift and go to state 31
 
+    expression                     shift and go to state 8
+    expressions                    shift and go to state 33
+    read_expression                shift and go to state 9
+    write_expression               shift and go to state 10
+    assign_expression              shift and go to state 12
+    if_expression                  shift and go to state 13
+    while_expression               shift and go to state 14
+    aux_assign_expression          shift and go to state 18
+    declaration_expression         shift and go to state 19
+    aux2_assign_expression         shift and go to state 20
+    start_if                       shift and go to state 21
+    arithmetic_datatypes           shift and go to state 23
+    bool_datatypes                 shift and go to state 25
+    string_datatypes               shift and go to state 26
 
 state 9
 
-    (6) expression -> write_expression . SEMICOLON
+    (5) expression -> read_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 20
+    SEMICOLON       shift and go to state 34
 
 
 state 10
 
-    (7) expression -> RETURN . INT_LITERAL SEMICOLON
-    (8) expression -> RETURN . BOOL_LITERAL SEMICOLON
+    (6) expression -> write_expression . SEMICOLON
 
-    INT_LITERAL     shift and go to state 21
-    BOOL_LITERAL    shift and go to state 22
+    SEMICOLON       shift and go to state 35
 
 
 state 11
 
-    (9) expression -> if_expression .
+    (7) expression -> RETURN . INT_LITERAL SEMICOLON
+    (8) expression -> RETURN . BOOL_LITERAL SEMICOLON
 
-    RIGHT_CURLY_BRACKET reduce using rule 9 (expression -> if_expression .)
-    RETURN          reduce using rule 9 (expression -> if_expression .)
-    READ            reduce using rule 9 (expression -> if_expression .)
-    WRITE           reduce using rule 9 (expression -> if_expression .)
-    WHILE           reduce using rule 9 (expression -> if_expression .)
-    IF              reduce using rule 9 (expression -> if_expression .)
+    INT_LITERAL     shift and go to state 36
+    BOOL_LITERAL    shift and go to state 37
 
 
 state 12
 
-    (10) expression -> while_expression .
+    (9) expression -> assign_expression . SEMICOLON
 
-    RIGHT_CURLY_BRACKET reduce using rule 10 (expression -> while_expression .)
-    RETURN          reduce using rule 10 (expression -> while_expression .)
-    READ            reduce using rule 10 (expression -> while_expression .)
-    WRITE           reduce using rule 10 (expression -> while_expression .)
-    WHILE           reduce using rule 10 (expression -> while_expression .)
-    IF              reduce using rule 10 (expression -> while_expression .)
+    SEMICOLON       shift and go to state 38
 
 
 state 13
 
-    (17) read_expression -> READ .
+    (10) expression -> if_expression .
 
-    SEMICOLON       reduce using rule 17 (read_expression -> READ .)
+    RIGHT_CURLY_BRACKET reduce using rule 10 (expression -> if_expression .)
+    RETURN          reduce using rule 10 (expression -> if_expression .)
+    READ            reduce using rule 10 (expression -> if_expression .)
+    WRITE           reduce using rule 10 (expression -> if_expression .)
+    CONST           reduce using rule 10 (expression -> if_expression .)
+    WHILE           reduce using rule 10 (expression -> if_expression .)
+    INT             reduce using rule 10 (expression -> if_expression .)
+    FLOAT           reduce using rule 10 (expression -> if_expression .)
+    BOOL            reduce using rule 10 (expression -> if_expression .)
+    STRING          reduce using rule 10 (expression -> if_expression .)
+    ID              reduce using rule 10 (expression -> if_expression .)
+    IF              reduce using rule 10 (expression -> if_expression .)
 
 
 state 14
 
-    (18) write_expression -> WRITE . LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
+    (11) expression -> while_expression .
 
-    LEFT_PARENTHESIS shift and go to state 23
+    RIGHT_CURLY_BRACKET reduce using rule 11 (expression -> while_expression .)
+    RETURN          reduce using rule 11 (expression -> while_expression .)
+    READ            reduce using rule 11 (expression -> while_expression .)
+    WRITE           reduce using rule 11 (expression -> while_expression .)
+    CONST           reduce using rule 11 (expression -> while_expression .)
+    WHILE           reduce using rule 11 (expression -> while_expression .)
+    INT             reduce using rule 11 (expression -> while_expression .)
+    FLOAT           reduce using rule 11 (expression -> while_expression .)
+    BOOL            reduce using rule 11 (expression -> while_expression .)
+    STRING          reduce using rule 11 (expression -> while_expression .)
+    ID              reduce using rule 11 (expression -> while_expression .)
+    IF              reduce using rule 11 (expression -> while_expression .)
 
 
 state 15
 
-    (12) if_expression -> start_if .
-    (13) if_expression -> start_if . else_expression
-    (15) else_expression -> . ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
-    (16) else_expression -> . ELSE block
+    (18) read_expression -> READ .
 
-    RIGHT_CURLY_BRACKET reduce using rule 12 (if_expression -> start_if .)
-    RETURN          reduce using rule 12 (if_expression -> start_if .)
-    READ            reduce using rule 12 (if_expression -> start_if .)
-    WRITE           reduce using rule 12 (if_expression -> start_if .)
-    WHILE           reduce using rule 12 (if_expression -> start_if .)
-    IF              reduce using rule 12 (if_expression -> start_if .)
-    ELSE            shift and go to state 25
+    SEMICOLON       reduce using rule 18 (read_expression -> READ .)
 
-    else_expression                shift and go to state 24
 
 state 16
 
-    (11) while_expression -> WHILE . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (19) write_expression -> WRITE . LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS
 
-    LEFT_PARENTHESIS shift and go to state 26
+    LEFT_PARENTHESIS shift and go to state 39
 
 
 state 17
 
-    (14) start_if -> IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+    (24) assign_expression -> CONST . aux_assign_expression
+    (28) aux_assign_expression -> . arithmetic_datatypes ID EQUALS arithmetic_expression
+    (29) aux_assign_expression -> . bool_datatypes ID EQUALS bool_expression
+    (30) aux_assign_expression -> . string_datatypes ID EQUALS string_expression
+    (20) arithmetic_datatypes -> . INT
+    (21) arithmetic_datatypes -> . FLOAT
+    (22) bool_datatypes -> . BOOL
+    (23) string_datatypes -> . STRING
 
-    LEFT_PARENTHESIS shift and go to state 27
+    INT             shift and go to state 28
+    FLOAT           shift and go to state 29
+    BOOL            shift and go to state 30
+    STRING          shift and go to state 31
 
+    aux_assign_expression          shift and go to state 40
+    arithmetic_datatypes           shift and go to state 41
+    bool_datatypes                 shift and go to state 42
+    string_datatypes               shift and go to state 43
 
 state 18
 
-    (2) block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .
+    (25) assign_expression -> aux_assign_expression .
 
-    $end            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    RIGHT_CURLY_BRACKET reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    RETURN          reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    READ            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    WRITE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    WHILE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    IF              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
-    ELSE            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET .)
+    SEMICOLON       reduce using rule 25 (assign_expression -> aux_assign_expression .)
 
 
 state 19
+
+    (26) assign_expression -> declaration_expression .
+
+    SEMICOLON       reduce using rule 26 (assign_expression -> declaration_expression .)
+
+
+state 20
+
+    (27) assign_expression -> aux2_assign_expression .
+
+    SEMICOLON       reduce using rule 27 (assign_expression -> aux2_assign_expression .)
+
+
+state 21
+
+    (13) if_expression -> start_if .
+    (14) if_expression -> start_if . else_expression
+    (16) else_expression -> . ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
+    (17) else_expression -> . ELSE block
+
+    RIGHT_CURLY_BRACKET reduce using rule 13 (if_expression -> start_if .)
+    RETURN          reduce using rule 13 (if_expression -> start_if .)
+    READ            reduce using rule 13 (if_expression -> start_if .)
+    WRITE           reduce using rule 13 (if_expression -> start_if .)
+    CONST           reduce using rule 13 (if_expression -> start_if .)
+    WHILE           reduce using rule 13 (if_expression -> start_if .)
+    INT             reduce using rule 13 (if_expression -> start_if .)
+    FLOAT           reduce using rule 13 (if_expression -> start_if .)
+    BOOL            reduce using rule 13 (if_expression -> start_if .)
+    STRING          reduce using rule 13 (if_expression -> start_if .)
+    ID              reduce using rule 13 (if_expression -> start_if .)
+    IF              reduce using rule 13 (if_expression -> start_if .)
+    ELSE            shift and go to state 45
+
+    else_expression                shift and go to state 44
+
+state 22
+
+    (12) while_expression -> WHILE . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+
+    LEFT_PARENTHESIS shift and go to state 46
+
+
+state 23
+
+    (28) aux_assign_expression -> arithmetic_datatypes . ID EQUALS arithmetic_expression
+    (34) declaration_expression -> arithmetic_datatypes . ID
+
+    ID              shift and go to state 47
+
+
+state 24
+
+    (31) aux2_assign_expression -> ID . EQUALS arithmetic_expression
+    (32) aux2_assign_expression -> ID . EQUALS bool_expression
+    (33) aux2_assign_expression -> ID . EQUALS string_expression
+
+    EQUALS          shift and go to state 48
+
+
+state 25
+
+    (29) aux_assign_expression -> bool_datatypes . ID EQUALS bool_expression
+    (35) declaration_expression -> bool_datatypes . ID
+
+    ID              shift and go to state 49
+
+
+state 26
+
+    (30) aux_assign_expression -> string_datatypes . ID EQUALS string_expression
+    (36) declaration_expression -> string_datatypes . ID
+
+    ID              shift and go to state 50
+
+
+state 27
+
+    (15) start_if -> IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
+
+    LEFT_PARENTHESIS shift and go to state 51
+
+
+state 28
+
+    (20) arithmetic_datatypes -> INT .
+
+    ID              reduce using rule 20 (arithmetic_datatypes -> INT .)
+
+
+state 29
+
+    (21) arithmetic_datatypes -> FLOAT .
+
+    ID              reduce using rule 21 (arithmetic_datatypes -> FLOAT .)
+
+
+state 30
+
+    (22) bool_datatypes -> BOOL .
+
+    ID              reduce using rule 22 (bool_datatypes -> BOOL .)
+
+
+state 31
+
+    (23) string_datatypes -> STRING .
+
+    ID              reduce using rule 23 (string_datatypes -> STRING .)
+
+
+state 32
+
+    (2) block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .
+
+    $end            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    RIGHT_CURLY_BRACKET reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    RETURN          reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    READ            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    WRITE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    CONST           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    WHILE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    INT             reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    FLOAT           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    BOOL            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    STRING          reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    ID              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    IF              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    ELSE            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+
+
+state 33
+
+    (4) expressions -> expression expressions .
+
+    RIGHT_CURLY_BRACKET reduce using rule 4 (expressions -> expression expressions .)
+
+
+state 34
 
     (5) expression -> read_expression SEMICOLON .
 
@@ -313,11 +573,17 @@ state 19
     RETURN          reduce using rule 5 (expression -> read_expression SEMICOLON .)
     READ            reduce using rule 5 (expression -> read_expression SEMICOLON .)
     WRITE           reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    CONST           reduce using rule 5 (expression -> read_expression SEMICOLON .)
     WHILE           reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    INT             reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    FLOAT           reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    BOOL            reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    STRING          reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    ID              reduce using rule 5 (expression -> read_expression SEMICOLON .)
     IF              reduce using rule 5 (expression -> read_expression SEMICOLON .)
 
 
-state 20
+state 35
 
     (6) expression -> write_expression SEMICOLON .
 
@@ -325,113 +591,227 @@ state 20
     RETURN          reduce using rule 6 (expression -> write_expression SEMICOLON .)
     READ            reduce using rule 6 (expression -> write_expression SEMICOLON .)
     WRITE           reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    CONST           reduce using rule 6 (expression -> write_expression SEMICOLON .)
     WHILE           reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    INT             reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    FLOAT           reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    BOOL            reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    STRING          reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    ID              reduce using rule 6 (expression -> write_expression SEMICOLON .)
     IF              reduce using rule 6 (expression -> write_expression SEMICOLON .)
 
 
-state 21
+state 36
 
     (7) expression -> RETURN INT_LITERAL . SEMICOLON
 
-    SEMICOLON       shift and go to state 28
+    SEMICOLON       shift and go to state 52
 
 
-state 22
+state 37
 
     (8) expression -> RETURN BOOL_LITERAL . SEMICOLON
 
-    SEMICOLON       shift and go to state 29
+    SEMICOLON       shift and go to state 53
 
 
-state 23
+state 38
 
-    (18) write_expression -> WRITE LEFT_PARENTHESIS . string_literals RIGHT_PARENTHESIS
-    (26) string_literals -> . STRING_LITERAL
-    (27) string_literals -> . ID
+    (9) expression -> assign_expression SEMICOLON .
 
-    STRING_LITERAL  shift and go to state 31
-    ID              shift and go to state 32
-
-    string_literals                shift and go to state 30
-
-state 24
-
-    (13) if_expression -> start_if else_expression .
-
-    RIGHT_CURLY_BRACKET reduce using rule 13 (if_expression -> start_if else_expression .)
-    RETURN          reduce using rule 13 (if_expression -> start_if else_expression .)
-    READ            reduce using rule 13 (if_expression -> start_if else_expression .)
-    WRITE           reduce using rule 13 (if_expression -> start_if else_expression .)
-    WHILE           reduce using rule 13 (if_expression -> start_if else_expression .)
-    IF              reduce using rule 13 (if_expression -> start_if else_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    RETURN          reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    READ            reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    WRITE           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    CONST           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    WHILE           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    INT             reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    FLOAT           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    BOOL            reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    STRING          reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    ID              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    IF              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
 
 
-state 25
+state 39
 
-    (15) else_expression -> ELSE . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
-    (16) else_expression -> ELSE . block
-    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+    (19) write_expression -> WRITE LEFT_PARENTHESIS . string_literals RIGHT_PARENTHESIS
+    (44) string_literals -> . STRING_LITERAL
+    (45) string_literals -> . ID
 
-    IF              shift and go to state 33
+    STRING_LITERAL  shift and go to state 55
+    ID              shift and go to state 56
+
+    string_literals                shift and go to state 54
+
+state 40
+
+    (24) assign_expression -> CONST aux_assign_expression .
+
+    SEMICOLON       reduce using rule 24 (assign_expression -> CONST aux_assign_expression .)
+
+
+state 41
+
+    (28) aux_assign_expression -> arithmetic_datatypes . ID EQUALS arithmetic_expression
+
+    ID              shift and go to state 57
+
+
+state 42
+
+    (29) aux_assign_expression -> bool_datatypes . ID EQUALS bool_expression
+
+    ID              shift and go to state 58
+
+
+state 43
+
+    (30) aux_assign_expression -> string_datatypes . ID EQUALS string_expression
+
+    ID              shift and go to state 59
+
+
+state 44
+
+    (14) if_expression -> start_if else_expression .
+
+    RIGHT_CURLY_BRACKET reduce using rule 14 (if_expression -> start_if else_expression .)
+    RETURN          reduce using rule 14 (if_expression -> start_if else_expression .)
+    READ            reduce using rule 14 (if_expression -> start_if else_expression .)
+    WRITE           reduce using rule 14 (if_expression -> start_if else_expression .)
+    CONST           reduce using rule 14 (if_expression -> start_if else_expression .)
+    WHILE           reduce using rule 14 (if_expression -> start_if else_expression .)
+    INT             reduce using rule 14 (if_expression -> start_if else_expression .)
+    FLOAT           reduce using rule 14 (if_expression -> start_if else_expression .)
+    BOOL            reduce using rule 14 (if_expression -> start_if else_expression .)
+    STRING          reduce using rule 14 (if_expression -> start_if else_expression .)
+    ID              reduce using rule 14 (if_expression -> start_if else_expression .)
+    IF              reduce using rule 14 (if_expression -> start_if else_expression .)
+
+
+state 45
+
+    (16) else_expression -> ELSE . IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
+    (17) else_expression -> ELSE . block
+    (2) block -> . LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
+
+    IF              shift and go to state 60
     LEFT_CURLY_BRACKET shift and go to state 6
 
-    block                          shift and go to state 34
+    block                          shift and go to state 61
 
-state 26
+state 46
 
-    (11) while_expression -> WHILE LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
-    (31) condition -> . arithmetic_expression GT arithmetic_expression
-    (32) condition -> . arithmetic_expression LT arithmetic_expression
-    (33) condition -> . arithmetic_expression GET arithmetic_expression
-    (34) condition -> . arithmetic_expression LET arithmetic_expression
-    (35) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
-    (36) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
-    (37) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
-    (38) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
+    (12) while_expression -> WHILE LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
+    (51) condition -> . arithmetic_expression GT arithmetic_expression
+    (52) condition -> . arithmetic_expression LT arithmetic_expression
+    (53) condition -> . arithmetic_expression GET arithmetic_expression
+    (54) condition -> . arithmetic_expression LET arithmetic_expression
+    (55) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
+    (56) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
+    (57) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
+    (58) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
 
-    BOOL_LITERAL    shift and go to state 37
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
+    BOOL_LITERAL    shift and go to state 64
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
 
-    condition                      shift and go to state 35
-    arithmetic_expression          shift and go to state 36
-    arithmetic_literals            shift and go to state 38
+    condition                      shift and go to state 62
+    arithmetic_expression          shift and go to state 63
+    arithmetic_literals            shift and go to state 65
 
-state 27
+state 47
 
-    (14) start_if -> IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
-    (31) condition -> . arithmetic_expression GT arithmetic_expression
-    (32) condition -> . arithmetic_expression LT arithmetic_expression
-    (33) condition -> . arithmetic_expression GET arithmetic_expression
-    (34) condition -> . arithmetic_expression LET arithmetic_expression
-    (35) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
-    (36) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
-    (37) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
-    (38) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
+    (28) aux_assign_expression -> arithmetic_datatypes ID . EQUALS arithmetic_expression
+    (34) declaration_expression -> arithmetic_datatypes ID .
 
-    BOOL_LITERAL    shift and go to state 37
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
+    EQUALS          shift and go to state 68
+    SEMICOLON       reduce using rule 34 (declaration_expression -> arithmetic_datatypes ID .)
 
-    condition                      shift and go to state 41
-    arithmetic_expression          shift and go to state 36
-    arithmetic_literals            shift and go to state 38
 
-state 28
+state 48
+
+    (31) aux2_assign_expression -> ID EQUALS . arithmetic_expression
+    (32) aux2_assign_expression -> ID EQUALS . bool_expression
+    (33) aux2_assign_expression -> ID EQUALS . string_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (46) bool_expression -> . BOOL_LITERAL AND bool_expression
+    (47) bool_expression -> . BOOL_LITERAL OR bool_expression
+    (48) bool_expression -> . BOOL_LITERAL
+    (49) string_expression -> . QUOTE STRING_LITERAL QUOTE
+    (50) string_expression -> . DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    BOOL_LITERAL    shift and go to state 72
+    QUOTE           shift and go to state 73
+    DOUBLE_QUOTE    shift and go to state 74
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 69
+    bool_expression                shift and go to state 70
+    string_expression              shift and go to state 71
+    arithmetic_literals            shift and go to state 65
+
+state 49
+
+    (29) aux_assign_expression -> bool_datatypes ID . EQUALS bool_expression
+    (35) declaration_expression -> bool_datatypes ID .
+
+    EQUALS          shift and go to state 75
+    SEMICOLON       reduce using rule 35 (declaration_expression -> bool_datatypes ID .)
+
+
+state 50
+
+    (30) aux_assign_expression -> string_datatypes ID . EQUALS string_expression
+    (36) declaration_expression -> string_datatypes ID .
+
+    EQUALS          shift and go to state 76
+    SEMICOLON       reduce using rule 36 (declaration_expression -> string_datatypes ID .)
+
+
+state 51
+
+    (15) start_if -> IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block
+    (51) condition -> . arithmetic_expression GT arithmetic_expression
+    (52) condition -> . arithmetic_expression LT arithmetic_expression
+    (53) condition -> . arithmetic_expression GET arithmetic_expression
+    (54) condition -> . arithmetic_expression LET arithmetic_expression
+    (55) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
+    (56) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
+    (57) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
+    (58) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    BOOL_LITERAL    shift and go to state 64
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    condition                      shift and go to state 77
+    arithmetic_expression          shift and go to state 63
+    arithmetic_literals            shift and go to state 65
+
+state 52
 
     (7) expression -> RETURN INT_LITERAL SEMICOLON .
 
@@ -439,11 +819,17 @@ state 28
     RETURN          reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
     READ            reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
     WRITE           reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    CONST           reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
     WHILE           reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    INT             reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    FLOAT           reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    BOOL            reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    STRING          reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
+    ID              reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
     IF              reduce using rule 7 (expression -> RETURN INT_LITERAL SEMICOLON .)
 
 
-state 29
+state 53
 
     (8) expression -> RETURN BOOL_LITERAL SEMICOLON .
 
@@ -451,548 +837,776 @@ state 29
     RETURN          reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
     READ            reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
     WRITE           reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    CONST           reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
     WHILE           reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    INT             reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    FLOAT           reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    BOOL            reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    STRING          reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
+    ID              reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
     IF              reduce using rule 8 (expression -> RETURN BOOL_LITERAL SEMICOLON .)
 
 
-state 30
-
-    (18) write_expression -> WRITE LEFT_PARENTHESIS string_literals . RIGHT_PARENTHESIS
-
-    RIGHT_PARENTHESIS shift and go to state 42
-
-
-state 31
-
-    (26) string_literals -> STRING_LITERAL .
-
-    RIGHT_PARENTHESIS reduce using rule 26 (string_literals -> STRING_LITERAL .)
-
-
-state 32
-
-    (27) string_literals -> ID .
-
-    RIGHT_PARENTHESIS reduce using rule 27 (string_literals -> ID .)
-
-
-state 33
-
-    (15) else_expression -> ELSE IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
-
-    LEFT_PARENTHESIS shift and go to state 43
-
-
-state 34
-
-    (16) else_expression -> ELSE block .
-
-    RIGHT_CURLY_BRACKET reduce using rule 16 (else_expression -> ELSE block .)
-    RETURN          reduce using rule 16 (else_expression -> ELSE block .)
-    READ            reduce using rule 16 (else_expression -> ELSE block .)
-    WRITE           reduce using rule 16 (else_expression -> ELSE block .)
-    WHILE           reduce using rule 16 (else_expression -> ELSE block .)
-    IF              reduce using rule 16 (else_expression -> ELSE block .)
-
-
-state 35
-
-    (11) while_expression -> WHILE LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
-
-    RIGHT_PARENTHESIS shift and go to state 44
-
-
-state 36
-
-    (31) condition -> arithmetic_expression . GT arithmetic_expression
-    (32) condition -> arithmetic_expression . LT arithmetic_expression
-    (33) condition -> arithmetic_expression . GET arithmetic_expression
-    (34) condition -> arithmetic_expression . LET arithmetic_expression
-    (35) condition -> arithmetic_expression . IS_EQUAL arithmetic_expression
-    (36) condition -> arithmetic_expression . IS_NOT_EQUAL arithmetic_expression
-
-    GT              shift and go to state 45
-    LT              shift and go to state 46
-    GET             shift and go to state 47
-    LET             shift and go to state 48
-    IS_EQUAL        shift and go to state 49
-    IS_NOT_EQUAL    shift and go to state 50
-
-
-state 37
-
-    (37) condition -> BOOL_LITERAL . IS_EQUAL BOOL_LITERAL
-    (38) condition -> BOOL_LITERAL . IS_NOT_EQUAL BOOL_LITERAL
-
-    IS_EQUAL        shift and go to state 51
-    IS_NOT_EQUAL    shift and go to state 52
-
-
-state 38
-
-    (19) arithmetic_expression -> arithmetic_literals . ADD arithmetic_expression
-    (20) arithmetic_expression -> arithmetic_literals . MINUS arithmetic_expression
-    (21) arithmetic_expression -> arithmetic_literals . MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> arithmetic_literals . DIVISION arithmetic_expression
-    (23) arithmetic_expression -> arithmetic_literals .
-
-    ADD             shift and go to state 53
-    MINUS           shift and go to state 54
-    MULTIPLICATION  shift and go to state 55
-    DIVISION        shift and go to state 56
-    GT              reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    RIGHT_PARENTHESIS reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    LT              reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    GET             reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    LET             reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    IS_EQUAL        reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-    IS_NOT_EQUAL    reduce using rule 23 (arithmetic_expression -> arithmetic_literals .)
-
-
-state 39
-
-    (24) arithmetic_literals -> INT_LITERAL .
-
-    ADD             reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    MINUS           reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    MULTIPLICATION  reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    DIVISION        reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    GT              reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    RIGHT_PARENTHESIS reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    LT              reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    GET             reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    LET             reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    IS_EQUAL        reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-    IS_NOT_EQUAL    reduce using rule 24 (arithmetic_literals -> INT_LITERAL .)
-
-
-state 40
-
-    (25) arithmetic_literals -> FLOAT_LITERAL .
-
-    ADD             reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    MINUS           reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    MULTIPLICATION  reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    DIVISION        reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    GT              reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    RIGHT_PARENTHESIS reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    LT              reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    GET             reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    LET             reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    IS_EQUAL        reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-    IS_NOT_EQUAL    reduce using rule 25 (arithmetic_literals -> FLOAT_LITERAL .)
-
-
-state 41
-
-    (14) start_if -> IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
-
-    RIGHT_PARENTHESIS shift and go to state 57
-
-
-state 42
-
-    (18) write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS .
-
-    SEMICOLON       reduce using rule 18 (write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS .)
-
-
-state 43
-
-    (15) else_expression -> ELSE IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block else_expression
-    (31) condition -> . arithmetic_expression GT arithmetic_expression
-    (32) condition -> . arithmetic_expression LT arithmetic_expression
-    (33) condition -> . arithmetic_expression GET arithmetic_expression
-    (34) condition -> . arithmetic_expression LET arithmetic_expression
-    (35) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
-    (36) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
-    (37) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
-    (38) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    BOOL_LITERAL    shift and go to state 37
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    condition                      shift and go to state 58
-    arithmetic_expression          shift and go to state 36
-    arithmetic_literals            shift and go to state 38
-
-state 44
-
-    (11) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
-    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
-
-    LEFT_CURLY_BRACKET shift and go to state 6
-
-    block                          shift and go to state 59
-
-state 45
-
-    (31) condition -> arithmetic_expression GT . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 60
-    arithmetic_literals            shift and go to state 38
-
-state 46
-
-    (32) condition -> arithmetic_expression LT . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 61
-    arithmetic_literals            shift and go to state 38
-
-state 47
-
-    (33) condition -> arithmetic_expression GET . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 62
-    arithmetic_literals            shift and go to state 38
-
-state 48
-
-    (34) condition -> arithmetic_expression LET . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 63
-    arithmetic_literals            shift and go to state 38
-
-state 49
-
-    (35) condition -> arithmetic_expression IS_EQUAL . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 64
-    arithmetic_literals            shift and go to state 38
-
-state 50
-
-    (36) condition -> arithmetic_expression IS_NOT_EQUAL . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_expression          shift and go to state 65
-    arithmetic_literals            shift and go to state 38
-
-state 51
-
-    (37) condition -> BOOL_LITERAL IS_EQUAL . BOOL_LITERAL
-
-    BOOL_LITERAL    shift and go to state 66
-
-
-state 52
-
-    (38) condition -> BOOL_LITERAL IS_NOT_EQUAL . BOOL_LITERAL
-
-    BOOL_LITERAL    shift and go to state 67
-
-
-state 53
-
-    (19) arithmetic_expression -> arithmetic_literals ADD . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
-
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
-
-    arithmetic_literals            shift and go to state 38
-    arithmetic_expression          shift and go to state 68
-
 state 54
 
-    (20) arithmetic_expression -> arithmetic_literals MINUS . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
+    (19) write_expression -> WRITE LEFT_PARENTHESIS string_literals . RIGHT_PARENTHESIS
 
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
+    RIGHT_PARENTHESIS shift and go to state 78
 
-    arithmetic_literals            shift and go to state 38
-    arithmetic_expression          shift and go to state 69
 
 state 55
 
-    (21) arithmetic_expression -> arithmetic_literals MULTIPLICATION . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
+    (44) string_literals -> STRING_LITERAL .
 
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
+    RIGHT_PARENTHESIS reduce using rule 44 (string_literals -> STRING_LITERAL .)
 
-    arithmetic_literals            shift and go to state 38
-    arithmetic_expression          shift and go to state 70
 
 state 56
 
-    (22) arithmetic_expression -> arithmetic_literals DIVISION . arithmetic_expression
-    (19) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
-    (20) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
-    (21) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
-    (22) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
-    (23) arithmetic_expression -> . arithmetic_literals
-    (24) arithmetic_literals -> . INT_LITERAL
-    (25) arithmetic_literals -> . FLOAT_LITERAL
+    (45) string_literals -> ID .
 
-    INT_LITERAL     shift and go to state 39
-    FLOAT_LITERAL   shift and go to state 40
+    RIGHT_PARENTHESIS reduce using rule 45 (string_literals -> ID .)
 
-    arithmetic_literals            shift and go to state 38
-    arithmetic_expression          shift and go to state 71
 
 state 57
 
-    (14) start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
-    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+    (28) aux_assign_expression -> arithmetic_datatypes ID . EQUALS arithmetic_expression
 
-    LEFT_CURLY_BRACKET shift and go to state 6
+    EQUALS          shift and go to state 68
 
-    block                          shift and go to state 72
 
 state 58
 
-    (15) else_expression -> ELSE IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block else_expression
+    (29) aux_assign_expression -> bool_datatypes ID . EQUALS bool_expression
 
-    RIGHT_PARENTHESIS shift and go to state 73
+    EQUALS          shift and go to state 75
 
 
 state 59
 
-    (11) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+    (30) aux_assign_expression -> string_datatypes ID . EQUALS string_expression
 
-    RIGHT_CURLY_BRACKET reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    RETURN          reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    READ            reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    WRITE           reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    WHILE           reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    IF              reduce using rule 11 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    EQUALS          shift and go to state 76
 
 
 state 60
 
-    (31) condition -> arithmetic_expression GT arithmetic_expression .
+    (16) else_expression -> ELSE IF . LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
 
-    RIGHT_PARENTHESIS reduce using rule 31 (condition -> arithmetic_expression GT arithmetic_expression .)
+    LEFT_PARENTHESIS shift and go to state 79
 
 
 state 61
 
-    (32) condition -> arithmetic_expression LT arithmetic_expression .
+    (17) else_expression -> ELSE block .
 
-    RIGHT_PARENTHESIS reduce using rule 32 (condition -> arithmetic_expression LT arithmetic_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 17 (else_expression -> ELSE block .)
+    RETURN          reduce using rule 17 (else_expression -> ELSE block .)
+    READ            reduce using rule 17 (else_expression -> ELSE block .)
+    WRITE           reduce using rule 17 (else_expression -> ELSE block .)
+    CONST           reduce using rule 17 (else_expression -> ELSE block .)
+    WHILE           reduce using rule 17 (else_expression -> ELSE block .)
+    INT             reduce using rule 17 (else_expression -> ELSE block .)
+    FLOAT           reduce using rule 17 (else_expression -> ELSE block .)
+    BOOL            reduce using rule 17 (else_expression -> ELSE block .)
+    STRING          reduce using rule 17 (else_expression -> ELSE block .)
+    ID              reduce using rule 17 (else_expression -> ELSE block .)
+    IF              reduce using rule 17 (else_expression -> ELSE block .)
 
 
 state 62
 
-    (33) condition -> arithmetic_expression GET arithmetic_expression .
+    (12) while_expression -> WHILE LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
 
-    RIGHT_PARENTHESIS reduce using rule 33 (condition -> arithmetic_expression GET arithmetic_expression .)
+    RIGHT_PARENTHESIS shift and go to state 80
 
 
 state 63
 
-    (34) condition -> arithmetic_expression LET arithmetic_expression .
+    (51) condition -> arithmetic_expression . GT arithmetic_expression
+    (52) condition -> arithmetic_expression . LT arithmetic_expression
+    (53) condition -> arithmetic_expression . GET arithmetic_expression
+    (54) condition -> arithmetic_expression . LET arithmetic_expression
+    (55) condition -> arithmetic_expression . IS_EQUAL arithmetic_expression
+    (56) condition -> arithmetic_expression . IS_NOT_EQUAL arithmetic_expression
 
-    RIGHT_PARENTHESIS reduce using rule 34 (condition -> arithmetic_expression LET arithmetic_expression .)
+    GT              shift and go to state 81
+    LT              shift and go to state 82
+    GET             shift and go to state 83
+    LET             shift and go to state 84
+    IS_EQUAL        shift and go to state 85
+    IS_NOT_EQUAL    shift and go to state 86
 
 
 state 64
 
-    (35) condition -> arithmetic_expression IS_EQUAL arithmetic_expression .
+    (57) condition -> BOOL_LITERAL . IS_EQUAL BOOL_LITERAL
+    (58) condition -> BOOL_LITERAL . IS_NOT_EQUAL BOOL_LITERAL
 
-    RIGHT_PARENTHESIS reduce using rule 35 (condition -> arithmetic_expression IS_EQUAL arithmetic_expression .)
+    IS_EQUAL        shift and go to state 87
+    IS_NOT_EQUAL    shift and go to state 88
 
 
 state 65
 
-    (36) condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression .
+    (37) arithmetic_expression -> arithmetic_literals . ADD arithmetic_expression
+    (38) arithmetic_expression -> arithmetic_literals . MINUS arithmetic_expression
+    (39) arithmetic_expression -> arithmetic_literals . MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> arithmetic_literals . DIVISION arithmetic_expression
+    (41) arithmetic_expression -> arithmetic_literals .
 
-    RIGHT_PARENTHESIS reduce using rule 36 (condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression .)
+    ADD             shift and go to state 89
+    MINUS           shift and go to state 90
+    MULTIPLICATION  shift and go to state 91
+    DIVISION        shift and go to state 92
+    SEMICOLON       reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    GT              reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    RIGHT_PARENTHESIS reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    LT              reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    GET             reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    LET             reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    IS_EQUAL        reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    IS_NOT_EQUAL    reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
 
 
 state 66
 
-    (37) condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL .
+    (42) arithmetic_literals -> INT_LITERAL .
 
-    RIGHT_PARENTHESIS reduce using rule 37 (condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL .)
+    ADD             reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    MINUS           reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    MULTIPLICATION  reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    DIVISION        reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    SEMICOLON       reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    GT              reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    LT              reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    GET             reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    LET             reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    IS_EQUAL        reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    IS_NOT_EQUAL    reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
 
 
 state 67
 
-    (38) condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL .
+    (43) arithmetic_literals -> FLOAT_LITERAL .
 
-    RIGHT_PARENTHESIS reduce using rule 38 (condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL .)
+    ADD             reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    MINUS           reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    MULTIPLICATION  reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    DIVISION        reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    SEMICOLON       reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    GT              reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    LT              reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    GET             reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    LET             reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    IS_EQUAL        reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    IS_NOT_EQUAL    reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
 
 
 state 68
 
-    (19) arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .
+    (28) aux_assign_expression -> arithmetic_datatypes ID EQUALS . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
 
-    GT              reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    LT              reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    GET             reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    LET             reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    IS_EQUAL        reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    IS_NOT_EQUAL    reduce using rule 19 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
 
+    arithmetic_expression          shift and go to state 93
+    arithmetic_literals            shift and go to state 65
 
 state 69
 
-    (20) arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .
+    (31) aux2_assign_expression -> ID EQUALS arithmetic_expression .
 
-    GT              reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    LT              reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    GET             reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    LET             reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    IS_EQUAL        reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    IS_NOT_EQUAL    reduce using rule 20 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    SEMICOLON       reduce using rule 31 (aux2_assign_expression -> ID EQUALS arithmetic_expression .)
 
 
 state 70
 
-    (21) arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .
+    (32) aux2_assign_expression -> ID EQUALS bool_expression .
 
-    GT              reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    LT              reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    GET             reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    LET             reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    IS_EQUAL        reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    IS_NOT_EQUAL    reduce using rule 21 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    SEMICOLON       reduce using rule 32 (aux2_assign_expression -> ID EQUALS bool_expression .)
 
 
 state 71
 
-    (22) arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .
+    (33) aux2_assign_expression -> ID EQUALS string_expression .
 
-    GT              reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    LT              reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    GET             reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    LET             reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    IS_EQUAL        reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    IS_NOT_EQUAL    reduce using rule 22 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    SEMICOLON       reduce using rule 33 (aux2_assign_expression -> ID EQUALS string_expression .)
 
 
 state 72
 
-    (14) start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+    (46) bool_expression -> BOOL_LITERAL . AND bool_expression
+    (47) bool_expression -> BOOL_LITERAL . OR bool_expression
+    (48) bool_expression -> BOOL_LITERAL .
 
-    RIGHT_CURLY_BRACKET reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    RETURN          reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    READ            reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    WRITE           reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    WHILE           reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    IF              reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    ELSE            reduce using rule 14 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    AND             shift and go to state 94
+    OR              shift and go to state 95
+    SEMICOLON       reduce using rule 48 (bool_expression -> BOOL_LITERAL .)
 
 
 state 73
 
-    (15) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block else_expression
-    (2) block -> . LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
+    (49) string_expression -> QUOTE . STRING_LITERAL QUOTE
 
-    LEFT_CURLY_BRACKET shift and go to state 6
+    STRING_LITERAL  shift and go to state 96
 
-    block                          shift and go to state 74
 
 state 74
 
-    (15) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block . else_expression
-    (15) else_expression -> . ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
-    (16) else_expression -> . ELSE block
+    (50) string_expression -> DOUBLE_QUOTE . STRING_LITERAL DOUBLE_QUOTE
 
-    ELSE            shift and go to state 25
+    STRING_LITERAL  shift and go to state 97
 
-    else_expression                shift and go to state 75
 
 state 75
 
-    (15) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .
+    (29) aux_assign_expression -> bool_datatypes ID EQUALS . bool_expression
+    (46) bool_expression -> . BOOL_LITERAL AND bool_expression
+    (47) bool_expression -> . BOOL_LITERAL OR bool_expression
+    (48) bool_expression -> . BOOL_LITERAL
 
-    RIGHT_CURLY_BRACKET reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    RETURN          reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    READ            reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    WRITE           reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    WHILE           reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    IF              reduce using rule 15 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    BOOL_LITERAL    shift and go to state 72
+
+    bool_expression                shift and go to state 98
+
+state 76
+
+    (30) aux_assign_expression -> string_datatypes ID EQUALS . string_expression
+    (49) string_expression -> . QUOTE STRING_LITERAL QUOTE
+    (50) string_expression -> . DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE
+
+    QUOTE           shift and go to state 73
+    DOUBLE_QUOTE    shift and go to state 74
+
+    string_expression              shift and go to state 99
+
+state 77
+
+    (15) start_if -> IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block
+
+    RIGHT_PARENTHESIS shift and go to state 100
+
+
+state 78
+
+    (19) write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS .
+
+    SEMICOLON       reduce using rule 19 (write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS .)
+
+
+state 79
+
+    (16) else_expression -> ELSE IF LEFT_PARENTHESIS . condition RIGHT_PARENTHESIS block else_expression
+    (51) condition -> . arithmetic_expression GT arithmetic_expression
+    (52) condition -> . arithmetic_expression LT arithmetic_expression
+    (53) condition -> . arithmetic_expression GET arithmetic_expression
+    (54) condition -> . arithmetic_expression LET arithmetic_expression
+    (55) condition -> . arithmetic_expression IS_EQUAL arithmetic_expression
+    (56) condition -> . arithmetic_expression IS_NOT_EQUAL arithmetic_expression
+    (57) condition -> . BOOL_LITERAL IS_EQUAL BOOL_LITERAL
+    (58) condition -> . BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    BOOL_LITERAL    shift and go to state 64
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    condition                      shift and go to state 101
+    arithmetic_expression          shift and go to state 63
+    arithmetic_literals            shift and go to state 65
+
+state 80
+
+    (12) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
+    (2) block -> . LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
+
+    LEFT_CURLY_BRACKET shift and go to state 6
+
+    block                          shift and go to state 102
+
+state 81
+
+    (51) condition -> arithmetic_expression GT . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 103
+    arithmetic_literals            shift and go to state 65
+
+state 82
+
+    (52) condition -> arithmetic_expression LT . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 104
+    arithmetic_literals            shift and go to state 65
+
+state 83
+
+    (53) condition -> arithmetic_expression GET . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 105
+    arithmetic_literals            shift and go to state 65
+
+state 84
+
+    (54) condition -> arithmetic_expression LET . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 106
+    arithmetic_literals            shift and go to state 65
+
+state 85
+
+    (55) condition -> arithmetic_expression IS_EQUAL . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 107
+    arithmetic_literals            shift and go to state 65
+
+state 86
+
+    (56) condition -> arithmetic_expression IS_NOT_EQUAL . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_expression          shift and go to state 108
+    arithmetic_literals            shift and go to state 65
+
+state 87
+
+    (57) condition -> BOOL_LITERAL IS_EQUAL . BOOL_LITERAL
+
+    BOOL_LITERAL    shift and go to state 109
+
+
+state 88
+
+    (58) condition -> BOOL_LITERAL IS_NOT_EQUAL . BOOL_LITERAL
+
+    BOOL_LITERAL    shift and go to state 110
+
+
+state 89
+
+    (37) arithmetic_expression -> arithmetic_literals ADD . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_literals            shift and go to state 65
+    arithmetic_expression          shift and go to state 111
+
+state 90
+
+    (38) arithmetic_expression -> arithmetic_literals MINUS . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_literals            shift and go to state 65
+    arithmetic_expression          shift and go to state 112
+
+state 91
+
+    (39) arithmetic_expression -> arithmetic_literals MULTIPLICATION . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_literals            shift and go to state 65
+    arithmetic_expression          shift and go to state 113
+
+state 92
+
+    (40) arithmetic_expression -> arithmetic_literals DIVISION . arithmetic_expression
+    (37) arithmetic_expression -> . arithmetic_literals ADD arithmetic_expression
+    (38) arithmetic_expression -> . arithmetic_literals MINUS arithmetic_expression
+    (39) arithmetic_expression -> . arithmetic_literals MULTIPLICATION arithmetic_expression
+    (40) arithmetic_expression -> . arithmetic_literals DIVISION arithmetic_expression
+    (41) arithmetic_expression -> . arithmetic_literals
+    (42) arithmetic_literals -> . INT_LITERAL
+    (43) arithmetic_literals -> . FLOAT_LITERAL
+
+    INT_LITERAL     shift and go to state 66
+    FLOAT_LITERAL   shift and go to state 67
+
+    arithmetic_literals            shift and go to state 65
+    arithmetic_expression          shift and go to state 114
+
+state 93
+
+    (28) aux_assign_expression -> arithmetic_datatypes ID EQUALS arithmetic_expression .
+
+    SEMICOLON       reduce using rule 28 (aux_assign_expression -> arithmetic_datatypes ID EQUALS arithmetic_expression .)
+
+
+state 94
+
+    (46) bool_expression -> BOOL_LITERAL AND . bool_expression
+    (46) bool_expression -> . BOOL_LITERAL AND bool_expression
+    (47) bool_expression -> . BOOL_LITERAL OR bool_expression
+    (48) bool_expression -> . BOOL_LITERAL
+
+    BOOL_LITERAL    shift and go to state 72
+
+    bool_expression                shift and go to state 115
+
+state 95
+
+    (47) bool_expression -> BOOL_LITERAL OR . bool_expression
+    (46) bool_expression -> . BOOL_LITERAL AND bool_expression
+    (47) bool_expression -> . BOOL_LITERAL OR bool_expression
+    (48) bool_expression -> . BOOL_LITERAL
+
+    BOOL_LITERAL    shift and go to state 72
+
+    bool_expression                shift and go to state 116
+
+state 96
+
+    (49) string_expression -> QUOTE STRING_LITERAL . QUOTE
+
+    QUOTE           shift and go to state 117
+
+
+state 97
+
+    (50) string_expression -> DOUBLE_QUOTE STRING_LITERAL . DOUBLE_QUOTE
+
+    DOUBLE_QUOTE    shift and go to state 118
+
+
+state 98
+
+    (29) aux_assign_expression -> bool_datatypes ID EQUALS bool_expression .
+
+    SEMICOLON       reduce using rule 29 (aux_assign_expression -> bool_datatypes ID EQUALS bool_expression .)
+
+
+state 99
+
+    (30) aux_assign_expression -> string_datatypes ID EQUALS string_expression .
+
+    SEMICOLON       reduce using rule 30 (aux_assign_expression -> string_datatypes ID EQUALS string_expression .)
+
+
+state 100
+
+    (15) start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block
+    (2) block -> . LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
+
+    LEFT_CURLY_BRACKET shift and go to state 6
+
+    block                          shift and go to state 119
+
+state 101
+
+    (16) else_expression -> ELSE IF LEFT_PARENTHESIS condition . RIGHT_PARENTHESIS block else_expression
+
+    RIGHT_PARENTHESIS shift and go to state 120
+
+
+state 102
+
+    (12) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+
+    RIGHT_CURLY_BRACKET reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    RETURN          reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    READ            reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    WRITE           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    CONST           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    WHILE           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    INT             reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    FLOAT           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    BOOL            reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    STRING          reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ID              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    IF              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+
+
+state 103
+
+    (51) condition -> arithmetic_expression GT arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 51 (condition -> arithmetic_expression GT arithmetic_expression .)
+
+
+state 104
+
+    (52) condition -> arithmetic_expression LT arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 52 (condition -> arithmetic_expression LT arithmetic_expression .)
+
+
+state 105
+
+    (53) condition -> arithmetic_expression GET arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 53 (condition -> arithmetic_expression GET arithmetic_expression .)
+
+
+state 106
+
+    (54) condition -> arithmetic_expression LET arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 54 (condition -> arithmetic_expression LET arithmetic_expression .)
+
+
+state 107
+
+    (55) condition -> arithmetic_expression IS_EQUAL arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 55 (condition -> arithmetic_expression IS_EQUAL arithmetic_expression .)
+
+
+state 108
+
+    (56) condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression .
+
+    RIGHT_PARENTHESIS reduce using rule 56 (condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression .)
+
+
+state 109
+
+    (57) condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL .
+
+    RIGHT_PARENTHESIS reduce using rule 57 (condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL .)
+
+
+state 110
+
+    (58) condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL .
+
+    RIGHT_PARENTHESIS reduce using rule 58 (condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL .)
+
+
+state 111
+
+    (37) arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .
+
+    SEMICOLON       reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    GT              reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    LT              reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    GET             reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    LET             reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    IS_EQUAL        reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    IS_NOT_EQUAL    reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+
+
+state 112
+
+    (38) arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .
+
+    SEMICOLON       reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    GT              reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    LT              reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    GET             reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    LET             reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    IS_EQUAL        reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    IS_NOT_EQUAL    reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+
+
+state 113
+
+    (39) arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .
+
+    SEMICOLON       reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    GT              reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    LT              reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    GET             reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    LET             reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    IS_EQUAL        reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    IS_NOT_EQUAL    reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+
+
+state 114
+
+    (40) arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .
+
+    SEMICOLON       reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    GT              reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    LT              reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    GET             reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    LET             reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    IS_EQUAL        reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    IS_NOT_EQUAL    reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+
+
+state 115
+
+    (46) bool_expression -> BOOL_LITERAL AND bool_expression .
+
+    SEMICOLON       reduce using rule 46 (bool_expression -> BOOL_LITERAL AND bool_expression .)
+
+
+state 116
+
+    (47) bool_expression -> BOOL_LITERAL OR bool_expression .
+
+    SEMICOLON       reduce using rule 47 (bool_expression -> BOOL_LITERAL OR bool_expression .)
+
+
+state 117
+
+    (49) string_expression -> QUOTE STRING_LITERAL QUOTE .
+
+    SEMICOLON       reduce using rule 49 (string_expression -> QUOTE STRING_LITERAL QUOTE .)
+
+
+state 118
+
+    (50) string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE .
+
+    SEMICOLON       reduce using rule 50 (string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE .)
+
+
+state 119
+
+    (15) start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
+
+    RIGHT_CURLY_BRACKET reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    RETURN          reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    READ            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    WRITE           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    CONST           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    WHILE           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    INT             reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    FLOAT           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    BOOL            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    STRING          reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ID              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    IF              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ELSE            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+
+
+state 120
+
+    (16) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS . block else_expression
+    (2) block -> . LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET
+
+    LEFT_CURLY_BRACKET shift and go to state 6
+
+    block                          shift and go to state 121
+
+state 121
+
+    (16) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block . else_expression
+    (16) else_expression -> . ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
+    (17) else_expression -> . ELSE block
+
+    ELSE            shift and go to state 45
+
+    else_expression                shift and go to state 122
+
+state 122
+
+    (16) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .
+
+    RIGHT_CURLY_BRACKET reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    RETURN          reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    READ            reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    WRITE           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    CONST           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    WHILE           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    INT             reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    FLOAT           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    BOOL            reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    STRING          reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    ID              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    IF              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
 

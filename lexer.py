@@ -117,14 +117,14 @@ def t_error(t):
 
 def p_program(t):
     '''program : STATIC VOID MAIN block'''
-    print('Program')
+    print('Correct :)')
 
 def p_block(t):
-    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET'''
-    print('Block')
+    '''block :  LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET'''
+    # print('Block')
 
 def p_expressions(t):
-    '''expressions : expression 
+    '''expressions : expression
                    | expression expressions '''
 
 def p_expression(t):
@@ -132,24 +132,18 @@ def p_expression(t):
                   | write_expression SEMICOLON
                   | RETURN INT_LITERAL SEMICOLON
                   | RETURN BOOL_LITERAL SEMICOLON
+                  | assign_expression SEMICOLON
                   | if_expression
                   | while_expression'''
 
-#
-#     '''expression : while_expression
-#                   | assign_expression SEMICOLON'''
-#     print('Expression')
-#     print(t[1])
-#
 
 def p_while_expression(t):
     '''while_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
-    print('While')
+    # print('While')
 
 def p_if_expression(t):
     '''if_expression : start_if
                      | start_if else_expression'''
-    # print('if')
 
 def p_start_if(t):
     '''start_if : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
@@ -160,34 +154,51 @@ def p_else_expression(t):
 
 def p_read_expression(t):
     '''read_expression : READ'''
-    print('read')
+    # print('read')
 
 def p_write_expression(t):
     '''write_expression : WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS'''
-    print('write')
+    # print('write')
 
-# def p_arithmetic_datatypes(t):
-#     '''arithmetic_datatypes : INT
-#                             | FLOAT'''
-#
-# def p_bool_datatypes(t):
-#     '''bool_datatypes : BOOL'''
-#
-# def p_string_datatypes(t):
-#     '''string_datatypes : STRING'''
-#
-# def p_assign_expression(t):
-#     '''assign_expression : arithmetic_datatypes ID EQUALS arithmetic_expression
-#               | bool_datatypes ID EQUALS bool_expression
-#               | string_datatypes ID EQUALS string_expression'''
-#     print('assign')
-#
-#
-# precedence = (
-#      ('left', 'ADD', 'MINUS'),
-#      ('left', 'MULTIPLICATION', 'DIVISION'),
-#  )
-#
+def p_arithmetic_datatypes(t):
+    '''arithmetic_datatypes : INT
+                            | FLOAT'''
+
+def p_bool_datatypes(t):
+    '''bool_datatypes : BOOL'''
+
+def p_string_datatypes(t):
+    '''string_datatypes : STRING'''
+
+def p_assign_expression(t):
+    '''assign_expression : CONST aux_assign_expression
+                         | aux_assign_expression
+                         | declaration_expression
+                         | aux2_assign_expression'''
+    # print('assign')
+
+def p_aux_assign_expression(t):
+    '''aux_assign_expression : arithmetic_datatypes ID EQUALS arithmetic_expression
+              | bool_datatypes ID EQUALS bool_expression
+              | string_datatypes ID EQUALS string_expression'''
+
+def p_aux2_assign_expression(t):
+    '''aux2_assign_expression : ID EQUALS arithmetic_expression
+              | ID EQUALS bool_expression
+              | ID EQUALS string_expression'''
+
+
+def p_declaration_expression(t):
+    '''declaration_expression : arithmetic_datatypes ID
+              | bool_datatypes ID
+              | string_datatypes ID'''
+
+
+precedence = (
+     ('left', 'ADD', 'MINUS'),
+     ('left', 'MULTIPLICATION', 'DIVISION'),
+ )
+
 # #start arithmetic_expressions
 def p_arithmetic_expression(t):
     '''arithmetic_expression : arithmetic_literals ADD arithmetic_expression
@@ -195,14 +206,14 @@ def p_arithmetic_expression(t):
                              | arithmetic_literals MULTIPLICATION arithmetic_expression
                              | arithmetic_literals DIVISION arithmetic_expression
                              | arithmetic_literals '''
-    print('arithmetic_expression')
+    # print('arithmetic_expression')
 
 
 
 def p_arithmetic_literals(t):
     '''arithmetic_literals : INT_LITERAL
               | FLOAT_LITERAL '''
-    print('arithmetic_literals')
+    # print('arithmetic_literals')
 
 #ends arithmetic_expressions
 
@@ -215,12 +226,12 @@ def p_bool_expression(t):
     '''bool_expression : BOOL_LITERAL AND bool_expression
                          | BOOL_LITERAL OR bool_expression
                          | BOOL_LITERAL '''
-    print('bool_expression')
+    # print('bool_expression')
 
-# def p_string_expression(t):
-#     '''string_expression : QUOTE STRING_LITERAL QUOTE
-#                          | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
-#     print('string_expression')
+def p_string_expression(t):
+    '''string_expression : QUOTE STRING_LITERAL QUOTE
+                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
+    # print('string_expression')
 
 def p_condition(t):
     '''condition : arithmetic_expression GT arithmetic_expression
@@ -231,7 +242,7 @@ def p_condition(t):
                    | arithmetic_expression IS_NOT_EQUAL arithmetic_expression
                    | BOOL_LITERAL IS_EQUAL BOOL_LITERAL
                    | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'''
-    print('condition')
+    # print('condition')
 
 def p_error(t):
     print("Syntax error at '%s'" % t.value)
