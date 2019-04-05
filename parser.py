@@ -2,23 +2,41 @@ import fileinput
 import sys
 #https://www.dabeaz.com/ply/PLYTalk.pdf
 
-tokens = (
+reserved = {
+    'static' : 'STATIC',
+    'const' : 'CONST',
+    'if' : 'IF',
+    'else' : 'ELSE',
+    'read' : 'READ',
+    'return' : 'RETURN',
+    'while': 'WHILE',
+    'Main':'MAIN',
+    'int':'INT',
+    'float' : 'FLOAT',
+    'bool': 'BOOL',
+    'string':'STRING',
+    'void': 'VOID'
+}
+
+tokens = [
     #comment
-    'ONE_LINE_COMMENT', #'MULTIPLE_LINE_COMMENT',
+    # 'ONE_LINE_COMMENT', #'MULTIPLE_LINE_COMMENT',
     #reserved words
     # 'PUBLIC', 'PRIVATE',
-    'STATIC',
-    'CONST','IF', 'ELSE','READ', 'RETURN',
+    # 'STATIC',
+    # 'CONST','IF', 'ELSE','READ', 'RETURN',
     # 'VAR',
-    'WHILE','WRITE', 'MAIN',
-    #operatoris
+    # 'WHILE',
+    'WRITE',
+    # 'MAIN',
+    #operators
     'EQUALS','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
     'AND', 'OR',
     # 'NOT',
     'IS_EQUAL',
     'ADD','MINUS', 'MULTIPLICATION', 'DIVISION',
     #data types
-    'INT', 'FLOAT', 'BOOL', 'STRING', 'VOID',
+    # 'INT', 'FLOAT', 'BOOL', 'STRING', 'VOID',
     #literals
     'INT_LITERAL', 'FLOAT_LITERAL', 'BOOL_LITERAL', 'STRING_LITERAL',
     #punctuation
@@ -34,28 +52,28 @@ tokens = (
 
     #id
     'ID'
-)
+]+ list(reserved.values())
 #tokens
 
 #comment
 # IGNORE
-t_ignore_ONE_LINE_COMMENT =  r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
+# t_ignore_ONE_LINE_COMMENT =  r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
 t_ignore_MULTIPLE_LINE_COMMENT = r'(/\*(.|\n)*?\*/)' #r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
-
+t_ignore_ONE_LINE_COMMENT = r'//.*'
 
 #reserved words
 # def t_PUBLIC(t): r'public'; return t
 # def t_PRIVATE(t): r'private'; return t
-def t_STATIC(t): r'static'; return t
-def t_CONST(t): r'const'; return t
-def t_IF(t): r'if'; return t
-def t_ELSE(t): r'else'; return t
+# def t_STATIC(t): r'static'; return t
+# def t_CONST(t): r'const'; return t
+# def t_IF(t): r'if'; return t
+# def t_ELSE(t): r'else'; return t
 def t_READ(t): r'Console\.Read\(\)'; return t
-def t_RETURN(t): r'return'; return t
+# def t_RETURN(t): r'return'; return t
 # def t_VAR(t): r'var'; return t
-def t_WHILE(t): r'while'; return t
+# def t_WHILE(t): r'while'; return t
 def t_WRITE(t): r'Console\.Write'; return t
-def t_MAIN(t): r'Main'; return t
+# def t_MAIN(t): r'Main'; return t
 
 
 #operators
@@ -76,11 +94,11 @@ t_EQUALS = r'\='
 
 
 #data types
-def t_INT(t): r'int'; return t
-def t_FLOAT(t): r'float'; return t
-def t_BOOL(t): r'bool'; return t
-def t_STRING(t): r'string'; return t
-def t_VOID(t): r'void'; return t
+# def t_INT(t): r'int'; return t
+# def t_FLOAT(t): r'float'; return t
+# def t_BOOL(t): r'bool'; return t
+# def t_STRING(t): r'string'; return t
+# def t_VOID(t): r'void'; return t
 
 #literals
 t_INT_LITERAL = r'[-]?[0-9]+'
@@ -102,14 +120,25 @@ t_SEMICOLON = r';'
 # t_QUOTE = r"'"
 
 #id
-t_ID = r'[a-zA-Z]\w*'
+# t_ID = r'[a-zA-Z]\w*'
+
+
+def t_ID(t):
+     r'[a-zA-Z_][a-zA-Z_0-9]*'
+     t.type = reserved.get(t.value,'ID')    # Check for reserved words
+     return t
+
 #whitespace
 # t_SPACE = r'\\s'
 # t_TAB = r'\\t'
 # t_NEW_LINE = r'\\n'
 
 # ignore
-t_ignore=' \t\r\n\f\v'
+t_ignore=' \t\r\f\v'
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += t.value.count("\n")
 
 
 
@@ -254,7 +283,7 @@ def p_error(t):
     global Errors
     Errors = Errors + 1
     if t is not None:
-        print("Syntax error at %s"%(t.value))
+        print("Syntax error at %s line: %s"%(t.value, t.lineno ))
         parser.errok()
     else:
         print("Unexpected end of input")
@@ -267,13 +296,14 @@ parser = yacc.yacc(method="SLR")
 lexer = lex.lex()
 
 def _process(s):
-    lex.input(s)
-    while True:
-        tok = lex.token()
-        print(tok)
-        if not tok:
-            break
-        par = parser.parse(s)
+    parser.parse(s)
+    # lex.input(s)
+    # while True:
+    #     tok = lex.token()
+    #     print(tok)
+    #     if not tok:
+    #         break
+    #     par = parser.parse(s)
 
 if(len(sys.argv) < 2):
     aux_s = ''
@@ -295,7 +325,7 @@ else:
     Errors = 0
     file = open(sys.argv[1], "r")
     _process(file.read())
-    #
+
     # aux_s = ''
     # file_input = fileinput.input()
     # for s in file_input:
