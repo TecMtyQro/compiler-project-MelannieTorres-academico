@@ -10,7 +10,9 @@ tokens = (
     'VAR','WHILE','WRITE', 'MAIN',
     #operatoris
     'EQUALS','IS_NOT_EQUAL', 'GT', 'LT', 'GET', 'LET',
-    'AND', 'OR', 'NOT', 'IS_EQUAL',
+    'AND', 'OR',
+    # 'NOT',
+    'IS_EQUAL',
     'ADD','MINUS', 'MULTIPLICATION', 'DIVISION',
     #data types
     'INT', 'FLOAT', 'BOOL', 'STRING', 'VOID',
@@ -21,7 +23,8 @@ tokens = (
     'RIGHT_CURLY_BRACKET',
     # 'LEFT_SQUARE_BRACKET', 'RIGHT_SQUARE_BRACKET',
     # 'COMMA',
-    'SEMICOLON', 'DOT',
+    'SEMICOLON',
+    # 'DOT',
     'DOUBLE_QUOTE', 'QUOTE',
     #whitespace
     # 'SPACE', 'TAB', 'NEW_LINE',
@@ -40,7 +43,7 @@ def t_STATIC(t): r'static'; return t
 def t_CONST(t): r'const'; return t
 def t_IF(t): r'if'; return t
 def t_ELSE(t): r'else'; return t
-def t_READ(t): r'Console\.Read'; return t
+def t_READ(t): r'Console\.Read\(\)'; return t
 def t_RETURN(t): r'return'; return t
 def t_VAR(t): r'var'; return t
 def t_WHILE(t): r'while'; return t
@@ -59,7 +62,7 @@ t_GET = r'>='
 t_LET = r'<='
 t_AND = r'&&'
 t_OR = r'\|\|'
-t_NOT = r'!'
+# t_NOT = r'!'
 t_IS_EQUAL = r'=='
 t_IS_NOT_EQUAL = r'!='
 t_ADD = r'\+'
@@ -91,7 +94,7 @@ t_RIGHT_CURLY_BRACKET = r'}'
 # t_RIGHT_SQUARE_BRACKET = r'\]'
 # t_COMMA = r','
 t_SEMICOLON = r';'
-t_DOT = r'\.'
+# t_DOT = r'\.'
 t_DOUBLE_QUOTE = r'"'
 t_QUOTE = r"'"
 
@@ -117,92 +120,115 @@ def p_program(t):
     print('Program')
 
 def p_block(t):
-    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET
-             |   LEFT_CURLY_BRACKET expression RETURN INT_LITERAL RIGHT_CURLY_BRACKET'''
+    '''block :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET'''
     print('Block')
 
-def p_expression(t):
-    '''expression : while_expression
-                  | if_expression
-                  | arithmetic_expression
-                  | bool_expression
-                  | assign_expression
-                  | read_expression
-                  | write_expression'''
-    print('Expression')
-    print(t[1])
+def p_expressions(t):
+    '''expressions : expression 
+                   | expression expressions '''
 
+def p_expression(t):
+    '''expression : read_expression SEMICOLON
+                  | write_expression SEMICOLON
+                  | RETURN INT_LITERAL SEMICOLON
+                  | RETURN BOOL_LITERAL SEMICOLON
+                  | if_expression
+                  | while_expression'''
+
+#
+#     '''expression : while_expression
+#                   | assign_expression SEMICOLON'''
+#     print('Expression')
+#     print(t[1])
+#
 
 def p_while_expression(t):
     '''while_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
     print('While')
 
 def p_if_expression(t):
-    '''if_expression : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block
-                     | IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block'''
-    print('if')
+    '''if_expression : start_if
+                     | start_if else_expression'''
+    # print('if')
+
+def p_start_if(t):
+    '''start_if : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block'''
+
+def p_else_expression(t):
+    '''else_expression : ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
+                       | ELSE block'''
 
 def p_read_expression(t):
     '''read_expression : READ'''
     print('read')
 
 def p_write_expression(t):
-    '''write_expression : WRITE'''
+    '''write_expression : WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS'''
     print('write')
 
-def p_assign_expression(t):
-    '''assign_expression : INT ID EQUALS arithmetic_expression
-              | FLOAT ID EQUALS arithmetic_expression
-              | BOOL ID EQUALS bool_expression
-              | STRING ID EQUALS string_expression'''
-    print('assign')
-
-
-precedence = (
-     ('left', 'ADD', 'MINUS'),
-     ('left', 'MULTIPLICATION', 'DIVISION'),
- )
-
-#start arithmetic_expressions
+# def p_arithmetic_datatypes(t):
+#     '''arithmetic_datatypes : INT
+#                             | FLOAT'''
+#
+# def p_bool_datatypes(t):
+#     '''bool_datatypes : BOOL'''
+#
+# def p_string_datatypes(t):
+#     '''string_datatypes : STRING'''
+#
+# def p_assign_expression(t):
+#     '''assign_expression : arithmetic_datatypes ID EQUALS arithmetic_expression
+#               | bool_datatypes ID EQUALS bool_expression
+#               | string_datatypes ID EQUALS string_expression'''
+#     print('assign')
+#
+#
+# precedence = (
+#      ('left', 'ADD', 'MINUS'),
+#      ('left', 'MULTIPLICATION', 'DIVISION'),
+#  )
+#
+# #start arithmetic_expressions
 def p_arithmetic_expression(t):
-    '''arithmetic_expression : number ADD arithmetic_expression
-                             | number MINUS arithmetic_expression
-                             | number MULTIPLICATION arithmetic_expression
-                             | number DIVISION arithmetic_expression
-                             | number '''
+    '''arithmetic_expression : arithmetic_literals ADD arithmetic_expression
+                             | arithmetic_literals MINUS arithmetic_expression
+                             | arithmetic_literals MULTIPLICATION arithmetic_expression
+                             | arithmetic_literals DIVISION arithmetic_expression
+                             | arithmetic_literals '''
     print('arithmetic_expression')
 
 
 
-def p_number(t):
-    '''number : INT_LITERAL
+def p_arithmetic_literals(t):
+    '''arithmetic_literals : INT_LITERAL
               | FLOAT_LITERAL '''
-    t[0] = t[1]
-    print('number')
+    print('arithmetic_literals')
+
 #ends arithmetic_expressions
 
-#start bool_expression
-
+def p_string_literals(t):
+    '''string_literals : STRING_LITERAL
+                       | ID'''
+# #start bool_expression
+#
 def p_bool_expression(t):
-    '''bool_expression : bool_expression AND BOOL_LITERAL
-                         | bool_expression OR BOOL_LITERAL
+    '''bool_expression : BOOL_LITERAL AND bool_expression
+                         | BOOL_LITERAL OR bool_expression
                          | BOOL_LITERAL '''
     print('bool_expression')
 
-def p_string_expression(t):
-    '''string_expression : QUOTE STRING_LITERAL QUOTE
-                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
-    print('string_expression')
+# def p_string_expression(t):
+#     '''string_expression : QUOTE STRING_LITERAL QUOTE
+#                          | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE '''
+#     print('string_expression')
 
 def p_condition(t):
-    '''condition : number GT number
-                   | number LT number
-                   | number GET number
-                   | number LET number
-                   | number NOT number
-                   | BOOL_LITERAL NOT BOOL_LITERAL
-                   | number IS_EQUAL number
-                   | number IS_NOT_EQUAL number
+    '''condition : arithmetic_expression GT arithmetic_expression
+                   | arithmetic_expression LT arithmetic_expression
+                   | arithmetic_expression GET arithmetic_expression
+                   | arithmetic_expression LET arithmetic_expression
+                   | arithmetic_expression IS_EQUAL arithmetic_expression
+                   | arithmetic_expression IS_NOT_EQUAL arithmetic_expression
                    | BOOL_LITERAL IS_EQUAL BOOL_LITERAL
                    | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'''
     print('condition')
@@ -212,7 +238,7 @@ def p_error(t):
 
 import ply.lex as lex
 import ply.yacc as yacc
-parser = yacc.yacc()
+parser = yacc.yacc(method="SLR")
 lexer = lex.lex()
 
 if(len(sys.argv) < 2):

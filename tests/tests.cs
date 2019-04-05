@@ -104,3 +104,15 @@ while while (1 == 1){
         return false;
     }
 }
+
+static void Main{if(1>2){if(3<1){return 1;}} while (1 == 1){while (1 == 1){return false;}}}
+
+
+//test 13
+static void Main{if(1>2){if(3<1){return 1;}}}
+
+//test 14
+static void Main{if(3<1){return 1;}}
+
+//test 15
+static void Main{if(1>2){if(3<1){return 1;}} else if (4>2) {return 2; } else{ return 3;}}

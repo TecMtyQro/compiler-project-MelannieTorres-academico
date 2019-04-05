@@ -4,11 +4,11 @@
 # pylint: disable=W,C,R
 _tabversion = '3.10'
 
-_lr_method = 'LALR'
+_lr_method = 'SLR'
 
-_lr_signature = 'leftADDMINUSleftMULTIPLICATIONDIVISIONADD AND BOOL BOOL_LITERAL CONST DIVISION DOT DOUBLE_QUOTE ELSE EQUALS FLOAT FLOAT_LITERAL GET GT ID IF INT INT_LITERAL IS_EQUAL IS_NOT_EQUAL LEFT_CURLY_BRACKET LEFT_PARENTHESIS LET LT MAIN MINUS MULTIPLICATION NOT OR QUOTE READ RETURN RIGHT_CURLY_BRACKET RIGHT_PARENTHESIS SEMICOLON STATIC STRING STRING_LITERAL VAR VOID WHILE WRITEprogram : STATIC VOID MAIN blockblock :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET\n             |   LEFT_CURLY_BRACKET expression RETURN INT_LITERAL RIGHT_CURLY_BRACKETexpression : while_expression\n                  | if_expression\n                  | arithmetic_expression\n                  | bool_expression\n                  | assign_expression\n                  | read_expression\n                  | write_expressionwhile_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS blockif_expression : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block\n                     | IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE blockread_expression : READwrite_expression : WRITEassign_expression : INT ID EQUALS arithmetic_expression\n              | FLOAT ID EQUALS arithmetic_expression\n              | BOOL ID EQUALS bool_expression\n              | STRING ID EQUALS string_expressionarithmetic_expression : number ADD arithmetic_expression\n                             | number MINUS arithmetic_expression\n                             | number MULTIPLICATION arithmetic_expression\n                             | number DIVISION arithmetic_expression\n                             | number number : INT_LITERAL\n              | FLOAT_LITERAL bool_expression : bool_expression AND BOOL_LITERAL\n                         | bool_expression OR BOOL_LITERAL\n                         | BOOL_LITERAL string_expression : QUOTE STRING_LITERAL QUOTE\n                         | DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE condition : number GT number\n                   | number LT number\n                   | number GET number\n                   | number LET number\n                   | number NOT number\n                   | BOOL_LITERAL NOT BOOL_LITERAL\n                   | number IS_EQUAL number\n                   | number IS_NOT_EQUAL number\n                   | BOOL_LITERAL IS_EQUAL BOOL_LITERAL\n                   | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'
+_lr_signature = 'ADD AND BOOL BOOL_LITERAL CONST DIVISION DOUBLE_QUOTE ELSE EQUALS FLOAT FLOAT_LITERAL GET GT ID IF INT INT_LITERAL IS_EQUAL IS_NOT_EQUAL LEFT_CURLY_BRACKET LEFT_PARENTHESIS LET LT MAIN MINUS MULTIPLICATION OR QUOTE READ RETURN RIGHT_CURLY_BRACKET RIGHT_PARENTHESIS SEMICOLON STATIC STRING STRING_LITERAL VAR VOID WHILE WRITEprogram : STATIC VOID MAIN blockblock :  LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKETexpressions : expression \n                   | expression expressions expression : read_expression SEMICOLON\n                  | write_expression SEMICOLON\n                  | RETURN INT_LITERAL SEMICOLON\n                  | RETURN BOOL_LITERAL SEMICOLON\n                  | if_expression\n                  | while_expressionwhile_expression : WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS blockif_expression : start_if\n                     | start_if else_expressionstart_if : IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS blockelse_expression : ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression\n                       | ELSE blockread_expression : READwrite_expression : WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESISarithmetic_expression : arithmetic_literals ADD arithmetic_expression\n                             | arithmetic_literals MINUS arithmetic_expression\n                             | arithmetic_literals MULTIPLICATION arithmetic_expression\n                             | arithmetic_literals DIVISION arithmetic_expression\n                             | arithmetic_literals arithmetic_literals : INT_LITERAL\n              | FLOAT_LITERAL string_literals : STRING_LITERAL\n                       | IDbool_expression : BOOL_LITERAL AND bool_expression\n                         | BOOL_LITERAL OR bool_expression\n                         | BOOL_LITERAL condition : arithmetic_expression GT arithmetic_expression\n                   | arithmetic_expression LT arithmetic_expression\n                   | arithmetic_expression GET arithmetic_expression\n                   | arithmetic_expression LET arithmetic_expression\n                   | arithmetic_expression IS_EQUAL arithmetic_expression\n                   | arithmetic_expression IS_NOT_EQUAL arithmetic_expression\n                   | BOOL_LITERAL IS_EQUAL BOOL_LITERAL\n                   | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'
     
-_lr_action_items = {'STATIC':([0,],[2,]),'$end':([1,5,27,56,],[0,-1,-2,-3,]),'VOID':([2,],[3,]),'MAIN':([3,],[4,]),'LEFT_CURLY_BRACKET':([4,57,68,89,],[6,6,6,6,]),'WHILE':([6,],[16,]),'IF':([6,],[17,]),'BOOL_LITERAL':([6,29,30,31,32,54,65,66,67,],[19,42,43,46,46,19,83,84,85,]),'INT':([6,],[20,]),'FLOAT':([6,],[21,]),'BOOL':([6,],[22,]),'STRING':([6,],[23,]),'READ':([6,],[24,]),'WRITE':([6,],[25,]),'INT_LITERAL':([6,28,31,32,33,34,35,36,52,53,58,59,60,61,62,63,64,],[8,41,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'FLOAT_LITERAL':([6,31,32,33,34,35,36,52,53,58,59,60,61,62,63,64,],[26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,]),'RIGHT_CURLY_BRACKET':([7,8,9,10,11,12,13,14,15,18,19,24,25,26,27,41,42,43,48,49,50,51,56,69,70,71,72,75,86,90,91,92,],[27,-25,-4,-5,-6,-7,-8,-9,-10,-24,-29,-14,-15,-26,-2,56,-27,-28,-20,-21,-22,-23,-3,-16,-17,-18,-19,-11,-12,-30,-31,-13,]),'RETURN':([7,8,9,10,11,12,13,14,15,18,19,24,25,26,27,42,43,48,49,50,51,56,69,70,71,72,75,86,90,91,92,],[28,-25,-4,-5,-6,-7,-8,-9,-10,-24,-29,-14,-15,-26,-2,-27,-28,-20,-21,-22,-23,-3,-16,-17,-18,-19,-11,-12,-30,-31,-13,]),'ADD':([8,18,26,],[-25,33,-26,]),'MINUS':([8,18,26,],[-25,34,-26,]),'MULTIPLICATION':([8,18,26,],[-25,35,-26,]),'DIVISION':([8,18,26,],[-25,36,-26,]),'GT':([8,26,45,],[-25,-26,58,]),'LT':([8,26,45,],[-25,-26,59,]),'GET':([8,26,45,],[-25,-26,60,]),'LET':([8,26,45,],[-25,-26,61,]),'NOT':([8,26,45,46,],[-25,-26,62,65,]),'IS_EQUAL':([8,26,45,46,],[-25,-26,63,66,]),'IS_NOT_EQUAL':([8,26,45,46,],[-25,-26,64,67,]),'RIGHT_PARENTHESIS':([8,26,44,47,76,77,78,79,80,81,82,83,84,85,],[-25,-26,57,68,-32,-33,-34,-35,-36,-38,-39,-37,-40,-41,]),'AND':([12,19,42,43,71,],[29,-29,-27,-28,29,]),'OR':([12,19,42,43,71,],[30,-29,-27,-28,30,]),'LEFT_PARENTHESIS':([16,17,],[31,32,]),'ID':([20,21,22,23,],[37,38,39,40,]),'ELSE':([27,56,86,],[-2,-3,89,]),'EQUALS':([37,38,39,40,],[52,53,54,55,]),'QUOTE':([55,87,],[73,90,]),'DOUBLE_QUOTE':([55,88,],[74,91,]),'STRING_LITERAL':([73,74,],[87,88,]),}
+_lr_action_items = {'STATIC':([0,],[2,]),'$end':([1,5,18,],[0,-1,-2,]),'VOID':([2,],[3,]),'MAIN':([3,],[4,]),'LEFT_CURLY_BRACKET':([4,25,44,57,73,],[6,6,6,6,6,]),'RETURN':([6,11,12,15,18,19,20,24,28,29,34,59,72,75,],[10,-9,-10,-12,-2,-5,-6,-13,-7,-8,-16,-11,-14,-15,]),'READ':([6,11,12,15,18,19,20,24,28,29,34,59,72,75,],[13,-9,-10,-12,-2,-5,-6,-13,-7,-8,-16,-11,-14,-15,]),'WRITE':([6,11,12,15,18,19,20,24,28,29,34,59,72,75,],[14,-9,-10,-12,-2,-5,-6,-13,-7,-8,-16,-11,-14,-15,]),'WHILE':([6,11,12,15,18,19,20,24,28,29,34,59,72,75,],[16,-9,-10,-12,-2,-5,-6,-13,-7,-8,-16,-11,-14,-15,]),'IF':([6,11,12,15,18,19,20,24,25,28,29,34,59,72,75,],[17,-9,-10,-12,-2,-5,-6,-13,33,-7,-8,-16,-11,-14,-15,]),'RIGHT_CURLY_BRACKET':([7,11,12,15,18,19,20,24,28,29,34,59,72,75,],[18,-9,-10,-12,-2,-5,-6,-13,-7,-8,-16,-11,-14,-15,]),'SEMICOLON':([8,9,13,21,22,42,],[19,20,-17,28,29,-18,]),'INT_LITERAL':([10,26,27,43,45,46,47,48,49,50,53,54,55,56,],[21,39,39,39,39,39,39,39,39,39,39,39,39,39,]),'BOOL_LITERAL':([10,26,27,43,51,52,],[22,37,37,37,66,67,]),'LEFT_PARENTHESIS':([14,16,17,33,],[23,26,27,43,]),'ELSE':([15,18,72,74,],[25,-2,-14,25,]),'STRING_LITERAL':([23,],[31,]),'ID':([23,],[32,]),'FLOAT_LITERAL':([26,27,43,45,46,47,48,49,50,53,54,55,56,],[40,40,40,40,40,40,40,40,40,40,40,40,40,]),'RIGHT_PARENTHESIS':([30,31,32,35,38,39,40,41,58,60,61,62,63,64,65,66,67,68,69,70,71,],[42,-26,-27,44,-23,-24,-25,57,73,-31,-32,-33,-34,-35,-36,-37,-38,-19,-20,-21,-22,]),'GT':([36,38,39,40,68,69,70,71,],[45,-23,-24,-25,-19,-20,-21,-22,]),'LT':([36,38,39,40,68,69,70,71,],[46,-23,-24,-25,-19,-20,-21,-22,]),'GET':([36,38,39,40,68,69,70,71,],[47,-23,-24,-25,-19,-20,-21,-22,]),'LET':([36,38,39,40,68,69,70,71,],[48,-23,-24,-25,-19,-20,-21,-22,]),'IS_EQUAL':([36,37,38,39,40,68,69,70,71,],[49,51,-23,-24,-25,-19,-20,-21,-22,]),'IS_NOT_EQUAL':([36,37,38,39,40,68,69,70,71,],[50,52,-23,-24,-25,-19,-20,-21,-22,]),'ADD':([38,39,40,],[53,-24,-25,]),'MINUS':([38,39,40,],[54,-24,-25,]),'MULTIPLICATION':([38,39,40,],[55,-24,-25,]),'DIVISION':([38,39,40,],[56,-24,-25,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'block':([4,57,68,89,],[5,75,86,92,]),'expression':([6,],[7,]),'while_expression':([6,],[9,]),'if_expression':([6,],[10,]),'arithmetic_expression':([6,33,34,35,36,52,53,],[11,48,49,50,51,69,70,]),'bool_expression':([6,54,],[12,71,]),'assign_expression':([6,],[13,]),'read_expression':([6,],[14,]),'write_expression':([6,],[15,]),'number':([6,31,32,33,34,35,36,52,53,58,59,60,61,62,63,64,],[18,45,45,18,18,18,18,18,18,76,77,78,79,80,81,82,]),'condition':([31,32,],[44,47,]),'string_expression':([55,],[72,]),}
+_lr_goto_items = {'program':([0,],[1,]),'block':([4,25,44,57,73,],[5,34,59,72,74,]),'expression':([6,],[7,]),'read_expression':([6,],[8,]),'write_expression':([6,],[9,]),'if_expression':([6,],[11,]),'while_expression':([6,],[12,]),'start_if':([6,],[15,]),'else_expression':([15,74,],[24,75,]),'string_literals':([23,],[30,]),'condition':([26,27,43,],[35,41,58,]),'arithmetic_expression':([26,27,43,45,46,47,48,49,50,53,54,55,56,],[36,36,36,60,61,62,63,64,65,68,69,70,71,]),'arithmetic_literals':([26,27,43,45,46,47,48,49,50,53,54,55,56,],[38,38,38,38,38,38,38,38,38,38,38,38,38,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,45 +27,42 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> STATIC VOID MAIN block','program',4,'p_program','lexer.py',116),
-  ('block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET','block',3,'p_block','lexer.py',120),
-  ('block -> LEFT_CURLY_BRACKET expression RETURN INT_LITERAL RIGHT_CURLY_BRACKET','block',5,'p_block','lexer.py',121),
-  ('expression -> while_expression','expression',1,'p_expression','lexer.py',125),
-  ('expression -> if_expression','expression',1,'p_expression','lexer.py',126),
-  ('expression -> arithmetic_expression','expression',1,'p_expression','lexer.py',127),
-  ('expression -> bool_expression','expression',1,'p_expression','lexer.py',128),
-  ('expression -> assign_expression','expression',1,'p_expression','lexer.py',129),
-  ('expression -> read_expression','expression',1,'p_expression','lexer.py',130),
-  ('expression -> write_expression','expression',1,'p_expression','lexer.py',131),
-  ('while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','while_expression',5,'p_while_expression','lexer.py',137),
-  ('if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','if_expression',5,'p_if_expression','lexer.py',141),
-  ('if_expression -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block ELSE block','if_expression',7,'p_if_expression','lexer.py',142),
-  ('read_expression -> READ','read_expression',1,'p_read_expression','lexer.py',146),
-  ('write_expression -> WRITE','write_expression',1,'p_write_expression','lexer.py',150),
-  ('assign_expression -> INT ID EQUALS arithmetic_expression','assign_expression',4,'p_assign_expression','lexer.py',154),
-  ('assign_expression -> FLOAT ID EQUALS arithmetic_expression','assign_expression',4,'p_assign_expression','lexer.py',155),
-  ('assign_expression -> BOOL ID EQUALS bool_expression','assign_expression',4,'p_assign_expression','lexer.py',156),
-  ('assign_expression -> STRING ID EQUALS string_expression','assign_expression',4,'p_assign_expression','lexer.py',157),
-  ('arithmetic_expression -> number ADD arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',168),
-  ('arithmetic_expression -> number MINUS arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',169),
-  ('arithmetic_expression -> number MULTIPLICATION arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',170),
-  ('arithmetic_expression -> number DIVISION arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',171),
-  ('arithmetic_expression -> number','arithmetic_expression',1,'p_arithmetic_expression','lexer.py',172),
-  ('number -> INT_LITERAL','number',1,'p_number','lexer.py',178),
-  ('number -> FLOAT_LITERAL','number',1,'p_number','lexer.py',179),
-  ('bool_expression -> bool_expression AND BOOL_LITERAL','bool_expression',3,'p_bool_expression','lexer.py',187),
-  ('bool_expression -> bool_expression OR BOOL_LITERAL','bool_expression',3,'p_bool_expression','lexer.py',188),
-  ('bool_expression -> BOOL_LITERAL','bool_expression',1,'p_bool_expression','lexer.py',189),
-  ('string_expression -> QUOTE STRING_LITERAL QUOTE','string_expression',3,'p_string_expression','lexer.py',193),
-  ('string_expression -> DOUBLE_QUOTE STRING_LITERAL DOUBLE_QUOTE','string_expression',3,'p_string_expression','lexer.py',194),
-  ('condition -> number GT number','condition',3,'p_condition','lexer.py',198),
-  ('condition -> number LT number','condition',3,'p_condition','lexer.py',199),
-  ('condition -> number GET number','condition',3,'p_condition','lexer.py',200),
-  ('condition -> number LET number','condition',3,'p_condition','lexer.py',201),
-  ('condition -> number NOT number','condition',3,'p_condition','lexer.py',202),
-  ('condition -> BOOL_LITERAL NOT BOOL_LITERAL','condition',3,'p_condition','lexer.py',203),
-  ('condition -> number IS_EQUAL number','condition',3,'p_condition','lexer.py',204),
-  ('condition -> number IS_NOT_EQUAL number','condition',3,'p_condition','lexer.py',205),
-  ('condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL','condition',3,'p_condition','lexer.py',206),
-  ('condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL','condition',3,'p_condition','lexer.py',207),
+  ('program -> STATIC VOID MAIN block','program',4,'p_program','lexer.py',119),
+  ('block -> LEFT_CURLY_BRACKET expression RIGHT_CURLY_BRACKET','block',3,'p_block','lexer.py',123),
+  ('expressions -> expression','expressions',1,'p_expressions','lexer.py',127),
+  ('expressions -> expression expressions','expressions',2,'p_expressions','lexer.py',128),
+  ('expression -> read_expression SEMICOLON','expression',2,'p_expression','lexer.py',131),
+  ('expression -> write_expression SEMICOLON','expression',2,'p_expression','lexer.py',132),
+  ('expression -> RETURN INT_LITERAL SEMICOLON','expression',3,'p_expression','lexer.py',133),
+  ('expression -> RETURN BOOL_LITERAL SEMICOLON','expression',3,'p_expression','lexer.py',134),
+  ('expression -> if_expression','expression',1,'p_expression','lexer.py',135),
+  ('expression -> while_expression','expression',1,'p_expression','lexer.py',136),
+  ('while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','while_expression',5,'p_while_expression','lexer.py',146),
+  ('if_expression -> start_if','if_expression',1,'p_if_expression','lexer.py',150),
+  ('if_expression -> start_if else_expression','if_expression',2,'p_if_expression','lexer.py',151),
+  ('start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block','start_if',5,'p_start_if','lexer.py',155),
+  ('else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression','else_expression',7,'p_else_expression','lexer.py',158),
+  ('else_expression -> ELSE block','else_expression',2,'p_else_expression','lexer.py',159),
+  ('read_expression -> READ','read_expression',1,'p_read_expression','lexer.py',162),
+  ('write_expression -> WRITE LEFT_PARENTHESIS string_literals RIGHT_PARENTHESIS','write_expression',4,'p_write_expression','lexer.py',166),
+  ('arithmetic_expression -> arithmetic_literals ADD arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',193),
+  ('arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',194),
+  ('arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',195),
+  ('arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression','arithmetic_expression',3,'p_arithmetic_expression','lexer.py',196),
+  ('arithmetic_expression -> arithmetic_literals','arithmetic_expression',1,'p_arithmetic_expression','lexer.py',197),
+  ('arithmetic_literals -> INT_LITERAL','arithmetic_literals',1,'p_arithmetic_literals','lexer.py',203),
+  ('arithmetic_literals -> FLOAT_LITERAL','arithmetic_literals',1,'p_arithmetic_literals','lexer.py',204),
+  ('string_literals -> STRING_LITERAL','string_literals',1,'p_string_literals','lexer.py',210),
+  ('string_literals -> ID','string_literals',1,'p_string_literals','lexer.py',211),
+  ('bool_expression -> BOOL_LITERAL AND bool_expression','bool_expression',3,'p_bool_expression','lexer.py',215),
+  ('bool_expression -> BOOL_LITERAL OR bool_expression','bool_expression',3,'p_bool_expression','lexer.py',216),
+  ('bool_expression -> BOOL_LITERAL','bool_expression',1,'p_bool_expression','lexer.py',217),
+  ('condition -> arithmetic_expression GT arithmetic_expression','condition',3,'p_condition','lexer.py',226),
+  ('condition -> arithmetic_expression LT arithmetic_expression','condition',3,'p_condition','lexer.py',227),
+  ('condition -> arithmetic_expression GET arithmetic_expression','condition',3,'p_condition','lexer.py',228),
+  ('condition -> arithmetic_expression LET arithmetic_expression','condition',3,'p_condition','lexer.py',229),
+  ('condition -> arithmetic_expression IS_EQUAL arithmetic_expression','condition',3,'p_condition','lexer.py',230),
+  ('condition -> arithmetic_expression IS_NOT_EQUAL arithmetic_expression','condition',3,'p_condition','lexer.py',231),
+  ('condition -> BOOL_LITERAL IS_EQUAL BOOL_LITERAL','condition',3,'p_condition','lexer.py',232),
+  ('condition -> BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL','condition',3,'p_condition','lexer.py',233),
 ]
