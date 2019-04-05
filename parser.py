@@ -3,6 +3,8 @@ import sys
 #https://www.dabeaz.com/ply/PLYTalk.pdf
 
 tokens = (
+    #comment
+    'ONE_LINE_COMMENT', #'MULTIPLE_LINE_COMMENT',
     #reserved words
     # 'PUBLIC', 'PRIVATE',
     'STATIC',
@@ -29,13 +31,17 @@ tokens = (
     # 'DOUBLE_QUOTE', 'QUOTE',
     #whitespace
     # 'SPACE', 'TAB', 'NEW_LINE',
-    #comment
-    # 'ONE_LINE_COMMENT', 'MULTIPLE_LINE_COMMENT',
 
     #id
     'ID'
 )
 #tokens
+
+#comment
+# IGNORE
+t_ignore_ONE_LINE_COMMENT =  r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
+t_ignore_MULTIPLE_LINE_COMMENT = r'(/\*(.|\n)*?\*/)' #r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
+
 
 #reserved words
 # def t_PUBLIC(t): r'public'; return t
@@ -51,10 +57,6 @@ def t_WHILE(t): r'while'; return t
 def t_WRITE(t): r'Console\.Write'; return t
 def t_MAIN(t): r'Main'; return t
 
-#comment
-# IGNORE
-t_ignore_ONE_LINE_COMMENT = r'^(?:[^"/\\]|\"(?:[^\"\\]|\\.)*\"|/(?:[^/"\\]|\\.)|/\"(?:[^\"\\]|\\.)*\"|\\.)*//(.*)$' # regex by python https://stackoverflow.com/questions/15423658/regular-expression-for-single-line-comments
-t_ignore_MULTIPLE_LINE_COMMENT = r'(/\*(.|\n)*?\*/)' #r'/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/'
 
 #operators
 t_GT = r'>'
@@ -69,7 +71,7 @@ t_IS_NOT_EQUAL = r'!='
 t_ADD = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLICATION = r'\*'
-t_DIVISION = r'/ '
+t_DIVISION = r'\/'
 t_EQUALS = r'\='
 
 
@@ -118,7 +120,8 @@ def t_error(t):
 
 def p_program(t):
     '''program : STATIC VOID MAIN block'''
-    print('Correct :)')
+    if Errors == 0:
+        print('Correct :)')
 
 def p_block(t):
     '''block :  LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET'''
@@ -245,9 +248,19 @@ def p_condition(t):
                    | BOOL_LITERAL IS_NOT_EQUAL BOOL_LITERAL'''
     # print('condition')
 
-def p_error(t):
-    print("Syntax error at '%s'" % t.value)
 
+# https://stackoverflow.com/questions/24627928/ply-lex-yacc-errors-handling
+def p_error(t):
+    global Errors
+    Errors = Errors + 1
+    if t is not None:
+        print("Syntax error at %s"%(t.value))
+        parser.errok()
+    else:
+        print("Unexpected end of input")
+
+
+Errors = 0
 import ply.lex as lex
 import ply.yacc as yacc
 parser = yacc.yacc(method="SLR")
@@ -257,6 +270,7 @@ def _process(s):
     lex.input(s)
     while True:
         tok = lex.token()
+        print(tok)
         if not tok:
             break
         par = parser.parse(s)
@@ -278,13 +292,17 @@ if(len(sys.argv) < 2):
 
 
 else:
-    aux_s = ''
-    file_input = fileinput.input()
-    for s in file_input:
-        if "/*" in s or aux_s:
-            aux_s = aux_s +s
-            if "*/" in s:
-                _process(aux_s)
-                aux_s=''
-        else:
-            _process(s)
+    Errors = 0
+    file = open(sys.argv[1], "r")
+    _process(file.read())
+    #
+    # aux_s = ''
+    # file_input = fileinput.input()
+    # for s in file_input:
+    #     if "/*" in s or aux_s:
+    #         aux_s = aux_s +s
+    #         if "*/" in s:
+    #             _process(aux_s)
+    #             aux_s=''
+    #     else:
+    #         _process(s)

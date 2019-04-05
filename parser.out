@@ -1,5 +1,9 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    ONE_LINE_COMMENT
+
 Grammar
 
 Rule 0     S' -> program
@@ -89,6 +93,7 @@ LT                   : 52
 MAIN                 : 1
 MINUS                : 38
 MULTIPLICATION       : 39
+ONE_LINE_COMMENT     : 
 OR                   : 48
 READ                 : 18
 RETURN               : 7 8
@@ -129,7 +134,7 @@ string_literals      : 19
 while_expression     : 11
 write_expression     : 6
 
-Parsing method: SLR
+Parsing method: LALR
 
 state 0
 
@@ -361,36 +366,36 @@ state 13
 
     (10) expression -> if_expression .
 
-    RIGHT_CURLY_BRACKET reduce using rule 10 (expression -> if_expression .)
     RETURN          reduce using rule 10 (expression -> if_expression .)
     READ            reduce using rule 10 (expression -> if_expression .)
     WRITE           reduce using rule 10 (expression -> if_expression .)
     CONST           reduce using rule 10 (expression -> if_expression .)
     WHILE           reduce using rule 10 (expression -> if_expression .)
+    ID              reduce using rule 10 (expression -> if_expression .)
+    IF              reduce using rule 10 (expression -> if_expression .)
     INT             reduce using rule 10 (expression -> if_expression .)
     FLOAT           reduce using rule 10 (expression -> if_expression .)
     BOOL            reduce using rule 10 (expression -> if_expression .)
     STRING          reduce using rule 10 (expression -> if_expression .)
-    ID              reduce using rule 10 (expression -> if_expression .)
-    IF              reduce using rule 10 (expression -> if_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 10 (expression -> if_expression .)
 
 
 state 14
 
     (11) expression -> while_expression .
 
-    RIGHT_CURLY_BRACKET reduce using rule 11 (expression -> while_expression .)
     RETURN          reduce using rule 11 (expression -> while_expression .)
     READ            reduce using rule 11 (expression -> while_expression .)
     WRITE           reduce using rule 11 (expression -> while_expression .)
     CONST           reduce using rule 11 (expression -> while_expression .)
     WHILE           reduce using rule 11 (expression -> while_expression .)
+    ID              reduce using rule 11 (expression -> while_expression .)
+    IF              reduce using rule 11 (expression -> while_expression .)
     INT             reduce using rule 11 (expression -> while_expression .)
     FLOAT           reduce using rule 11 (expression -> while_expression .)
     BOOL            reduce using rule 11 (expression -> while_expression .)
     STRING          reduce using rule 11 (expression -> while_expression .)
-    ID              reduce using rule 11 (expression -> while_expression .)
-    IF              reduce using rule 11 (expression -> while_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 11 (expression -> while_expression .)
 
 
 state 15
@@ -456,18 +461,18 @@ state 21
     (16) else_expression -> . ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression
     (17) else_expression -> . ELSE block
 
-    RIGHT_CURLY_BRACKET reduce using rule 13 (if_expression -> start_if .)
     RETURN          reduce using rule 13 (if_expression -> start_if .)
     READ            reduce using rule 13 (if_expression -> start_if .)
     WRITE           reduce using rule 13 (if_expression -> start_if .)
     CONST           reduce using rule 13 (if_expression -> start_if .)
     WHILE           reduce using rule 13 (if_expression -> start_if .)
+    ID              reduce using rule 13 (if_expression -> start_if .)
+    IF              reduce using rule 13 (if_expression -> start_if .)
     INT             reduce using rule 13 (if_expression -> start_if .)
     FLOAT           reduce using rule 13 (if_expression -> start_if .)
     BOOL            reduce using rule 13 (if_expression -> start_if .)
     STRING          reduce using rule 13 (if_expression -> start_if .)
-    ID              reduce using rule 13 (if_expression -> start_if .)
-    IF              reduce using rule 13 (if_expression -> start_if .)
+    RIGHT_CURLY_BRACKET reduce using rule 13 (if_expression -> start_if .)
     ELSE            shift and go to state 50
 
     else_expression                shift and go to state 49
@@ -552,18 +557,18 @@ state 32
     (2) block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .
 
     $end            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
-    RIGHT_CURLY_BRACKET reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     RETURN          reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     READ            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     WRITE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     CONST           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     WHILE           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    ID              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    IF              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     INT             reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     FLOAT           reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     BOOL            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     STRING          reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
-    ID              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
-    IF              reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
+    RIGHT_CURLY_BRACKET reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
     ELSE            reduce using rule 2 (block -> LEFT_CURLY_BRACKET expressions RIGHT_CURLY_BRACKET .)
 
 
@@ -578,36 +583,36 @@ state 34
 
     (5) expression -> read_expression SEMICOLON .
 
-    RIGHT_CURLY_BRACKET reduce using rule 5 (expression -> read_expression SEMICOLON .)
     RETURN          reduce using rule 5 (expression -> read_expression SEMICOLON .)
     READ            reduce using rule 5 (expression -> read_expression SEMICOLON .)
     WRITE           reduce using rule 5 (expression -> read_expression SEMICOLON .)
     CONST           reduce using rule 5 (expression -> read_expression SEMICOLON .)
     WHILE           reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    ID              reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    IF              reduce using rule 5 (expression -> read_expression SEMICOLON .)
     INT             reduce using rule 5 (expression -> read_expression SEMICOLON .)
     FLOAT           reduce using rule 5 (expression -> read_expression SEMICOLON .)
     BOOL            reduce using rule 5 (expression -> read_expression SEMICOLON .)
     STRING          reduce using rule 5 (expression -> read_expression SEMICOLON .)
-    ID              reduce using rule 5 (expression -> read_expression SEMICOLON .)
-    IF              reduce using rule 5 (expression -> read_expression SEMICOLON .)
+    RIGHT_CURLY_BRACKET reduce using rule 5 (expression -> read_expression SEMICOLON .)
 
 
 state 35
 
     (6) expression -> write_expression SEMICOLON .
 
-    RIGHT_CURLY_BRACKET reduce using rule 6 (expression -> write_expression SEMICOLON .)
     RETURN          reduce using rule 6 (expression -> write_expression SEMICOLON .)
     READ            reduce using rule 6 (expression -> write_expression SEMICOLON .)
     WRITE           reduce using rule 6 (expression -> write_expression SEMICOLON .)
     CONST           reduce using rule 6 (expression -> write_expression SEMICOLON .)
     WHILE           reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    ID              reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    IF              reduce using rule 6 (expression -> write_expression SEMICOLON .)
     INT             reduce using rule 6 (expression -> write_expression SEMICOLON .)
     FLOAT           reduce using rule 6 (expression -> write_expression SEMICOLON .)
     BOOL            reduce using rule 6 (expression -> write_expression SEMICOLON .)
     STRING          reduce using rule 6 (expression -> write_expression SEMICOLON .)
-    ID              reduce using rule 6 (expression -> write_expression SEMICOLON .)
-    IF              reduce using rule 6 (expression -> write_expression SEMICOLON .)
+    RIGHT_CURLY_BRACKET reduce using rule 6 (expression -> write_expression SEMICOLON .)
 
 
 state 36
@@ -638,12 +643,12 @@ state 38
     DIVISION        shift and go to state 62
     SEMICOLON       reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     GT              reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
-    RIGHT_PARENTHESIS reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     LT              reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     GET             reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     LET             reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     IS_EQUAL        reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
     IS_NOT_EQUAL    reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
+    RIGHT_PARENTHESIS reduce using rule 41 (arithmetic_expression -> arithmetic_literals .)
 
 
 state 39
@@ -667,12 +672,12 @@ state 40
     DIVISION        reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     SEMICOLON       reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     GT              reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
-    RIGHT_PARENTHESIS reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     LT              reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     GET             reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     LET             reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     IS_EQUAL        reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
     IS_NOT_EQUAL    reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 42 (arithmetic_literals -> INT_LITERAL .)
 
 
 state 41
@@ -685,12 +690,12 @@ state 41
     DIVISION        reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     SEMICOLON       reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     GT              reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
-    RIGHT_PARENTHESIS reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     LT              reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     GET             reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     LET             reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     IS_EQUAL        reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
     IS_NOT_EQUAL    reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
+    RIGHT_PARENTHESIS reduce using rule 43 (arithmetic_literals -> FLOAT_LITERAL .)
 
 
 state 42
@@ -703,30 +708,30 @@ state 42
     DIVISION        reduce using rule 44 (arithmetic_literals -> ID .)
     SEMICOLON       reduce using rule 44 (arithmetic_literals -> ID .)
     GT              reduce using rule 44 (arithmetic_literals -> ID .)
-    RIGHT_PARENTHESIS reduce using rule 44 (arithmetic_literals -> ID .)
     LT              reduce using rule 44 (arithmetic_literals -> ID .)
     GET             reduce using rule 44 (arithmetic_literals -> ID .)
     LET             reduce using rule 44 (arithmetic_literals -> ID .)
     IS_EQUAL        reduce using rule 44 (arithmetic_literals -> ID .)
     IS_NOT_EQUAL    reduce using rule 44 (arithmetic_literals -> ID .)
+    RIGHT_PARENTHESIS reduce using rule 44 (arithmetic_literals -> ID .)
 
 
 state 43
 
     (9) expression -> assign_expression SEMICOLON .
 
-    RIGHT_CURLY_BRACKET reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     RETURN          reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     READ            reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     WRITE           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     CONST           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     WHILE           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    ID              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    IF              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     INT             reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     FLOAT           reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     BOOL            reduce using rule 9 (expression -> assign_expression SEMICOLON .)
     STRING          reduce using rule 9 (expression -> assign_expression SEMICOLON .)
-    ID              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
-    IF              reduce using rule 9 (expression -> assign_expression SEMICOLON .)
+    RIGHT_CURLY_BRACKET reduce using rule 9 (expression -> assign_expression SEMICOLON .)
 
 
 state 44
@@ -772,18 +777,18 @@ state 49
 
     (14) if_expression -> start_if else_expression .
 
-    RIGHT_CURLY_BRACKET reduce using rule 14 (if_expression -> start_if else_expression .)
     RETURN          reduce using rule 14 (if_expression -> start_if else_expression .)
     READ            reduce using rule 14 (if_expression -> start_if else_expression .)
     WRITE           reduce using rule 14 (if_expression -> start_if else_expression .)
     CONST           reduce using rule 14 (if_expression -> start_if else_expression .)
     WHILE           reduce using rule 14 (if_expression -> start_if else_expression .)
+    ID              reduce using rule 14 (if_expression -> start_if else_expression .)
+    IF              reduce using rule 14 (if_expression -> start_if else_expression .)
     INT             reduce using rule 14 (if_expression -> start_if else_expression .)
     FLOAT           reduce using rule 14 (if_expression -> start_if else_expression .)
     BOOL            reduce using rule 14 (if_expression -> start_if else_expression .)
     STRING          reduce using rule 14 (if_expression -> start_if else_expression .)
-    ID              reduce using rule 14 (if_expression -> start_if else_expression .)
-    IF              reduce using rule 14 (if_expression -> start_if else_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 14 (if_expression -> start_if else_expression .)
 
 
 state 50
@@ -915,36 +920,36 @@ state 57
 
     (7) expression -> RETURN arithmetic_expression SEMICOLON .
 
-    RIGHT_CURLY_BRACKET reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     RETURN          reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     READ            reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     WRITE           reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     CONST           reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     WHILE           reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
+    ID              reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
+    IF              reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     INT             reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     FLOAT           reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     BOOL            reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
     STRING          reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
-    ID              reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
-    IF              reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
+    RIGHT_CURLY_BRACKET reduce using rule 7 (expression -> RETURN arithmetic_expression SEMICOLON .)
 
 
 state 58
 
     (8) expression -> RETURN bool_expression SEMICOLON .
 
-    RIGHT_CURLY_BRACKET reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     RETURN          reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     READ            reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     WRITE           reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     CONST           reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     WHILE           reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
+    ID              reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
+    IF              reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     INT             reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     FLOAT           reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     BOOL            reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
     STRING          reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
-    ID              reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
-    IF              reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
+    RIGHT_CURLY_BRACKET reduce using rule 8 (expression -> RETURN bool_expression SEMICOLON .)
 
 
 state 59
@@ -1098,18 +1103,18 @@ state 72
 
     (17) else_expression -> ELSE block .
 
-    RIGHT_CURLY_BRACKET reduce using rule 17 (else_expression -> ELSE block .)
     RETURN          reduce using rule 17 (else_expression -> ELSE block .)
     READ            reduce using rule 17 (else_expression -> ELSE block .)
     WRITE           reduce using rule 17 (else_expression -> ELSE block .)
     CONST           reduce using rule 17 (else_expression -> ELSE block .)
     WHILE           reduce using rule 17 (else_expression -> ELSE block .)
+    ID              reduce using rule 17 (else_expression -> ELSE block .)
+    IF              reduce using rule 17 (else_expression -> ELSE block .)
     INT             reduce using rule 17 (else_expression -> ELSE block .)
     FLOAT           reduce using rule 17 (else_expression -> ELSE block .)
     BOOL            reduce using rule 17 (else_expression -> ELSE block .)
     STRING          reduce using rule 17 (else_expression -> ELSE block .)
-    ID              reduce using rule 17 (else_expression -> ELSE block .)
-    IF              reduce using rule 17 (else_expression -> ELSE block .)
+    RIGHT_CURLY_BRACKET reduce using rule 17 (else_expression -> ELSE block .)
 
 
 state 73
@@ -1225,12 +1230,12 @@ state 84
 
     SEMICOLON       reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     GT              reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     LT              reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     GET             reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     LET             reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     IS_EQUAL        reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
     IS_NOT_EQUAL    reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 37 (arithmetic_expression -> arithmetic_literals ADD arithmetic_expression .)
 
 
 state 85
@@ -1239,12 +1244,12 @@ state 85
 
     SEMICOLON       reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     GT              reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     LT              reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     GET             reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     LET             reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     IS_EQUAL        reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
     IS_NOT_EQUAL    reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 38 (arithmetic_expression -> arithmetic_literals MINUS arithmetic_expression .)
 
 
 state 86
@@ -1253,12 +1258,12 @@ state 86
 
     SEMICOLON       reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     GT              reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     LT              reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     GET             reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     LET             reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     IS_EQUAL        reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
     IS_NOT_EQUAL    reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 39 (arithmetic_expression -> arithmetic_literals MULTIPLICATION arithmetic_expression .)
 
 
 state 87
@@ -1267,12 +1272,12 @@ state 87
 
     SEMICOLON       reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     GT              reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
-    RIGHT_PARENTHESIS reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     LT              reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     GET             reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     LET             reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     IS_EQUAL        reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
     IS_NOT_EQUAL    reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
+    RIGHT_PARENTHESIS reduce using rule 40 (arithmetic_expression -> arithmetic_literals DIVISION arithmetic_expression .)
 
 
 state 88
@@ -1503,18 +1508,18 @@ state 106
 
     (12) while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
 
-    RIGHT_CURLY_BRACKET reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     RETURN          reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     READ            reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     WRITE           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     CONST           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     WHILE           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ID              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    IF              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     INT             reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     FLOAT           reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     BOOL            reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     STRING          reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    ID              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    IF              reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    RIGHT_CURLY_BRACKET reduce using rule 12 (while_expression -> WHILE LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
 
 
 state 107
@@ -1577,19 +1582,19 @@ state 115
 
     (15) start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .
 
-    RIGHT_CURLY_BRACKET reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ELSE            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     RETURN          reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     READ            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     WRITE           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     CONST           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     WHILE           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    ID              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    IF              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     INT             reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     FLOAT           reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     BOOL            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
     STRING          reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    ID              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    IF              reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
-    ELSE            reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
+    RIGHT_CURLY_BRACKET reduce using rule 15 (start_if -> IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block .)
 
 
 state 116
@@ -1615,16 +1620,16 @@ state 118
 
     (16) else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .
 
-    RIGHT_CURLY_BRACKET reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     RETURN          reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     READ            reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     WRITE           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     CONST           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     WHILE           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    ID              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    IF              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     INT             reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     FLOAT           reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     BOOL            reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
     STRING          reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    ID              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
-    IF              reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
+    RIGHT_CURLY_BRACKET reduce using rule 16 (else_expression -> ELSE IF LEFT_PARENTHESIS condition RIGHT_PARENTHESIS block else_expression .)
 
