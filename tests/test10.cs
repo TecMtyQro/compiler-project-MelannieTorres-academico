@@ -4,7 +4,7 @@
 //test 11 variable outside scope
 
 static void Main {
-  if (a == b){
+  if (1==2){
     int result = 0;
   }
   Console.Write(result);
